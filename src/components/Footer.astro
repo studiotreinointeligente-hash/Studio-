@@ -1,0 +1,104 @@
+---
+---
+<footer class="site-footer" aria-label="Rodape">
+  <div class="footer-top">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <a href="/" aria-label="Studio Livel Treino Inteligente — ir para a página inicial">
+            <img
+              src="/images/logos/logo-livel-studio-roxa.png"
+              alt="Studio Livel — academia de treino inteligente em Prado, Belo Horizonte, desde 1986"
+              width="140"
+              height="140"
+              loading="lazy"
+              decoding="async"
+              class="footer-logo-img"
+            />
+          </a>
+        </div>
+        <p class="footer-desc">Casa especializada em treino acompanhado no Prado, Belo Horizonte. Pilates, Musculação, Funcional, Yoga e Krav Magá. Turmas de até 6 alunos por instrutor.</p>
+        <div class="footer-seals" aria-label="Parceiros">
+          <img src="/images/selos/wellhub-magenta.png" alt="Wellhub parceiro" width="72" height="22" loading="lazy" decoding="async" />
+          <img src="/images/selos/totalpass-white.svg" alt="TotalPass parceiro" width="72" height="22" loading="lazy" decoding="async" />
+          <img src="/images/selos/classpass.svg" alt="ClassPass parceiro" width="64" height="22" loading="lazy" decoding="async" />
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-col-title">Modalidades</h3>
+        <ul role="list">
+          <li><a href="/musculacao/">Musculação</a></li>
+          <li><a href="/pilates/">Pilates</a></li>
+          <li><a href="/treino-funcional/">Funcional FitBox</a></li>
+          <li><a href="/yoga/">Yoga</a></li>
+          <li><a href="/krav-maga/">Krav Maga</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-col-title">Estúdio</h3>
+        <ul role="list">
+          <li><a href="/quem-somos/">Quem Somos</a></li>
+          <li><a href="/metodo-livel/">Metodo Livel</a></li>
+          <li><a href="/planos/">Planos</a></li>
+          <li><a href="/aula-avaliacao/">Aula de Avaliação</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-col-title">Contato</h3>
+        <address class="footer-address">
+          <p>R. Chopin, 271</p>
+          <p>Prado, Belo Horizonte MG</p>
+          <p>CEP 30410-180</p>
+          <p><a href="tel:+5531988451387">(31) 98845-1387</a></p>
+        </address>
+        <p class="footer-hours">Seg. a Sex.: 06h30 às 21h00<br />Sábado: 07h00 às 13h00</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="wrap footer-bottom-inner">
+      <p class="footer-copy">&copy; {new Date().getFullYear()} Studio Livel Treino Inteligente. Todos os direitos reservados.</p>
+      <nav aria-label="Links legais">
+        <ul role="list" class="footer-legal">
+          <li><a href="/privacidade/">Privacidade</a></li>
+          <li><a href="/termos/">Termos</a></li>
+          <li><a href="/contato/">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer { background: var(--roxo-dark, #3D1540); color: #F0EDE8; }
+.footer-top { padding: 56px 0 40px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+.footer-logo { display: flex; align-items: center; margin-bottom: 14px; }
+.footer-logo a { display: inline-block; }
+.footer-logo-img { height: 72px; width: auto; display: block; }
+.footer-desc { font-size: 13px; color: rgba(240,237,232,.42); line-height: 1.7; margin-bottom: 18px; overflow-wrap: break-word; }
+.footer-seals { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.footer-seals img { opacity: 0.7; filter: brightness(0) invert(1); height: 22px; width: auto; transition: opacity .2s; }
+.footer-seals img:hover { opacity: 1; }
+.footer-col-title { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(240,237,232,.30); margin-bottom: 14px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.footer-col ul a { font-size: 13.5px; color: rgba(240,237,232,.55); text-decoration: none; transition: color .14s; }
+.footer-col ul a:hover { color: var(--gold-light); }
+.footer-address { font-style: normal; font-size: 13px; color: rgba(240,237,232,.40); line-height: 1.85; margin-bottom: 10px; }
+.footer-address a { color: rgba(240,237,232,.60); text-decoration: none; }
+.footer-address a:hover { color: #F0EDE8; }
+.footer-hours { font-size: 12px; color: rgba(240,237,232,.32); line-height: 1.65; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 18px 0; }
+.footer-bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.footer-copy { font-size: 12px; color: rgba(240,237,232,.22); }
+.footer-legal { list-style: none; display: flex; gap: 18px; }
+.footer-legal a { font-size: 12px; color: rgba(240,237,232,.22); text-decoration: none; }
+.footer-legal a:hover { color: rgba(240,237,232,.50); }
+@media(max-width:900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:540px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>

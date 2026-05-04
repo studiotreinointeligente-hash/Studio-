@@ -1,0 +1,108 @@
+@import './tokens.css';
+
+/* Fontes self-hosted — caminhos absolutos para evitar resolução relativa à página */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/files/instrument-serif-latin-400-normal.woff2') format('woff2'),
+       url('/files/instrument-serif-latin-400-normal.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+                 U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/files/instrument-serif-latin-400-italic.woff2') format('woff2'),
+       url('/files/instrument-serif-latin-400-italic.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+                 U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@import '@fontsource-variable/dm-sans';
+
+/* ── Reset ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: #FFFFFF;
+  color: #2A2622;          /* explicito — nao depende de variavel em dark mode */
+  line-height: 1.6;
+  font-size: 16px;
+}
+img, video { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ── Layout ───────────────────────────────────────────── */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 640px) { .wrap { padding: 0 18px; } }
+
+/* ── Botões ───────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 12px 28px; border-radius: 9999px;
+  font-family: var(--font-body); font-size: 14.5px; font-weight: 600; line-height: 1;
+  text-decoration: none; border: 2px solid transparent;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s, box-shadow 0.18s;
+  white-space: nowrap; cursor: pointer;
+}
+.btn--sm  { padding: 8px 20px; font-size: 13px; }
+.btn--lg  { padding: 15px 36px; font-size: 16.5px; }
+.btn--roxo  { background: var(--roxo); color: #fff; border-color: var(--roxo); }
+.btn--roxo:hover  { background: var(--roxo-dark); border-color: var(--roxo-dark); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(99,36,101,.35); }
+.btn--gold  { background: var(--gold); color: var(--brown); border-color: var(--gold); }
+.btn--gold:hover  { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); transform: translateY(-1px); }
+.btn--orange { background: var(--orange); color: #fff; border-color: var(--orange); }
+.btn--orange:hover { background: var(--orange-dark); border-color: var(--orange-dark); transform: translateY(-1px); }
+.btn--gray   { background: var(--gray); color: #fff; border-color: var(--gray); }
+.btn--gray:hover   { background: var(--gray-dark); border-color: var(--gray-dark); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(107,114,128,.30); }
+.btn--red    { background: var(--red); color: #fff; border-color: var(--red); }
+.btn--red:hover    { background: var(--red-dark); border-color: var(--red-dark); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(192,24,26,.35); }
+.btn--outline { background: transparent; border-color: var(--roxo); color: var(--roxo); }
+.btn--outline:hover { background: var(--roxo-dim); }
+.btn--outline-white { background: transparent; border-color: rgba(255,255,255,.6); color: #fff; }
+.btn--outline-white:hover { background: rgba(255,255,255,.12); }
+.btn--wa { background: #22A643; color: #fff; border-color: #22A643; }
+.btn--wa:hover { background: #178A36; transform: translateY(-1px); }
+
+/* ── Prose (conteúdo MDX) ─────────────────────────────── */
+.prose { max-width: 820px; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 {
+  font-family: var(--font-body); font-size: 22px; font-weight: 700;
+  color: var(--text); margin-top: 2em; margin-bottom: 0.5em; line-height: 1.25;
+}
+.prose h3 {
+  font-family: var(--font-body); font-size: 18px; font-weight: 600;
+  color: var(--text); margin-top: 1.6em; margin-bottom: 0.4em;
+}
+.prose p { font-size: 16px; color: var(--text-dim); line-height: 1.78; }
+.prose p.summarization {
+  font-size: 16.5px; font-weight: 500; color: var(--text);
+  border-left: 3px solid var(--gold); padding: 14px 20px;
+  background: var(--gold-dim); border-radius: 0 var(--r-md) var(--r-md) 0;
+  margin: 0 0 2em;
+}
+.prose ul, .prose ol { padding-left: 1.5em; }
+.prose li { font-size: 16px; color: var(--text-dim); line-height: 1.7; margin-bottom: 0.35em; }
+.prose strong { color: var(--text); font-weight: 600; }
+.prose a { color: var(--roxo); text-underline-offset: 3px; }
+.prose a:hover { color: var(--roxo-light); }
+.prose table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 1.5em 0; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); }
+.prose table th { text-align: left; padding: 10px 16px; background: var(--surface-subtle); border-bottom: 2px solid var(--border-strong); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
+.prose table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+.prose table tr:last-child td { border-bottom: none; }
+
+/* ── Animações ────────────────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.anim { animation: fadeUp 0.45s ease both; }
+.anim:nth-child(1) { animation-delay: .05s; } .anim:nth-child(2) { animation-delay: .10s; }
+.anim:nth-child(3) { animation-delay: .16s; } .anim:nth-child(4) { animation-delay: .22s; }
+.anim:nth-child(5) { animation-delay: .28s; } .anim:nth-child(6) { animation-delay: .34s; }
+@media (prefers-reduced-motion: reduce) { .anim { animation: none; } }

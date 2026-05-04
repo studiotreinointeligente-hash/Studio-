@@ -1,0 +1,296 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Tipos que aparecem no blog (nao-pilar, nao-bairro, nao-tier2)
+const BLOG_TYPES = ['educacional', 'subpublico', 'outer'];
+
+// Labels de modalidade
+const modalLabel: Record<string, string> = {
+  pilates: 'Pilates', musculacao: 'Musculacao',
+  funcional: 'Funcional', yoga: 'Yoga',
+  'krav-maga': 'Krav Maga', geral: 'Estudio',
+};
+
+// Categoria visual por tipo
+const typeLabel: Record<string, string> = {
+  educacional: 'Artigo',
+  subpublico: 'Guia',
+  outer: 'Especial',
+};
+
+const typeColor: Record<string, string> = {
+  educacional: 'var(--roxo)',
+  subpublico:  'var(--gold-dark)',
+  outer:       'var(--orange-dark)',
+};
+
+export async function getStaticPaths({ paginate }) {
+  // Constantes dentro da funcao — nao acessam escopo do frontmatter
+  const TIPOS_BLOG = ['educacional', 'subpublico', 'outer'];
+  const cols = ['pilates','musculacao','funcional','yoga','krav-maga','outer'] as const;
+  const ORDER = ['educacional','subpublico','outer'];
+
+  const allPosts = (
+    await Promise.all(cols.map(c => getCollection(c)))
+  )
+    .flat()
+    .filter(e => TIPOS_BLOG.includes(e.data.type))
+    .sort((a, b) => {
+      const diff = ORDER.indexOf(a.data.type) - ORDER.indexOf(b.data.type);
+      return diff !== 0 ? diff : a.data.title.localeCompare(b.data.title);
+    });
+
+  return paginate(allPosts, { pageSize: 9 });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+const isFirstPage = page.currentPage === 1;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}#webpage`,
+      'url': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`,
+      'name': `Blog e Educacao${isFirstPage ? '' : ' - Pagina' + page.currentPage} | Studio Livel`,
+      'inLanguage': 'pt-BR',
+      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`Blog e Educacao${isFirstPage ? '' : ' - Pagina' + page.currentPage} | Studio Livel Treino Inteligente`}
+  description="Artigos, guias e conteudo educacional sobre Pilates, Musculacao, Funcional, Yoga e Krav Maga. Baseado no Metodo Livel desde 1986, Prado, Belo Horizonte."
+  canonical={`https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`}
+  schema={schema}
+  activePath="/blog/"
+>
+
+  <div class="blog-page">
+
+    <!-- Header -->
+    <header class="blog-hdr">
+      <div class="wrap">
+        <p class="blog-hdr__kicker">Conteudo educacional</p>
+        <h1 class="blog-hdr__h1">Blog e <em>Educacao</em></h1>
+        <p class="blog-hdr__desc">Artigos, guias e conteudos especiais sobre as cinco modalidades do Studio Livel. {page.total} publicacoes no total.</p>
+
+        <!-- Indicador de pagina (se nao for a primeira) -->
+        {!isFirstPage && (
+          <p class="blog-hdr__page">Pagina {page.currentPage} de {page.lastPage}</p>
+        )}
+      </div>
+    </header>
+
+    <!-- Grade de posts -->
+    <div class="blog-body">
+      <div class="wrap">
+        <ul class="blog-grid" role="list">
+          {posts.map((post) => {
+            const href = `/${post.data.urlPath.replace(/^\/|\/$/g,'')}/`;
+            const mod  = modalLabel[post.data.modalidade] || post.data.modalidade;
+            const tipo = typeLabel[post.data.type]  || post.data.type;
+            const cor  = typeColor[post.data.type]  || 'var(--roxo)';
+            const title = post.data.title.split('|')[0].trim();
+            const desc  = post.data.description.length > 130
+              ? post.data.description.slice(0, 128) + '...'
+              : post.data.description;
+
+            return (
+              <li>
+                <a href={href} class="bcard" style={`--bcard-c:${cor}`}>
+                  <div class="bcard__meta">
+                    <span class="bcard__tipo">{tipo}</span>
+                    <span class="bcard__mod">{mod}</span>
+                  </div>
+                  <h2 class="bcard__title">{title}</h2>
+                  <p class="bcard__desc">{desc}</p>
+                  <span class="bcard__cta">Ler artigo completo &rarr;</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <!-- Paginacao -->
+        <nav class="pagination" aria-label="Paginacao do blog">
+          <div class="pagination__inner">
+
+            <!-- Anterior -->
+            {page.url.prev ? (
+              <a href={page.url.prev} class="pag-btn pag-btn--prev" rel="prev">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                Anterior
+              </a>
+            ) : (
+              <span class="pag-btn pag-btn--disabled" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                Anterior
+              </span>
+            )}
+
+            <!-- Numeros de pagina -->
+            <div class="pag-nums" role="list" aria-label="Paginas">
+              {Array.from({ length: page.lastPage }, (_, i) => i + 1).map(num => {
+                const isActive = num === page.currentPage;
+                const href = num === 1 ? '/blog/' : `/blog/${num}/`;
+                return (
+                  <a
+                    href={href}
+                    class={`pag-num ${isActive ? 'pag-num--active' : ''}`}
+                    aria-current={isActive ? 'page' : undefined}
+                    aria-label={`Pagina ${num}`}
+                    role="listitem"
+                  >
+                    {num}
+                  </a>
+                );
+              })}
+            </div>
+
+            <!-- Proximo -->
+            {page.url.next ? (
+              <a href={page.url.next} class="pag-btn pag-btn--next" rel="next">
+                Proxima
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </a>
+            ) : (
+              <span class="pag-btn pag-btn--disabled" aria-hidden="true">
+                Proxima
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </span>
+            )}
+
+          </div>
+
+          <!-- Resumo -->
+          <p class="pag-summary">
+            Mostrando {(page.currentPage - 1) * 9 + 1} a {Math.min(page.currentPage * 9, page.total)} de {page.total} publicacoes
+          </p>
+        </nav>
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+.blog-page { background: #fff; min-height: 60vh; }
+
+/* Header */
+.blog-hdr {
+  background: #F8F5F0; border-bottom: 1px solid var(--border);
+  padding: 52px 0 40px;
+}
+.blog-hdr__kicker {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--roxo); margin-bottom: 12px;
+}
+.blog-hdr__h1 {
+  font-family: var(--font-display); font-size: clamp(28px,4vw,48px);
+  font-weight: 400; color: var(--text); margin-bottom: 12px;
+}
+.blog-hdr__h1 em { font-style: italic; color: var(--roxo); }
+.blog-hdr__desc {
+  font-size: 16px; color: var(--text-dim); max-width: 560px;
+  line-height: 1.65;
+}
+.blog-hdr__page {
+  margin-top: 12px; font-size: 13.5px; color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+/* Body */
+.blog-body { padding: 48px 0 72px; }
+
+/* Grid */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; list-style: none;
+  margin-bottom: 56px;
+}
+@media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .blog-grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.bcard {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1.5px solid var(--border);
+  border-top: 3px solid var(--bcard-c, var(--roxo));
+  border-radius: var(--r-lg); padding: 24px 22px 20px;
+  text-decoration: none; height: 100%;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.bcard:hover {
+  border-color: var(--bcard-c, var(--roxo));
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.bcard__meta {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+.bcard__tipo {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--bcard-c);
+  background: color-mix(in srgb, var(--bcard-c) 10%, white);
+  padding: 2px 8px; border-radius: 9999px;
+}
+.bcard__mod {
+  font-size: 10.5px; color: var(--text-faint);
+  font-weight: 500;
+}
+.bcard__title {
+  font-size: 16.5px; font-weight: 700; color: var(--text);
+  line-height: 1.35; margin-bottom: 10px; overflow-wrap: break-word;
+}
+.bcard__desc {
+  font-size: 14px; color: var(--text-dim); line-height: 1.65;
+  flex: 1; margin-bottom: 18px; overflow-wrap: break-word;
+}
+.bcard__cta {
+  font-size: 13px; font-weight: 600;
+  color: var(--bcard-c, var(--roxo));
+  margin-top: auto;
+}
+
+/* Paginacao */
+.pagination { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.pagination__inner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  justify-content: center;
+}
+.pag-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--text-dim);
+  text-decoration: none; padding: 10px 18px;
+  border: 1.5px solid var(--border); border-radius: var(--r-md);
+  transition: all .15s; background: #fff;
+}
+.pag-btn:hover { border-color: var(--roxo); color: var(--roxo); }
+.pag-btn--disabled { opacity: .38; cursor: default; pointer-events: none; }
+.pag-nums { display: flex; gap: 6px; align-items: center; }
+.pag-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: var(--r-md);
+  font-size: 14px; font-weight: 600; color: var(--text-dim);
+  text-decoration: none; border: 1.5px solid var(--border);
+  background: #fff; transition: all .15s;
+}
+.pag-num:hover { border-color: var(--roxo); color: var(--roxo); }
+.pag-num--active {
+  background: var(--roxo); color: #fff;
+  border-color: var(--roxo); pointer-events: none;
+}
+.pag-summary {
+  font-size: 13px; color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+</style>

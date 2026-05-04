@@ -1,0 +1,430 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://studiotreinointeligente.com.br/modalidades/#webpage',
+      'url': 'https://studiotreinointeligente.com.br/modalidades/',
+      'name': 'Modalidades | Studio Livel Treino Inteligente',
+      'description': 'Conheça as cinco modalidades do Studio Livel: Musculação, Pilates, Treino Funcional, Yoga e Krav Magá. Turmas de até 6 alunos por instrutor no Prado, BH.',
+      'inLanguage': 'pt-BR',
+      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://studiotreinointeligente.com.br/' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Modalidades', 'item': 'https://studiotreinointeligente.com.br/modalidades/' },
+      ],
+    },
+  ],
+};
+
+const modalidades = [
+  {
+    href: '/musculacao/',
+    nome: 'Musculação',
+    andar: '1º Andar',
+    cor: 'roxo',
+    tag: 'Força · Hipertrofia · Composição Corporal',
+    img: '/images/modalidades/musculacao-mulher.webp',
+    imgAvif: null,
+    imgWebp: '/images/modalidades/musculacao-mulher.webp',
+    imgAlt: 'Mulher treinando musculação com halteres no Studio Livel — treino supervisionado',
+    desc: 'Treino de força e hipertrofia com o Método Livel. Ciclos de 3 semanas com reavaliação obrigatória ao final de cada mesociclo. Sessões de 45 minutos com até 6 alunos por educador físico.',
+    diferenciais: ['Ciclos de 3 semanas', '45 min por sessão', 'Até 6 alunos por instrutor', 'Avaliação física periódica'],
+    publicos: ['Iniciantes', 'Atletas', 'Idosos', 'Emagrecimento'],
+  },
+  {
+    href: '/pilates/',
+    nome: 'Pilates',
+    andar: '2º Andar',
+    cor: 'gold',
+    tag: 'Postura · Mobilidade · Ativação Profunda',
+    img: '/images/modalidades/pilates-turma.webp',
+    imgAvif: null,
+    imgWebp: '/images/modalidades/pilates-turma.webp',
+    imgAlt: 'Turma de Pilates mat com mulheres em exercício de alongamento lateral — Studio Livel',
+    desc: 'Mobilidade, postura e ativação profunda com equipamentos Reformer, Cadillac e Chair. Sessões de 50 minutos com progressão pelo Método Livel. Indicado para todas as idades, incluindo gestantes e pós-cirúrgico.',
+    diferenciais: ['Equipamentos Reformer e Cadillac', '50 min por sessão', 'Progressão pelo Método Livel', 'Sub-públicos clínicos YMYL'],
+    publicos: ['Gestantes', 'Pós-cirúrgico', 'Idosos', 'Coluna'],
+  },
+  {
+    href: '/treino-funcional/',
+    nome: 'Funcional FitBox',
+    andar: '3º Andar',
+    cor: 'orange',
+    tag: 'Condicionamento · Grupo · Alta Eficiência',
+    img: '/images/modalidades/funcional-mulher.webp',
+    imgAvif: null,
+    imgWebp: '/images/modalidades/funcional-mulher.webp',
+    imgAlt: 'Mulher em treino funcional em grupo no Studio Livel — energia e motivação',
+    desc: 'Circuitos funcionais em grupo com Kit FitBox exclusivo. 30 minutos de alta eficiência com movimento real e condicionamento cardiovascular integrado. Metodologia de grupo com até 6 alunos.',
+    diferenciais: ['Kit FitBox exclusivo', '30 min de alta intensidade', 'Circuitos em grupo', 'Condicionamento cardiovascular'],
+    publicos: ['Todos os níveis', 'Emagrecimento', 'Condicionamento', 'Grupo'],
+  },
+  {
+    href: '/yoga/',
+    nome: 'Yoga',
+    andar: 'Studio',
+    cor: 'gray',
+    tag: 'Equilíbrio · Respiração · Presença',
+    img: '/images/modalidades/yoga3.webp',
+    imgAvif: '/images/modalidades/yoga3-800w.avif',
+    imgWebp: '/images/modalidades/yoga3-800w.webp',
+    imgAlt: 'Mulher praticando Yoga — postura de meditação com presença e respiração consciente',
+    desc: 'Asanas, pranayama e presença plena. Prática estruturada com progressão pelo Método Livel. Aberto a iniciantes e praticantes experientes. Foco em mobilidade, equilíbrio mental e respiração consciente.',
+    diferenciais: ['Aberto a iniciantes', 'Progressão estruturada', 'Pranayama e asanas', 'Equilíbrio mente-corpo'],
+    publicos: ['Iniciantes', 'Ansiedade', 'Flexibilidade', 'Idosos'],
+  },
+  {
+    href: '/krav-maga/',
+    nome: 'Krav Magá',
+    andar: 'Studio',
+    cor: 'red',
+    tag: 'Defesa Pessoal · Condicionamento · Iniciantes',
+    img: '/images/modalidades/krav-maga-treino.webp',
+    imgAvif: null,
+    imgWebp: '/images/modalidades/krav-maga-treino.webp',
+    imgAlt: 'Mulher treinando Krav Magá — golpe no saco com foco e determinação',
+    desc: 'Defesa pessoal civil com condicionamento físico integrado. Sistema israelense adaptado para o contexto civil, aberto a iniciantes. Treino que desenvolve força, agilidade e confiança pessoal.',
+    diferenciais: ['Aberto a iniciantes', 'Sistema israelense', 'Condicionamento integrado', 'Defesa pessoal civil'],
+    publicos: ['Iniciantes', 'Mulheres', 'Autoconfiança', 'Condicionamento'],
+  },
+];
+
+const corMap: Record<string, { bg: string; text: string; accent: string; badge: string }> = {
+  roxo:   { bg: 'var(--roxo-dim)',   text: 'var(--roxo)',       accent: 'var(--roxo)',   badge: 'rgba(99,36,101,.15)'   },
+  gold:   { bg: 'var(--gold-dim)',   text: 'var(--gold-dark)',  accent: 'var(--gold)',   badge: 'rgba(212,160,23,.18)'  },
+  orange: { bg: 'var(--orange-dim)', text: 'var(--orange-dark)',accent: 'var(--orange)', badge: 'rgba(255,145,77,.18)'  },
+  gray:   { bg: 'var(--gray-dim)',   text: 'var(--gray-dark)',  accent: 'var(--gray)',   badge: 'rgba(107,114,128,.18)' },
+  red:    { bg: 'var(--red-dim)',    text: 'var(--red-dark)',   accent: 'var(--red)',    badge: 'rgba(192,24,26,.18)'   },
+};
+---
+
+<BaseLayout
+  title="Modalidades | Studio Livel Treino Inteligente"
+  description="Conheça as cinco modalidades do Studio Livel: Musculação, Pilates, Funcional FitBox, Yoga e Krav Magá. Turmas de até 6 alunos por instrutor no Prado, Belo Horizonte."
+  canonical="https://studiotreinointeligente.com.br/modalidades/"
+  schema={schema}
+  andar="roxo"
+  activePath="/modalidades/"
+  lcpImage="/images/logos/logo-livel-oficial.png"
+>
+
+  <!-- ── Breadcrumb ── -->
+  <nav class="breadcrumb-wrap" aria-label="Caminho de navegação">
+    <div class="wrap">
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li aria-hidden="true" class="breadcrumb-sep">›</li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name" aria-current="page">Modalidades</span>
+          <meta itemprop="position" content="2" />
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="mod-hero" aria-labelledby="mod-h1">
+    <div class="wrap mod-hero__inner">
+      <div class="mod-hero__logo-wrap">
+        <img
+          src="/images/logos/logo-livel-oficial.png"
+          alt="Studio Livel Treino Inteligente"
+          width="180"
+          height="60"
+          loading="eager"
+          decoding="sync"
+          class="mod-hero__logo"
+        />
+      </div>
+      <p class="sec-kicker">Um estúdio. Cinco práticas.</p>
+      <h1 id="mod-h1" class="mod-hero__h1">
+        Todas as <em>modalidades</em>
+      </h1>
+      <p class="mod-hero__sub">
+        Cada modalidade tem sala dedicada, instrutor de formação específica e progressão pelo Método Livel.
+        Turmas de até 6 alunos por educador físico, no Prado, Belo Horizonte, desde 1986.
+      </p>
+      <div class="mod-hero__pills">
+        {modalidades.map(m => (
+          <a href={m.href} class={`mod-pill mod-pill--${m.cor}`}>{m.nome}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cards grid ── -->
+  <section class="mod-grid-section" aria-labelledby="mod-grid-heading">
+    <div class="wrap">
+      <h2 id="mod-grid-heading" class="sr-only">Todas as modalidades</h2>
+      <div class="mod-grid">
+        {modalidades.map((m, i) => (
+          <article class={`mod-card mod-card--${m.cor} anim`} style={`animation-delay:${i * 0.09}s`} aria-labelledby={`mod-${i}-name`}>
+
+            <!-- Imagem -->
+            <a href={m.href} class="mod-card__img-link" tabindex="-1" aria-hidden="true">
+              <div class="mod-card__img-wrap">
+                <picture>
+                  {m.imgAvif && (
+                    <source
+                      type="image/avif"
+                      srcset={`${m.img.replace('.webp','-400w.avif')} 400w, ${m.imgAvif} 800w`}
+                      sizes="(max-width:640px) 100vw, (max-width:1000px) 50vw, 33vw"
+                    />
+                  )}
+                  {m.imgWebp && (
+                    <source
+                      type="image/webp"
+                      srcset={`${m.img.replace('.webp','-400w.webp')} 400w, ${m.imgWebp} 800w`}
+                      sizes="(max-width:640px) 100vw, (max-width:1000px) 50vw, 33vw"
+                    />
+                  )}
+                  <img
+                    src={m.img}
+                    alt={m.imgAlt}
+                    width="600"
+                    height="400"
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                    decoding={i < 2 ? 'sync' : 'async'}
+                  />
+                </picture>
+                <div class="mod-card__overlay"></div>
+                <span class="mod-card__andar-badge">{m.andar}</span>
+              </div>
+            </a>
+
+            <!-- Conteúdo -->
+            <div class="mod-card__body">
+              <span class="mod-card__tag">{m.tag}</span>
+              <h3 id={`mod-${i}-name`} class="mod-card__nome">
+                <a href={m.href}>{m.nome}</a>
+              </h3>
+              <p class="mod-card__desc">{m.desc}</p>
+
+              <!-- Diferenciais -->
+              <ul class="mod-card__difs" aria-label={`Diferenciais de ${m.nome}`}>
+                {m.diferenciais.map(d => (
+                  <li>
+                    <span class={`mod-card__check mod-card__check--${m.cor}`} aria-hidden="true">✓</span>
+                    {d}
+                  </li>
+                ))}
+              </ul>
+
+              <!-- Públicos -->
+              <div class="mod-card__publicos">
+                {m.publicos.map(p => (
+                  <span class={`mod-pub-chip mod-pub-chip--${m.cor}`}>{p}</span>
+                ))}
+              </div>
+
+              <a href={m.href} class={`mod-card__cta btn btn--${m.cor === 'gold' ? 'gold' : m.cor === 'orange' ? 'orange' : 'outline'} btn--sm`}>
+                {m.cor === 'roxo' ? 'Ver modalidade →' : 'Conhecer a modalidade →'}
+              </a>
+            </div>
+
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Método Livel callout ── -->
+  <section class="metodo-callout" aria-labelledby="metodo-heading">
+    <div class="wrap metodo-callout__inner">
+      <div class="metodo-callout__content">
+        <p class="sec-kicker">O que une tudo</p>
+        <h2 id="metodo-heading" class="sec-h2">O <em>Método Livel</em></h2>
+        <p class="sec-p">Independente da modalidade, todos os alunos do Studio Livel seguem a mesma lógica de progressão: ciclos de 3 semanas com reavaliação obrigatória ao final de cada mesociclo.</p>
+        <p class="sec-p">O método foi formalizado em 2016 pela segunda geração da família, sistematizando 30 anos de prática clínica em treino acompanhado. É o mesmo rigor aplicado desde 1986, agora documentado e replicável em todas as modalidades.</p>
+        <a href="/metodo-livel/" class="btn btn--roxo" style="margin-top:8px">Entender o Método Livel</a>
+      </div>
+      <div class="metodo-callout__stats">
+        <div class="metodo-stat">
+          <span class="metodo-stat__n">3</span>
+          <span class="metodo-stat__l">semanas por ciclo</span>
+        </div>
+        <div class="metodo-stat">
+          <span class="metodo-stat__n">6</span>
+          <span class="metodo-stat__l">alunos por instrutor</span>
+        </div>
+        <div class="metodo-stat">
+          <span class="metodo-stat__n">38+</span>
+          <span class="metodo-stat__l">anos de operação</span>
+        </div>
+        <div class="metodo-stat">
+          <span class="metodo-stat__n">5</span>
+          <span class="metodo-stat__l">modalidades</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA agendar ── -->
+  <section class="mod-cta" aria-labelledby="mod-cta-heading">
+    <div class="wrap mod-cta__inner">
+      <div>
+        <h2 id="mod-cta-heading" class="mod-cta__h2">Não sabe por qual modalidade começar?</h2>
+        <p class="mod-cta__p">Agende uma aula-avaliação gratuita. Em 50 minutos, nossos educadores físicos identificam a modalidade ideal para o seu objetivo e condição física atual.</p>
+      </div>
+      <div class="mod-cta__btns">
+        <a href="/aula-avaliacao/" class="btn btn--roxo btn--lg">Agendar Aula-Avaliação gratuita</a>
+        <a href="tel:+5531988451387" class="btn btn--outline btn--lg">(31) 98845-1387</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+/* ── Breadcrumb ── */
+.breadcrumb-wrap { background: var(--surface-subtle); border-bottom: 1px solid var(--border); padding: 10px 0; }
+.breadcrumb { display: flex; gap: 6px; align-items: center; list-style: none; font-size: 12.5px; color: var(--text-faint); }
+.breadcrumb a { color: var(--roxo); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb-sep { user-select: none; }
+
+/* ── Hero ── */
+.mod-hero { background: var(--bg); padding: 56px 0 48px; border-bottom: 1px solid var(--border); }
+.mod-hero__inner { max-width: 720px; }
+.mod-hero__logo-wrap { margin-bottom: 28px; }
+.mod-hero__logo { height: 52px; width: auto; object-fit: contain; }
+.mod-hero__h1 {
+  font-family: var(--font-display); font-size: clamp(32px, 5vw, 54px);
+  font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 16px;
+}
+.mod-hero__h1 em { font-style: italic; color: var(--roxo); }
+.mod-hero__sub { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 28px; }
+.mod-hero__pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.mod-pill {
+  padding: 7px 18px; border-radius: var(--r-pill); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: transform .15s, box-shadow .15s;
+}
+.mod-pill:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.mod-pill--roxo   { background: var(--roxo-dim);   color: var(--roxo); }
+.mod-pill--gold   { background: var(--gold-dim);   color: var(--gold-dark); }
+.mod-pill--orange { background: var(--orange-dim); color: var(--orange-dark); }
+.mod-pill--gray   { background: var(--gray-dim);   color: var(--gray-dark); }
+.mod-pill--red    { background: var(--red-dim);    color: var(--red-dark); }
+
+/* ── Grid ── */
+.mod-grid-section { background: #fff; padding: 72px 0 80px; }
+.mod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 0;
+}
+
+/* Last card centered when 5 items (2+2+1) */
+.mod-grid > article:last-child:nth-child(3n+1) {
+  grid-column: 2;
+}
+
+/* ── Card ── */
+.mod-card {
+  background: #fff; border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: var(--shadow-sm); border: 1.5px solid var(--border);
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.mod-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+.mod-card__img-link { display: block; text-decoration: none; }
+.mod-card__img-wrap { position: relative; aspect-ratio: 3/2; overflow: hidden; }
+.mod-card__img-wrap picture { position: absolute; inset: 0; }
+.mod-card__img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.mod-card:hover .mod-card__img-wrap img { transform: scale(1.05); }
+.mod-card__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.5) 0%, transparent 55%);
+}
+.mod-card__andar-badge {
+  position: absolute; bottom: 14px; left: 14px;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(0,0,0,.60); color: #fff; padding: 4px 12px; border-radius: var(--r-pill);
+}
+
+.mod-card__body { padding: 22px 24px 26px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.mod-card__tag { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); }
+.mod-card__nome { font-family: var(--font-display); font-size: 26px; font-weight: 400; line-height: 1.1; }
+.mod-card__nome a { text-decoration: none; color: var(--text); }
+.mod-card__nome a:hover { color: var(--roxo); }
+.mod-card--gold .mod-card__nome a:hover { color: var(--gold-dark); }
+.mod-card--orange .mod-card__nome a:hover { color: var(--orange-dark); }
+.mod-card--gray .mod-card__nome a:hover { color: var(--gray-dark); }
+.mod-card--red .mod-card__nome a:hover { color: var(--red-dark); }
+.mod-card__desc { font-size: 14px; color: var(--text-dim); line-height: 1.65; flex: 1; }
+
+/* Diferenciais */
+.mod-card__difs { list-style: none; display: flex; flex-direction: column; gap: 5px; margin: 4px 0; }
+.mod-card__difs li { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+.mod-card__check { font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.mod-card__check--roxo   { color: var(--roxo); }
+.mod-card__check--gold   { color: var(--gold-dark); }
+.mod-card__check--orange { color: var(--orange-dark); }
+.mod-card__check--gray   { color: var(--gray-dark); }
+.mod-card__check--red    { color: var(--red-dark); }
+
+/* Chips de público */
+.mod-card__publicos { display: flex; flex-wrap: wrap; gap: 6px; }
+.mod-pub-chip {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: var(--r-pill); letter-spacing: .03em;
+}
+.mod-pub-chip--roxo   { background: var(--roxo-dim);   color: var(--roxo); }
+.mod-pub-chip--gold   { background: var(--gold-dim);   color: var(--gold-dark); }
+.mod-pub-chip--orange { background: var(--orange-dim); color: var(--orange-dark); }
+.mod-pub-chip--gray   { background: var(--gray-dim);   color: var(--gray-dark); }
+.mod-pub-chip--red    { background: var(--red-dim);    color: var(--red-dark); }
+
+.mod-card__cta { align-self: flex-start; margin-top: 4px; }
+.btn--outline { border-color: var(--roxo); color: var(--roxo); }
+.btn--outline:hover { background: var(--roxo-dim); }
+
+/* ── Método Livel callout ── */
+.metodo-callout { background: var(--surface-subtle); padding: 72px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.metodo-callout__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.metodo-callout__content .sec-p { font-size: 16px; color: var(--text-dim); line-height: 1.75; margin-bottom: 12px; }
+.metodo-callout__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.metodo-stat { display: flex; flex-direction: column; gap: 4px; }
+.metodo-stat__n { font-family: var(--font-display); font-size: 48px; color: var(--roxo); line-height: 1; }
+.metodo-stat__l { font-size: 13px; color: var(--text-faint); letter-spacing: .04em; }
+
+/* ── CTA ── */
+.mod-cta { background: var(--roxo); padding: 64px 0; }
+.mod-cta__inner { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; justify-content: space-between; }
+.mod-cta__h2 { font-family: var(--font-display); font-size: clamp(22px, 3vw, 34px); font-weight: 400; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+.mod-cta__p { font-size: 16px; color: rgba(255,255,255,.72); line-height: 1.65; max-width: 480px; }
+.mod-cta__btns { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+.mod-cta .btn--roxo { background: #fff; color: var(--roxo); border-color: #fff; }
+.mod-cta .btn--roxo:hover { background: var(--gold-light); border-color: var(--gold-light); color: var(--brown); }
+.mod-cta .btn--outline { border-color: rgba(255,255,255,.5); color: #fff; }
+.mod-cta .btn--outline:hover { background: rgba(255,255,255,.12); }
+
+/* ── Acessibilidade ── */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+  .mod-grid { grid-template-columns: repeat(2, 1fr); }
+  .mod-grid > article:last-child:nth-child(3n+1) { grid-column: auto; }
+  .metodo-callout__inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .mod-grid { grid-template-columns: 1fr; }
+  .mod-cta__inner { flex-direction: column; gap: 28px; }
+  .mod-cta__btns { width: 100%; }
+  .mod-cta__btns .btn { width: 100%; justify-content: center; }
+  .metodo-callout__stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+</style>

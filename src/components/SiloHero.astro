@@ -1,0 +1,142 @@
+---
+interface Props {
+  overline: string;
+  h1: string;
+  intro?: string;
+  andar: 'roxo' | 'gold' | 'orange' | 'gray' | 'red' | 'none';
+  imageSrc?: string;
+  imageAlt?: string;
+  stats?: Array<{ num: string; label: string }>;
+  ctaHref?: string;
+  ctaLabel?: string;
+  ctaSecondaryHref?: string;
+  ctaSecondaryLabel?: string;
+}
+const {
+  overline, h1, intro, andar,
+  imageSrc, imageAlt = '',
+  stats = [],
+  ctaHref = '/aula-avaliacao/',
+  ctaLabel = 'Agendar Aula de Avaliação',
+  ctaSecondaryHref = '#beneficios',
+  ctaSecondaryLabel = 'Como funciona',
+} = Astro.props;
+
+const colorMap = {
+  roxo:   { accent: '#632465', accentLight: '#C090C0', bg: '#3D1540', btnClass: 'btn--roxo' },
+  gold:   { accent: '#D4A017', accentLight: '#E8C040', bg: '#2A1C04', btnClass: 'btn--gold' },
+  orange: { accent: '#FF914D', accentLight: '#FFB07A', bg: '#2E1408', btnClass: 'btn--orange' },
+  gray:   { accent: '#6B7280', accentLight: '#D1D5DB', bg: '#1F2937', btnClass: 'btn--gray' },
+  red:    { accent: '#C0181A', accentLight: '#F08080', bg: '#2D0808', btnClass: 'btn--red' },
+  none:   { accent: '#632465', accentLight: '#C090C0', bg: '#3D1540', btnClass: 'btn--roxo' },
+};
+const c = colorMap[andar];
+---
+
+<section
+  class="silo-hero"
+  style={`background:${c.bg}`}
+  aria-labelledby="page-h1"
+>
+  {imageSrc && (
+    <picture class="silo-hero__bg-picture" aria-hidden="true">
+      <source
+        type="image/avif"
+        srcset={`${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
+        sizes="100vw"
+      />
+      <source
+        type="image/webp"
+        srcset={`${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${imageSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
+        sizes="100vw"
+      />
+      <img
+        src={imageSrc}
+        alt=""
+        width="1200"
+        height="630"
+        loading="eager"
+        decoding="sync"
+        fetchpriority="high"
+        class="silo-hero__bg-img"
+      />
+    </picture>
+  )}
+  {imageSrc && <div class="silo-hero__overlay"></div>}
+  <div class="silo-hero__noise"></div>
+  <div class="wrap silo-hero__inner">
+    <div class="silo-hero__content">
+      <p class="silo-hero__over" style={`color:${c.accentLight}`}>
+        <span class="silo-hero__over-line" style={`background:${c.accentLight}`}></span>
+        {overline}
+      </p>
+      <h1 id="page-h1" class="silo-hero__h1">{h1}</h1>
+      {intro && <p class="silo-hero__intro">{intro}</p>}
+      <div class="silo-hero__btns">
+        <a href={ctaHref} class={`btn ${c.btnClass} btn--lg`}>{ctaLabel}</a>
+        <a href={ctaSecondaryHref} class="btn btn--outline-white btn--lg" style={`border-color:rgba(255,255,255,.45)`}>{ctaSecondaryLabel}</a>
+      </div>
+      {stats.length > 0 && (
+        <dl class="silo-hero__stats" style={`border-top-color:${c.accent}44`}>
+          {stats.map(s => (
+            <div class="silo-hero__stat">
+              <dd class="silo-hero__stat-num" style={`color:${c.accentLight}`}>{s.num}</dd>
+              <dt class="silo-hero__stat-lbl">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+.silo-hero {
+  position: relative; overflow: hidden; padding: 72px 0 60px;
+}
+.silo-hero__bg-picture {
+  position: absolute; inset: 0; z-index: 0;
+  display: block; overflow: hidden;
+}
+.silo-hero__bg-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+.silo-hero__overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.48) 100%);
+}
+.silo-hero__noise {
+  position: absolute; inset: 0; z-index: 2;
+  background-image: radial-gradient(circle, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 22px 22px; pointer-events: none;
+}
+.silo-hero__inner { position: relative; z-index: 3; }
+.silo-hero__content { max-width: 620px; }
+.silo-hero__over {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
+  margin-bottom: 18px; display: flex; align-items: center; gap: 12px;
+}
+.silo-hero__over-line { display: block; width: 24px; height: 1.5px; flex-shrink: 0; }
+.silo-hero__h1 {
+  font-family: var(--font-display); font-size: clamp(26px, 4vw, 46px);
+  font-weight: 400; line-height: 1.1; color: #F0EDE8;
+  margin-bottom: 16px; overflow-wrap: break-word;
+}
+.silo-hero__intro {
+  font-size: 16.5px; color: rgba(240,237,232,.62); line-height: 1.7;
+  margin-bottom: 28px; max-width: 500px; overflow-wrap: break-word;
+}
+.silo-hero__btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+.silo-hero__stats {
+  display: flex; gap: 36px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid;
+  list-style: none;
+}
+.silo-hero__stat { display: flex; flex-direction: column; gap: 3px; }
+.silo-hero__stat-num { font-family: var(--font-display); font-size: 30px; line-height: 1; }
+.silo-hero__stat-lbl { font-size: 12px; color: rgba(240,237,232,.38); letter-spacing: .04em; }
+@media(max-width:640px){ .silo-hero { padding: 48px 0 40px; } }
+</style>

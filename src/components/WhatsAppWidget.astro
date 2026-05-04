@@ -1,0 +1,338 @@
+---
+const WA_NUMBER = '5531991070392';
+const WA_MSG    = encodeURIComponent('Olá! Gostaria de agendar minha aula-avaliação gratuita no Studio Livel.');
+const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
+---
+
+<div id="lv-wa" aria-live="polite">
+
+  <div id="lv-chat" role="dialog" aria-modal="true" aria-label="Chat Studio Livel" aria-hidden="true">
+    <div class="lv-hdr">
+      <div class="lv-av-wrap">
+        <div class="lv-av">SL</div>
+        <span class="lv-dot"></span>
+      </div>
+      <div class="lv-agent">
+        <div class="lv-aname">Studio Livel</div>
+        <div class="lv-astat">Online agora</div>
+      </div>
+      <button id="lv-x" aria-label="Fechar chat">&times;</button>
+    </div>
+
+    <div class="lv-body">
+      <div class="lv-time">Hoje</div>
+      <div class="lv-row">
+        <div class="lv-msg-av" aria-hidden="true">SL</div>
+        <div class="lv-bubble">
+          Olá! 👋 Tudo bem?<br /><br />
+          Quer agendar sua <strong>aula-avaliação gratuita</strong> no Studio Livel?<br /><br />
+          São 50 minutos para descobrir qual modalidade é ideal pra você, sem compromisso.
+        </div>
+      </div>
+    </div>
+
+    <div class="lv-foot">
+      <a class="lv-cta" href={WA_HREF} target="_blank" rel="noopener noreferrer"
+         aria-label="Falar com o Studio Livel no WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.504 3.94 1.39 5.617L0 24l6.545-1.367A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.797 9.797 0 01-5.031-1.388l-.36-.214-3.732.979.997-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z" fill-rule="evenodd"/>
+        </svg>
+        Sim, vamos lá! →
+      </a>
+      <p class="lv-priv">
+        Ao clicar você aceita nossa
+        <a href="/privacidade/" target="_blank">Política de Privacidade</a>
+      </p>
+    </div>
+  </div>
+
+  <button id="lv-fab" aria-label="Falar com o Studio Livel no WhatsApp"
+          aria-expanded="false" aria-controls="lv-chat">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.504 3.94 1.39 5.617L0 24l6.545-1.367A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.797 9.797 0 01-5.031-1.388l-.36-.214-3.732.979.997-3.648-.235-.374A9.786 9.786 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z" fill-rule="evenodd"/>
+    </svg>
+  </button>
+
+</div>
+
+<style>
+#lv-wa {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Chat window */
+#lv-chat {
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,.25);
+  transform: scale(.88) translateY(14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .32s cubic-bezier(.34,1.56,.64,1), opacity .24s ease;
+  transform-origin: bottom right;
+  background: #fff;
+}
+#lv-chat.lv-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header */
+.lv-hdr {
+  background: #1a7fe8;
+  padding: 14px 14px 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lv-av-wrap { position: relative; flex-shrink: 0; }
+.lv-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff 0%, #e8f4ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 15px;
+  color: #1a7fe8;
+  letter-spacing: -.5px;
+  border: 2px solid rgba(255,255,255,.3);
+}
+.lv-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 12px;
+  height: 12px;
+  background: #4ade80;
+  border-radius: 50%;
+  border: 2px solid #1a7fe8;
+}
+.lv-agent { flex: 1; min-width: 0; }
+.lv-aname {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lv-astat { color: rgba(255,255,255,.82); font-size: 12px; margin-top: 3px; }
+#lv-x {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+#lv-x:hover { background: rgba(255,255,255,.32); }
+#lv-x:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Chat body */
+.lv-body {
+  background: #ece5dd;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lv-time {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  background: rgba(255,255,255,.6);
+  padding: 3px 10px;
+  border-radius: 20px;
+  align-self: center;
+}
+.lv-row { display: flex; align-items: flex-end; gap: 8px; }
+.lv-msg-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a7fe8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 10px;
+  color: #fff;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+.lv-bubble {
+  background: #fff;
+  border-radius: 0 12px 12px 12px;
+  padding: 11px 13px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #2a2a2a;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  max-width: calc(100% - 40px);
+}
+
+/* Footer */
+.lv-foot {
+  padding: 14px 16px 16px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+}
+.lv-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25d366;
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background .2s, transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.lv-cta:hover { background: #1ebe5c; transform: translateY(-1px); }
+.lv-cta:active { transform: translateY(0); }
+.lv-priv {
+  font-size: 11px;
+  color: #aaa;
+  text-align: center;
+  margin-top: 9px;
+  line-height: 1.4;
+}
+.lv-priv a { color: #1a7fe8; text-decoration: none; }
+.lv-priv a:hover { text-decoration: underline; }
+
+/* FAB */
+#lv-fab {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #25d366;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.55), 0 2px 8px rgba(0,0,0,.15);
+  transition: transform .2s, box-shadow .2s;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+#lv-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(37,211,102,.65), 0 2px 10px rgba(0,0,0,.18);
+}
+#lv-fab:active { transform: scale(.95); }
+#lv-fab:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+#lv-fab::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(37,211,102,.45);
+  animation: lv-pulse 2.4s ease-out infinite;
+}
+@keyframes lv-pulse {
+  0%          { opacity: 1; transform: scale(1); }
+  80%, 100%   { opacity: 0; transform: scale(1.75); }
+}
+
+@media (max-width: 480px) {
+  #lv-wa   { bottom: 16px; right: 16px; gap: 10px; }
+  #lv-fab  { width: 58px; height: 58px; }
+  #lv-chat { width: min(340px, calc(100vw - 32px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lv-chat, #lv-fab, #lv-fab::after, .lv-cta { transition: none; animation: none; }
+}
+</style>
+
+<script is:inline>
+(function () {
+  'use strict';
+
+  var COOKIE = 'lv_wa_v2';
+  var DELAY  = 5000;
+  var TTL    = 10;
+
+  function getCk(n) {
+    var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+  function setCk(n, v, min) {
+    document.cookie = n + '=' + v + ';expires=' + new Date(Date.now() + min * 60000).toUTCString() + ';path=/;SameSite=Lax';
+  }
+
+  function init() {
+    var chat = document.getElementById('lv-chat');
+    var fab  = document.getElementById('lv-fab');
+    var btnX = document.getElementById('lv-x');
+
+    if (!chat || !fab || !btnX) return;
+
+    function open() {
+      chat.classList.add('lv-open');
+      chat.setAttribute('aria-hidden', 'false');
+      fab.setAttribute('aria-expanded', 'true');
+      btnX.focus();
+    }
+    function close() {
+      chat.classList.remove('lv-open');
+      chat.setAttribute('aria-hidden', 'true');
+      fab.setAttribute('aria-expanded', 'false');
+    }
+
+    if (!getCk(COOKIE)) {
+      setTimeout(function () {
+        setCk(COOKIE, '1', TTL);
+        open();
+      }, DELAY);
+    }
+
+    btnX.addEventListener('click', close);
+    fab.addEventListener('click', function () {
+      chat.classList.contains('lv-open') ? close() : open();
+    });
+    document.addEventListener('click', function (e) {
+      var w = document.getElementById('lv-wa');
+      if (w && !w.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+}());
+</script>

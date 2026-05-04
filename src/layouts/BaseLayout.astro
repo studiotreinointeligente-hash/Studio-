@@ -1,0 +1,131 @@
+---
+import SchemaLD from '../components/SchemaLD.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PreFooterCTA from '../components/PreFooterCTA.astro';
+import WhatsAppWidget from '../components/WhatsAppWidget.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  schema?: Record<string, unknown>;
+  andar?: 'roxo' | 'gold' | 'orange' | 'gray' | 'red' | 'none';
+  activePath?: string;
+  lcpImage?: string;
+  ogImage?: string;
+  isYMYL?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  schema,
+  andar = 'none',
+  activePath = '',
+  lcpImage,
+  ogImage = '/images/logos/logo-livel-og.jpg',
+  isYMYL = false,
+} = Astro.props;
+
+const siteUrl = 'https://studiotreinointeligente.com.br';
+const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="color-scheme" content="light" />
+  <!-- Preload LCP image -->
+  {lcpImage && <link rel="preload" as="image" href={lcpImage} fetchpriority="high" />}
+
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Referrer Policy via meta (funciona em todos os browsers) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- X-Frame-Options e X-Content-Type-Options são aplicados via HTTP headers (_headers / vercel.json) -->
+
+  <!-- SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {isYMYL && <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={canonical} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content={fullOg} />
+  <meta property="og:locale"      content="pt_BR" />
+  <meta property="og:site_name"   content="Studio Livel Treino Inteligente" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={fullOg} />
+
+  <!-- Preconnect desnecessário: fontes são self-hosted -->
+  <!-- DNS para WhatsApp (CTA) -->
+  <link rel="dns-prefetch" href="//wa.me" />
+
+  <!-- Schema JSON-LD -->
+  {schema && <SchemaLD schema={schema} />}
+
+  <!-- Fontes self-hosted: @font-face com URLs absolutas (evita resolução relativa à página) -->
+  <style is:global>
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/files/instrument-serif-latin-400-normal.woff2') format('woff2'),
+           url('/files/instrument-serif-latin-400-normal.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/files/instrument-serif-latin-400-italic.woff2') format('woff2'),
+           url('/files/instrument-serif-latin-400-italic.woff') format('woff');
+    }
+  </style>
+
+  <!-- CSS crítico inline + global -->
+  <style is:global>
+    @import '/src/styles/global.css';
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  <Nav andar={andar} activePath={activePath} />
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+  <PreFooterCTA />
+  <Footer />
+  <WhatsAppWidget />
+</body>
+</html>
+
+<style is:global>
+.skip-link {
+  position: absolute; top: -100px; left: 20px;
+  background: var(--roxo); color: #fff; padding: 8px 16px;
+  border-radius: 0 0 var(--r-md) var(--r-md); font-weight: 600; font-size: 14px;
+  text-decoration: none; z-index: 9999; transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+</style>

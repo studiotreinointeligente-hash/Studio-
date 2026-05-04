@@ -1,0 +1,140 @@
+---
+interface Person {
+  emoji: string;   // mantido na interface mas nao exibido
+  title: string;
+  text: string;
+}
+interface Props {
+  items: Person[];
+  andar?: 'roxo' | 'gold' | 'orange' | 'gray' | 'red' | 'none';
+  title?: string;
+  kicker?: string;
+}
+const {
+  items,
+  andar = 'roxo',
+  title = 'Para quem é indicado',
+  kicker = 'Público-alvo',
+} = Astro.props;
+
+const accent    = { roxo:'var(--roxo)', gold:'var(--gold)', orange:'var(--orange)', gray:'var(--gray)', red:'var(--red)', none:'var(--roxo)' }[andar];
+const accentBg  = { roxo:'var(--roxo-dim)', gold:'var(--gold-dim)', orange:'var(--orange-dim)', gray:'var(--gray-dim)', red:'var(--red-dim)', none:'var(--roxo-dim)' }[andar];
+---
+
+<section class="car-section" aria-labelledby="car-heading">
+  <div class="wrap car-inner" role="region" aria-label={title}>
+    <p class="car-kicker" style={`color:${accent}`}>{kicker}</p>
+    <h2 id="car-heading" class="car-title">{title}</h2>
+    <ul class="car-track" role="list">
+      {items.map((item, i) => (
+        <li class="car-item">
+          <div class="car-card" style={`--ca:${accent};--cab:${accentBg}`}>
+            <div class="car-card__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+            <h3 class="car-card__title">{item.title}</h3>
+            <p class="car-card__text">{item.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="car-hint" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      deslize para ver mais
+    </p>
+  </div>
+</section>
+
+
+<style>
+.car-section { padding: 64px 0 48px; background: #F8F5F0; }
+
+.car-kicker {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.car-title {
+  font-family: var(--font-display); font-size: clamp(22px, 3vw, 34px);
+  font-weight: 400; color: var(--text); line-height: 1.15; margin-bottom: 32px;
+}
+
+/* ── Desktop + Tablet: grid dentro do .wrap (mesma largura das outras secoes) ── */
+.car-inner { /* herda max-width:1100px e padding:0 32px do .wrap global */ }
+
+.car-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  list-style: none;
+}
+.car-item { width: 100%; }
+
+@media (max-width: 900px) {
+  .car-track { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Mobile: carrossel horizontal com overflow do .wrap ── */
+@media (max-width: 580px) {
+  /*
+    overflow-x: clip → clipa visual sem criar scroll-container pai.
+    Isso impede que iOS Safari intercepte os swipes antes de chegarem
+    no .car-track filho que tem overflow-x: auto.
+  */
+  .car-inner {
+    overflow-x: clip;   /* clip visual, sem scroll container */
+    overflow-y: visible;
+    padding-right: 0;
+  }
+  .car-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+    padding-right: 18px;
+    padding-left: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 14px;
+    /* Garante que o browser entenda que este elemento faz pan horizontal */
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch; /* momentum scroll no iOS */
+    cursor: grab;
+  }
+  .car-track:active { cursor: grabbing; }
+  .car-track::-webkit-scrollbar { display: none; }
+  .car-item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    width: 82vw;
+  }
+}
+
+.car-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-top: 3px solid var(--ca);
+  border-radius: var(--r-lg);
+  padding: 28px 22px 24px;
+  height: 100%;
+  transition: box-shadow .2s, transform .2s;
+}
+.car-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.car-card__num {
+  font-family: var(--font-display); font-size: 36px; font-weight: 400;
+  color: var(--ca); line-height: 1; margin-bottom: 14px; opacity: .35;
+}
+.car-card__title {
+  font-size: 16px; font-weight: 700;
+  color: var(--text); line-height: 1.3; margin-bottom: 10px;
+}
+.car-card__text {
+  font-size: 14px; color: var(--text-dim); line-height: 1.65;
+}
+
+.car-hint {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text-faint);
+  margin-top: 14px; padding-left: 2px;
+}
+@media (min-width: 900px) { .car-hint { display: none; } }
+</style>

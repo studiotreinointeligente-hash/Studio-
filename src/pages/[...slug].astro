@@ -1,0 +1,540 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiloHero from '../components/SiloHero.astro';
+import FAQSection from '../components/FAQSection.astro';
+import BairrosMap from '../components/BairrosMap.astro';
+import BreadcrumbNav from '../components/BreadcrumbNav.astro';
+import PeopleCarousel from '../components/PeopleCarousel.astro';
+import { siloData } from '../data/siloData';
+
+type PageEntry =
+  | CollectionEntry<'pilates'> | CollectionEntry<'musculacao'>
+  | CollectionEntry<'funcional'> | CollectionEntry<'yoga'>
+  | CollectionEntry<'krav-maga'> | CollectionEntry<'tier0'>
+  | CollectionEntry<'tier2'> | CollectionEntry<'outer'>;
+
+// Imagens por modalidade — foco em público feminino, imagens específicas por prática
+const modalImages: Record<string, string> = {
+  musculacao:  '/images/modalidades/musculacao-mulher.webp',  // mulher fazendo press com halteres
+  pilates:     '/images/modalidades/pilates-turma.webp',      // turma feminina de pilates mat em estúdio
+  funcional:   '/images/modalidades/funcional-mulher.webp',   // mulher em treino funcional em grupo
+  yoga:        '/images/modalidades/yoga3.webp',              // mulher em postura de meditação
+  'krav-maga': '/images/modalidades/krav-maga-treino.webp',   // mulher golpeando saco de boxe
+  geral:       '/images/banner/fachada-banner.webp',
+};
+
+// H1 curto para exibicao (SEO title longo permanece em <title>)
+function getDisplayH1(h1: string): string {
+  const beforeColon = h1.split(':')[0].trim();
+  return beforeColon.length > 60 ? beforeColon.slice(0, 58) + '...' : beforeColon;
+}
+
+export async function getStaticPaths() {
+  // Páginas com arquivo dedicado em src/pages/ — não gerar via slug dinâmico
+  const CUSTOM_PAGES = new Set(['/contato/']);
+  const cols = ['pilates','musculacao','funcional','yoga','krav-maga','tier0','tier2','outer'] as const;
+  const paths = [];
+  for (const col of cols) {
+    const entries = await getCollection(col);
+    for (const entry of entries) {
+      const slug = entry.data.urlPath.replace(/^\/|\/$/g,'');
+      if (!slug) continue;
+      if (CUSTOM_PAGES.has(entry.data.urlPath)) continue;
+      paths.push({ params: { slug }, props: { entry } });
+    }
+  }
+  return paths;
+}
+
+const { entry } = Astro.props as { entry: PageEntry };
+const { Content } = await entry.render();
+const d = entry.data;
+
+// FAQ do schema
+let faqItems: Array<{ question: string; answer: string }> = [];
+const graph = (d.schema as any)?.['@graph'];
+if (Array.isArray(graph)) {
+  const node = graph.find((n: any) => n['@type'] === 'FAQPage');
+  if (node?.mainEntity) {
+    faqItems = node.mainEntity.map((q: any) => ({
+      question: q.name || '',
+      answer: q.acceptedAnswer?.text || '',
+    }));
+  }
+}
+
+// Landing page: APENAS as pilar pages do menu principal
+// Tudo o mais (hub, bairro, subpublico, educacional, tier0, tier2, outer) = blog
+const isSiloPage   = d.type === 'pilar';
+const isContentPage = isSiloPage;
+const isPilarOrHub  = d.type === 'pilar';
+const isBairro      = false;
+const isBlogPage    = !isSiloPage;
+
+// Dobra 2 com conteudo expandivel em todas as paginas pilar
+const hasInlineExpand = d.type === 'pilar';
+
+const imgSrc = modalImages[d.modalidade] || modalImages.geral;
+const sData = siloData[d.modalidade];
+
+// H1 curto para display (sem colon e subtitulo)
+const displayH1 = getDisplayH1(d.h1 || d.title);
+
+// Breadcrumb com label curto
+const shortBreadcrumb = d.breadcrumb.map((b, i) =>
+  i === d.breadcrumb.length - 1 ? { ...b, name: displayH1 } : b
+);
+
+// Cor do andar
+const andarCor = d.andar === 'none' ? 'roxo' : (d.andar as 'roxo' | 'gold' | 'orange' | 'gray' | 'red');
+const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--orange)', gray: 'var(--gray)', red: 'var(--red)' }[andarCor];
+---
+
+<BaseLayout
+  title={d.title}
+  description={d.description}
+  canonical={d.canonical}
+  schema={d.schema}
+  andar={d.andar}
+  activePath={`/${d.urlPath.replace(/^\/|\/$/g,'')}/`}
+  lcpImage={isContentPage ? imgSrc : undefined}
+  isYMYL={d.isYMYL}
+>
+  {isContentPage ? (
+    <>
+      {/* ── DOBRA 1: HERO ─────────────────────────────── */}
+      <SiloHero
+        overline={sData?.overline || (d.modalidade + ' · Studio Livel')}
+        h1={displayH1}
+        intro={sData?.heroIntroShort || d.description}
+        andar={andarCor}
+        imageSrc={imgSrc}
+        imageAlt={displayH1}
+        stats={sData?.stats || []}
+        ctaHref="/aula-avaliacao/"
+        ctaLabel={sData?.ctaLabel || 'Agendar Aula-Avaliacao'}
+      />
+
+      <div class="silo-body">
+
+        {/* ── DOBRA 2: SUMARIO ─────────────────────────── */}
+        <section class="dobra-sumario" aria-label="Resumo da pagina">
+          <div class="wrap">
+            <BreadcrumbNav items={shortBreadcrumb} />
+            {d.isYMYL && (
+              <div class="ymyl-banner">
+                <strong>Aviso medico:</strong> As informacoes desta pagina sao de carater informativo.
+                Consulte um profissional de saude antes de iniciar qualquer pratica fisica em contexto clinico.
+              </div>
+            )}
+
+            {hasInlineExpand ? (
+              /* ── VERSAO NOVA (musculacao pilar): sumario com fade + ver mais ── */
+              <div class="fade-expand-wrap">
+                <div class="fade-expand" id="fade-expand">
+                  <div class="fade-expand__prose prose">
+                    <Content />
+                  </div>
+                  <div class="fade-expand__veil" aria-hidden="true"></div>
+                </div>
+                <button class="fade-expand__btn" id="fade-expand-btn" type="button">
+                  <span>Ver mais</span>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              /* ── VERSAO PADRAO: so a description destacada ── */
+              d.description && (
+                <p class="dobra-sumario__text">{d.description}</p>
+              )
+            )}
+          </div>
+        </section>
+
+        {/* ── DOBRA 3: O QUE E (so pilar) ──────────────── */}
+        {isPilarOrHub && sData?.whatIsCards && (
+          <section class="dobra-whatis" aria-labelledby="whatis-heading" style={`--dobra-accent:${accentColor}`}>
+            <div class="wrap">
+              <p class="dobra-kicker" style={`color:${accentColor}`}>O que e</p>
+              <h2 id="whatis-heading" class="dobra-h2">{sData.whatIsTitle}</h2>
+              <ul class="what-grid" role="list">
+                {sData.whatIsCards.map(card => (
+                  <li class="what-card">
+                    <div class="what-card__icon" style={`background:${accentColor}18`} aria-hidden="true">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke={accentColor} stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d={card.icon} />
+                      </svg>
+                    </div>
+                    <h3 class="what-card__title">{card.title}</h3>
+                    <p class="what-card__text">{card.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        {/* ── DOBRA 4: COMO FUNCIONA ────────────────────── */}
+        {isPilarOrHub && sData?.howSteps && (
+          <section class="dobra-how" aria-labelledby="how-heading">
+            <div class="wrap dobra-how__inner">
+              <div class="dobra-how__text">
+                <p class="dobra-kicker" style={`color:${accentColor}`}>Metodo Livel</p>
+                <h2 id="how-heading" class="dobra-h2">{sData.howTitle}</h2>
+                <ol class="how-steps" role="list">
+                  {sData.howSteps.map(step => (
+                    <li class="how-step">
+                      <span class="how-step__num" style={`color:${accentColor}`}>{step.num}</span>
+                      <div>
+                        <strong class="how-step__title">{step.title}</strong>
+                        <p class="how-step__text">{step.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div class="dobra-how__img" aria-hidden="true">
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
+                    sizes="(max-width:900px) 100vw, 50vw"
+                  />
+                  <source
+                    type="image/webp"
+                    srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
+                    sizes="(max-width:900px) 100vw, 50vw"
+                  />
+                  <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── DOBRA 5: CARROSSEL PARA QUEM E ───────────── */}
+        {(isPilarOrHub || isBairro) && sData?.forWhom && (
+          <div class="dobra-carousel-wrap" style={`--dobra-accent:${accentColor}`}>
+            <PeopleCarousel
+              items={sData.forWhom}
+              andar={andarCor}
+              title={sData.forWhomTitle}
+              kicker="Para quem e indicado"
+            />
+          </div>
+        )}
+
+        {/* ── DOBRA 6: MAPA DE BAIRROS ─────────────────── */}
+        {isPilarOrHub && sData?.bairros && sData.bairros.length > 0 && (
+          <BairrosMap
+            bairros={sData.bairros}
+            andar={andarCor}
+            modalidade={d.modalidade}
+          />
+        )}
+
+        {/* ── DOBRA 7: FAQ ──────────────────────────────── */}
+        {faqItems.length > 0 && (
+          <div class="dobra-faq-wrap">
+            <div class="wrap">
+              <FAQSection items={faqItems} andar={andarCor} />
+            </div>
+          </div>
+        )}
+
+        {/* CTA global gerenciado pelo PreFooterCTA no BaseLayout */}
+
+        {/* ── DOBRA 9: CONTEUDO SEO EXPANDIVEL (nao aparece quando inline expand ativo) ── */}
+        {!hasInlineExpand && (
+          <div class="dobra-seo">
+            <div class="wrap">
+              <details class="seo-expand">
+                <summary class="seo-expand__summary">
+                  <span>Leia mais sobre {displayH1}</span>
+                  <span class="seo-expand__icon" aria-hidden="true"></span>
+                </summary>
+                <div class="seo-expand__body prose">
+                  <Content />
+                </div>
+              </details>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </>
+  ) : isBlogPage ? (
+    /* ── PAGINAS DE BLOG / EDUCACIONAIS — layout de artigo ── */
+    <div class="blog-article-page">
+      <header class="blog-article-header">
+        <div class="wrap">
+          <p class="blog-article-modal" style={`color:${accentColor}`}>
+            {d.modalidade === 'krav-maga' ? 'Krav Maga' : d.modalidade.charAt(0).toUpperCase() + d.modalidade.slice(1)}
+          </p>
+          <h1 class="blog-article-h1">{displayH1}</h1>
+          {d.description && <p class="blog-article-desc">{d.description}</p>}
+        </div>
+      </header>
+      <div class="wrap blog-article-body">
+        <BreadcrumbNav items={shortBreadcrumb} />
+        <div class="prose"><Content /></div>
+        {faqItems.length > 0 && <FAQSection items={faqItems} andar={andarCor} />}
+        <div class="blog-article-cta">
+          <p class="blog-article-cta__text">Quer praticar no Studio Livel?</p>
+          <a href="/aula-avaliacao/" class="btn btn--roxo">Agendar Aula-Avaliacao gratuita</a>
+        </div>
+      </div>
+    </div>
+  ) : (
+    /* ── PAGINAS SIMPLES (tier0, tier2, outer, etc.) ── */
+    <div class="simple-page">
+      <header class="simple-header">
+        <div class="wrap">
+          <h1 class="simple-h1">{displayH1}</h1>
+          {d.description && <p class="simple-desc">{d.description}</p>}
+        </div>
+      </header>
+      <div class="wrap simple-content">
+        <BreadcrumbNav items={shortBreadcrumb} />
+        <div class="prose"><Content /></div>
+        {faqItems.length > 0 && <FAQSection items={faqItems} andar="roxo" />}
+      </div>
+    </div>
+  )}
+</BaseLayout>
+
+{hasInlineExpand && (
+  <script>
+    (function () {
+      var wrap = document.getElementById('fade-expand');
+      var btn  = document.getElementById('fade-expand-btn');
+      if (!wrap || !btn) return;
+      var veil = wrap.querySelector('.fade-expand__veil');
+      btn.addEventListener('click', function () {
+        var prose = wrap.querySelector('.fade-expand__prose');
+        wrap.style.transition = 'max-height 0.45s ease';
+        wrap.style.maxHeight  = prose.scrollHeight + 'px';
+        if (veil) veil.style.opacity = '0';
+        btn.style.display = 'none';
+        setTimeout(function () {
+          wrap.style.maxHeight = 'none';
+          wrap.style.overflow  = 'visible';
+        }, 470);
+      });
+    })();
+  </script>
+)}
+
+<style>
+/* ── Dobra geral ──────────────────────────────────── */
+.silo-body { background: #fff; }
+.dobra-kicker { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.dobra-h2 { font-family: var(--font-display); font-size: clamp(22px,2.8vw,34px); font-weight: 400; color: var(--text); margin-bottom: 32px; line-height: 1.15; }
+
+/* ── Dobra 2: sumario ─────────────────────────────── */
+.dobra-sumario { padding: 36px 0 0; }
+.dobra-sumario__text {
+  font-size: 16.5px; font-weight: 500; color: var(--text);
+  border-left: 4px solid var(--gold); padding: 18px 24px;
+  background: var(--gold-dim); border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  margin: 0 0 24px; line-height: 1.78; max-width: 820px;
+}
+.ymyl-banner {
+  background: #FFF8E1; border-left: 4px solid #F0A500;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: 12px 18px; font-size: 14px; color: #5C4000;
+  margin-bottom: 20px; line-height: 1.5;
+}
+
+/* ── Dobra 3: O que e ─────────────────────────────── */
+.dobra-whatis { padding: 56px 0; background: var(--surface-subtle, #F2EFE8); }
+.what-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; list-style: none; }
+.what-card { background: #fff; border-radius: var(--r-lg); padding: 24px 20px; border-top: 3px solid var(--dobra-accent); transition: box-shadow .2s, transform .2s; }
+.what-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.what-card__icon { width: 46px; height: 46px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.what-card__title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 7px; line-height: 1.3; }
+.what-card__text  { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; }
+@media (max-width: 900px) { .what-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .what-grid { grid-template-columns: 1fr; } }
+
+/* ── Dobra 4: Como funciona ───────────────────────── */
+.dobra-how { padding: 64px 0; background: #fff; }
+.dobra-how__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.how-steps { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+.how-step { display: flex; gap: 16px; align-items: flex-start; }
+.how-step__num { font-family: var(--font-display); font-size: 28px; font-weight: 400; line-height: 1; flex-shrink: 0; min-width: 40px; }
+.how-step__title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; display: block; }
+.how-step__text  { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+.dobra-how__img {
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  max-height: 480px;
+}
+.dobra-how__img img {
+  width: 100%; height: 480px;
+  object-fit: cover; object-position: center top;
+}
+@media (max-width: 860px) { .dobra-how__inner { grid-template-columns: 1fr; gap: 36px; } .dobra-how__img { order: -1; max-height: 300px; } }
+
+/* ── Dobra 5: Carrossel ───────────────────────────── */
+.dobra-carousel-wrap { background: var(--surface-subtle, #F2EFE8); }
+
+/* ── Dobra 6: Bairros ─────────────────────────────── */
+.dobra-bairros { padding: 56px 0; background: #fff; border-top: 1px solid var(--border); }
+.bairros-grid { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.bairro-pill {
+  display: inline-block; padding: 8px 18px; border-radius: 9999px;
+  border: 1.5px solid var(--border-strong); background: #fff;
+  font-size: 14px; font-weight: 500; color: var(--text-dim);
+  text-decoration: none; transition: all .15s;
+}
+.bairro-pill:hover { border-color: var(--pill-accent); color: var(--pill-accent); background: color-mix(in srgb, var(--pill-accent) 8%, white); }
+
+/* ── Dobra 7: FAQ ─────────────────────────────────── */
+.dobra-faq-wrap { background: var(--surface-subtle, #F2EFE8); padding: 8px 0; }
+
+/* ── Dobra 8: CTA ─────────────────────────────────── */
+.dobra-cta {
+  background: var(--roxo-dark, #3D1540);
+  padding: 64px 0;
+  position: relative; overflow: hidden;
+}
+.dobra-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.dobra-cta__inner { position: relative; z-index: 1; max-width: 620px; }
+.dobra-cta__title { font-family: var(--font-display); font-size: clamp(24px,3.5vw,42px); font-weight: 400; color: #F0EDE8; margin-bottom: 12px; line-height: 1.1; }
+.dobra-cta__sub { font-size: 15.5px; color: rgba(240,237,232,.58); line-height: 1.7; margin-bottom: 28px; }
+.dobra-cta__btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ── Dobra 9: SEO expandivel ──────────────────────── */
+.dobra-seo { background: #F9F7F4; border-top: 1px solid var(--border); padding: 0; }
+.seo-expand { border: none; background: transparent; }
+.seo-expand__summary {
+  padding: 20px 0; list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  font-size: 15px; font-weight: 600; color: var(--text-dim);
+  transition: color .15s; user-select: none; border-bottom: 1px solid transparent;
+}
+.seo-expand__summary::-webkit-details-marker { display: none; }
+.seo-expand[open] .seo-expand__summary { color: var(--text); border-bottom-color: var(--border); margin-bottom: 28px; }
+.seo-expand__icon {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  position: relative; transition: transform .2s;
+}
+.seo-expand__icon::before, .seo-expand__icon::after {
+  content: ''; position: absolute; background: var(--text-dim); border-radius: 1px;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+.seo-expand__icon::before { width: 10px; height: 1.5px; }
+.seo-expand__icon::after  { width: 1.5px; height: 10px; transition: opacity .2s; }
+details[open] .seo-expand__icon::after { opacity: 0; }
+.seo-expand__body { padding-bottom: 48px; }
+
+/* ── Paginas simples ──────────────────────────────── */
+.simple-page { background: #fff; }
+.simple-header { background: var(--surface-subtle); border-bottom: 1px solid var(--border); padding: 40px 0 32px; }
+.simple-h1 { font-family: var(--font-display); font-size: clamp(24px,3vw,38px); font-weight: 400; color: var(--text); margin-bottom: 8px; }
+.simple-desc { font-size: 16px; color: var(--text-dim); max-width: 580px; line-height: 1.65; }
+.simple-content { padding: 32px 0 64px; max-width: 820px; }
+
+/* ── Breadcrumb position ──────────────────────────── */
+.dobra-sumario .breadcrumb-nav { margin-bottom: 20px; }
+
+/* ── Fade expand — sumario musculacao pilar ───────── */
+.fade-expand-wrap { margin-bottom: 28px; }
+
+.fade-expand {
+  position: relative;
+  max-height: 120px;
+  overflow: hidden;
+}
+
+.fade-expand__veil {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 72px;
+  background: linear-gradient(to bottom, transparent, #fff);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Remove card styling do summarization neste contexto */
+.fade-expand :global(p.summarization) {
+  border-left: none;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.78;
+  color: var(--text);
+  margin: 0;
+}
+
+.fade-expand__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--roxo, #5B2D8B);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+.fade-expand__btn:hover { opacity: 0.6; }
+
+/* ── Garantir cores corretas em textos (forca light) ── */
+.silo-body, .seo-expand__body, .simple-content, .blog-article-body {
+  color: var(--text);
+}
+.silo-body strong, .seo-expand__body strong,
+.simple-content strong, .blog-article-body strong,
+.prose strong { color: var(--text) !important; }
+
+.seo-expand__body .prose p,
+.seo-expand__body .prose li { color: var(--text-dim); }
+.seo-expand__body .prose h2,
+.seo-expand__body .prose h3 { color: var(--text); }
+
+/* ── Blog Article ─────────────────────────────────── */
+.blog-article-page { background: #fff; min-height: 60vh; }
+.blog-article-header {
+  background: #F8F5F0;
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0 36px;
+}
+.blog-article-modal {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.blog-article-h1 {
+  font-family: var(--font-display); font-size: clamp(26px,3.5vw,42px);
+  font-weight: 400; color: var(--text); margin-bottom: 12px; line-height: 1.1;
+}
+.blog-article-desc {
+  font-size: 16px; color: var(--text-dim); max-width: 620px;
+  line-height: 1.65;
+}
+.blog-article-body { padding: 36px 0 64px; max-width: 820px; }
+.blog-article-cta {
+  margin-top: 48px; padding: 32px 36px;
+  background: #F8F5F0; border-radius: var(--r-xl);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.blog-article-cta__text { font-size: 17px; font-weight: 600; color: var(--text); }
+</style>

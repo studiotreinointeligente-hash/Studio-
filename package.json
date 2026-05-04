@@ -1,0 +1,28 @@
+{
+  "name": "studio-livel-treino-inteligente",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "convert": "node scripts/convert-content.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.2.4",
+    "@astrojs/partytown": "^2.1.7",
+    "@astrojs/sitemap": "^3.3.0",
+    "@fontsource-variable/dm-sans": "^5.2.8",
+    "@fontsource/instrument-serif": "^5.2.8",
+    "@playform/compress": "^0.2.3",
+    "astro": "^5.7.13",
+    "astro-icon": "^1.1.5",
+    "leaflet": "^1.9.4",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21",
+    "typescript": "^5.7.3"
+  }
+}

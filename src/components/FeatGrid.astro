@@ -1,0 +1,68 @@
+---
+export interface FeatItem {
+  icon?: string;   // SVG path data
+  title: string;
+  text: string;
+  tag?: string;
+}
+interface Props {
+  items: FeatItem[];
+  andar?: 'roxo' | 'gold' | 'orange' | 'gray' | 'red';
+}
+const { items, andar = 'roxo' } = Astro.props;
+const cardClass = { roxo: 'feat-card--roxo', gold: 'feat-card--gold', orange: 'feat-card--orange', gray: 'feat-card--gray', red: 'feat-card--red' }[andar];
+const tagClass  = { roxo: 'feat-tag--roxo',  gold: 'feat-tag--gold',  orange: 'feat-tag--orange',  gray: 'feat-tag--gray',  red: 'feat-tag--red'  }[andar];
+const iconClass = { roxo: 'feat-icon--roxo', gold: 'feat-icon--gold', orange: 'feat-icon--orange', gray: 'feat-icon--gray', red: 'feat-icon--red' }[andar];
+---
+
+<ul class="feat-grid" role="list">
+  {items.map((item) => (
+    <li class={`feat-card ${cardClass} anim`}>
+      {item.icon && (
+        <div class={`feat-icon ${iconClass}`} aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d={item.icon} />
+          </svg>
+        </div>
+      )}
+      <h3 class="feat-title">{item.title}</h3>
+      <p class="feat-text">{item.text}</p>
+      {item.tag && <span class={`feat-tag ${tagClass}`}>{item.tag}</span>}
+    </li>
+  ))}
+</ul>
+
+<style>
+.feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; list-style: none; }
+.feat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: 24px; border-top: 3px solid; min-width: 0;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.feat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.feat-card--roxo   { border-top-color: var(--roxo); }
+.feat-card--gold   { border-top-color: var(--gold); }
+.feat-card--orange { border-top-color: var(--orange); }
+.feat-card--gray   { border-top-color: var(--gray); }
+.feat-card--red    { border-top-color: var(--red); }
+.feat-icon { width: 42px; height: 42px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.feat-icon--roxo   { background: var(--roxo-dim); }
+.feat-icon--gold   { background: var(--gold-dim); }
+.feat-icon--orange { background: var(--orange-dim); }
+.feat-icon--gray   { background: var(--gray-dim); }
+.feat-icon--red    { background: var(--red-dim); }
+.feat-icon svg { width: 20px; height: 20px; }
+.feat-icon--roxo   svg { stroke: var(--roxo); }
+.feat-icon--gold   svg { stroke: var(--gold-dark); }
+.feat-icon--orange svg { stroke: var(--orange-dark); }
+.feat-icon--gray   svg { stroke: var(--gray-dark); }
+.feat-icon--red    svg { stroke: var(--red-dark); }
+.feat-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.3; overflow-wrap: break-word; }
+.feat-text  { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; overflow-wrap: break-word; }
+.feat-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 10px; border-radius: 9999px; }
+.feat-tag--roxo   { background: var(--roxo-dim); color: var(--roxo); }
+.feat-tag--gold   { background: var(--gold-dim); color: var(--gold-dark); }
+.feat-tag--orange { background: var(--orange-dim); color: var(--orange-dark); }
+.feat-tag--gray   { background: var(--gray-dim); color: var(--gray-dark); }
+.feat-tag--red    { background: var(--red-dim); color: var(--red-dark); }
+</style>

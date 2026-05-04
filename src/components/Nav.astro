@@ -1,0 +1,333 @@
+---
+interface Props {
+  andar?: 'roxo' | 'gold' | 'orange' | 'gray' | 'red' | 'none';
+  activePath?: string;
+}
+const { andar = 'none', activePath = '' } = Astro.props;
+const accentColor = { roxo:'var(--roxo)', gold:'var(--gold)', orange:'var(--orange)', gray:'var(--gray)', red:'var(--red)', none:'var(--roxo)' }[andar];
+const btnClass = { roxo:'btn--roxo', gold:'btn--gold', orange:'btn--orange', gray:'btn--gray', red:'btn--red', none:'btn--roxo' }[andar];
+
+const modalidades = [
+  { href:'/musculacao/',      label:'Musculação' },
+  { href:'/pilates/',         label:'Pilates' },
+  { href:'/treino-funcional/',label:'Funcional' },
+  { href:'/yoga/',            label:'Yoga' },
+  { href:'/krav-maga/',       label:'Krav Magá' },
+];
+
+const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) || activePath === '/modalidades/';
+---
+<header class="site-nav" role="banner">
+  <div class="wrap nav-inner">
+
+    <a href="/" class="nav-logo" aria-label="Studio Livel Treino Inteligente — Prado, Belo Horizonte">
+      <img
+        src="/images/logos/logo-livel-studio-clara.png"
+        alt="Studio Livel — academia de treino inteligente em Prado, BH"
+        width="110"
+        height="110"
+        loading="eager"
+        decoding="async"
+        class="nav-logo-img"
+      />
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <ul class="nav-links" role="list">
+
+        <li>
+          <a href="/"
+            class={activePath==='/'?'is-active':''}
+            aria-current={activePath==='/'?'page':undefined}
+            style={activePath==='/'?`color:${accentColor}`:''}>
+            Início
+          </a>
+        </li>
+
+        <li>
+          <a href="/quem-somos/"
+            class={activePath==='/quem-somos/'?'is-active':''}
+            aria-current={activePath==='/quem-somos/'?'page':undefined}
+            style={activePath==='/quem-somos/'?`color:${accentColor}`:''}>
+            Quem Somos
+          </a>
+        </li>
+
+        <li class="nav-dropdown">
+          <button
+            class={`nav-dropdown__trigger${isModalidadeActive?' is-active':''}`}
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            style={isModalidadeActive?`color:${accentColor}`:''}
+            type="button">
+            Modalidades
+            <svg class="nav-dropdown__chevron" width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+              <path d="M2 3.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="nav-dropdown__menu" role="listbox">
+            <li class="nav-dropdown__ver-todas">
+              <a href="/modalidades/"
+                class={activePath==='/modalidades/'?'is-active':''}
+                aria-current={activePath==='/modalidades/'?'page':undefined}
+                style={activePath==='/modalidades/'?`color:${accentColor}`:''}
+              >
+                Ver todas as modalidades
+              </a>
+            </li>
+            <li class="nav-dropdown__divider" role="separator" aria-hidden="true"></li>
+            {modalidades.map(m => (
+              <li>
+                <a href={m.href}
+                  class={activePath.startsWith(m.href)?'is-active':''}
+                  aria-current={activePath.startsWith(m.href)?'page':undefined}
+                  style={activePath.startsWith(m.href)?`color:${accentColor}`:''}>
+                  {m.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+
+        <li>
+          <a href="/blog/"
+            class={activePath.startsWith('/blog/')?'is-active':''}
+            aria-current={activePath.startsWith('/blog/')?'page':undefined}
+            style={activePath.startsWith('/blog/')?`color:${accentColor}`:''}>
+            Blog
+          </a>
+        </li>
+
+        <li>
+          <a href="/contato/"
+            class={activePath==='/contato/'?'is-active':''}
+            aria-current={activePath==='/contato/'?'page':undefined}
+            style={activePath==='/contato/'?`color:${accentColor}`:''}>
+            Contato
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="tel:+5531988451387" class="nav-phone">(31) 98845-1387</a>
+      <a href="/aula-avaliacao/" class={`btn ${btnClass} btn--sm`}>Agendar Aula</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-mobile">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="nav-mobile" class="nav-mobile" hidden>
+    <ul role="list">
+      <li>
+        <a href="/"
+          aria-current={activePath==='/'?'page':undefined}
+          style={activePath==='/'?`color:${accentColor};font-weight:700`:''}>
+          Início
+        </a>
+      </li>
+      <li>
+        <a href="/quem-somos/"
+          aria-current={activePath==='/quem-somos/'?'page':undefined}
+          style={activePath==='/quem-somos/'?`color:${accentColor};font-weight:700`:''}>
+          Quem Somos
+        </a>
+      </li>
+      <li class="nav-mobile-group">
+        <a href="/modalidades/"
+          class="nav-mobile-group__label"
+          aria-current={activePath==='/modalidades/'?'page':undefined}
+          style={isModalidadeActive?`color:${accentColor};font-weight:700`:''}>
+          Modalidades
+        </a>
+        <ul class="nav-mobile-group__list" role="list">
+          {modalidades.map(m => (
+            <li>
+              <a href={m.href}
+                aria-current={activePath.startsWith(m.href)?'page':undefined}
+                style={activePath.startsWith(m.href)?`color:${accentColor};font-weight:700`:''}>
+                {m.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </li>
+      <li>
+        <a href="/blog/"
+          aria-current={activePath.startsWith('/blog/')?'page':undefined}
+          style={activePath.startsWith('/blog/')?`color:${accentColor};font-weight:700`:''}>
+          Blog
+        </a>
+      </li>
+      <li>
+        <a href="/contato/"
+          aria-current={activePath==='/contato/'?'page':undefined}
+          style={activePath==='/contato/'?`color:${accentColor};font-weight:700`:''}>
+          Contato
+        </a>
+      </li>
+    </ul>
+    <div style="margin-top:18px">
+      <a href="/aula-avaliacao/" class={`btn ${btnClass}`}>Agendar Aula Grátis</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile toggle
+  const t = document.querySelector('.nav-toggle') as HTMLButtonElement | null;
+  const m = document.getElementById('nav-mobile');
+  if (t && m) {
+    t.addEventListener('click', () => {
+      const open = t.getAttribute('aria-expanded') === 'true';
+      t.setAttribute('aria-expanded', String(!open));
+      m.hidden = open;
+    });
+  }
+
+  // Dropdown desktop
+  const trigger = document.querySelector('.nav-dropdown__trigger') as HTMLButtonElement | null;
+  const dropdown = document.querySelector('.nav-dropdown') as HTMLElement | null;
+
+  if (trigger && dropdown) {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!expanded));
+      dropdown.classList.toggle('is-open', !expanded);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target as Node)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+        trigger.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+.site-nav { position:sticky; top:0; z-index:2000; background:#fff; border-bottom:1px solid rgba(81,77,66,.10); box-shadow:0 1px 8px rgba(0,0,0,.06); }
+.nav-inner { height:68px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+
+/* Logo */
+.nav-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
+.nav-logo-img { height:52px; width:auto; display:block; }
+
+/* Links base */
+.nav-links { display:flex; gap:24px; list-style:none; align-items:center; }
+nav ul a {
+  font-size:13.5px; font-weight:500; color:var(--text-dim);
+  text-decoration:none; transition:color .15s;
+  padding:4px 0; position:relative;
+}
+nav ul a:hover { color:var(--text); }
+nav ul a.is-active::after {
+  content:''; position:absolute; bottom:-2px; left:0; right:0;
+  height:2px; border-radius:1px; background:currentColor;
+}
+
+/* Dropdown trigger */
+.nav-dropdown { position:relative; }
+.nav-dropdown__trigger {
+  font-size:13.5px; font-weight:500; color:var(--text-dim);
+  background:none; border:none; cursor:pointer;
+  display:flex; align-items:center; gap:5px;
+  padding:4px 0; position:relative;
+  transition:color .15s; font-family:inherit;
+}
+.nav-dropdown__trigger:hover { color:var(--text); }
+.nav-dropdown__trigger.is-active::after {
+  content:''; position:absolute; bottom:-2px; left:0; right:100%;
+  height:2px; border-radius:1px; background:currentColor;
+  animation: none;
+}
+.nav-dropdown__trigger.is-active::after { right:0; }
+.nav-dropdown__chevron { transition:transform .2s; flex-shrink:0; }
+.nav-dropdown.is-open .nav-dropdown__chevron { transform:rotate(180deg); }
+
+/* Dropdown menu */
+.nav-dropdown__menu {
+  display:none;
+  flex-direction:column; gap:0;
+  position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  background:#fff; border:1px solid var(--border);
+  border-radius:var(--r-lg,12px); box-shadow:0 8px 32px rgba(0,0,0,.12);
+  list-style:none; min-width:176px; padding:10px 0 6px;
+  z-index:200; margin-top:8px;
+}
+.nav-dropdown.is-open .nav-dropdown__menu { display:flex; }
+.nav-dropdown__menu::before {
+  content:''; position:absolute; top:-5px; left:50%; transform:translateX(-50%) rotate(45deg);
+  width:10px; height:10px; background:#fff;
+  border-left:1px solid var(--border); border-top:1px solid var(--border);
+}
+.nav-dropdown__menu li a {
+  display:block; padding:9px 20px;
+  font-size:13.5px; font-weight:500; color:var(--text-dim);
+  text-decoration:none; transition:color .12s, background .12s;
+  position:static;
+}
+.nav-dropdown__menu li a::after { display:none; }
+.nav-dropdown__menu li a:hover { color:var(--text); background:var(--surface-subtle,#F2EFE8); }
+.nav-dropdown__menu li a.is-active { font-weight:700; }
+.nav-dropdown__ver-todas a { font-weight:600; font-size:13px; }
+.nav-dropdown__divider { height:1px; background:var(--border); margin:4px 12px; }
+
+/* Actions */
+.nav-actions { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.nav-phone { font-size:12.5px; color:var(--text-faint); text-decoration:none; white-space:nowrap; }
+.nav-phone:hover { color:var(--text); }
+
+/* Hamburger */
+.nav-toggle { display:none; flex-direction:column; gap:5px; padding:6px; background:transparent; border:none; cursor:pointer; }
+.bar { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; }
+
+/* Mobile menu */
+.nav-mobile {
+  background:#fff;
+  border-top:1px solid var(--border);
+  padding:18px 32px 22px;
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-mobile > ul { list-style:none; display:flex; flex-direction:column; gap:0; }
+.nav-mobile > ul > li > a {
+  display:block; padding:11px 0; font-size:15.5px;
+  color:var(--text-dim); text-decoration:none;
+  border-bottom:1px solid var(--border);
+}
+.nav-mobile > ul > li > a:hover { color:var(--text); }
+.nav-mobile-group { border-bottom:1px solid var(--border); }
+.nav-mobile-group__label {
+  display:block; padding:11px 0 6px;
+  font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--text-faint);
+  text-decoration:none;
+}
+.nav-mobile-group__label:hover { color:var(--text); }
+.nav-mobile-group__list { list-style:none; padding-left:12px; }
+.nav-mobile-group__list li a {
+  display:block; padding:8px 0; font-size:14.5px;
+  color:var(--text-dim); text-decoration:none;
+  border-bottom:1px solid var(--border);
+}
+.nav-mobile-group__list li:last-child a { border-bottom:none; }
+.nav-mobile-group__list li a:hover { color:var(--text); }
+
+@media(max-width:900px) { nav, .nav-phone { display:none; } .nav-toggle { display:flex; } }
+@media(max-width:640px) { .nav-mobile { padding:14px 18px 20px; } }
+</style>

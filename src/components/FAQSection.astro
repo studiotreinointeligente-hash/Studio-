@@ -1,0 +1,67 @@
+---
+interface FAQItem { question: string; answer: string; }
+interface Props { items: FAQItem[]; andar?: 'roxo' | 'gold' | 'orange' | 'gray' | 'red' | 'none'; modalidade?: string; }
+const { items, andar = 'roxo', modalidade = 'a modalidade' } = Astro.props;
+if (!items || items.length === 0) return;
+const accentVar = { roxo:'var(--roxo)', gold:'var(--gold)', orange:'var(--orange)', gray:'var(--gray)', red:'var(--red)', none:'var(--roxo)' }[andar];
+---
+
+<section class="faq-section" aria-labelledby="faq-heading">
+  <div class="faq-header">
+    <div class="faq-label" style={`color:${accentVar}`}>Perguntas Frequentes</div>
+    <h2 id="faq-heading" class="faq-title" style={`--faq-c:${accentVar}`}>
+      Dúvidas sobre <em>{modalidade}</em>
+    </h2>
+  </div>
+  <div class="faq-list">
+    {items.map((item, i) => (
+      <details class="faq-item">
+        <summary class="faq-q" id={`faq-q-${i}`} style={`--faq-c:${accentVar}`}>
+          <span>{item.question}</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a" role="region" aria-labelledby={`faq-q-${i}`}>
+          <div set:html={item.answer} />
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+.faq-section { padding: 56px 0; }
+.faq-header { margin-bottom: 32px; }
+.faq-label { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.faq-title { font-family: var(--font-display); font-size: clamp(22px,3vw,34px); font-weight: 400; color: var(--text); line-height: 1.15; }
+.faq-title em { font-style: italic; color: var(--faq-c); }
+.faq-list { display: flex; flex-direction: column; gap: 6px; }
+.faq-item { background: #fff; border: 1.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: border-color .2s; }
+.faq-item[open] { border-color: var(--faq-c, var(--roxo)); }
+.faq-q {
+  padding: 18px 22px; cursor: pointer; list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  font-size: 15.5px; font-weight: 600; color: var(--text); user-select: none;
+  background: #fff; transition: background .15s;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q:hover { background: var(--surface-subtle); }
+.faq-icon {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; position: relative;
+}
+.faq-icon::before, .faq-icon::after {
+  content: ''; position: absolute; background: var(--text-dim); border-radius: 1px;
+}
+.faq-icon::before { width: 10px; height: 1.5px; }
+.faq-icon::after { width: 1.5px; height: 10px; transition: transform .2s; }
+details[open] .faq-icon::after { transform: rotate(90deg); opacity: 0; }
+details[open] .faq-icon { border-color: var(--faq-c, var(--roxo)); }
+.faq-a {
+  padding: 0 22px 20px; border-top: 1px solid var(--border);
+  font-size: 15px; color: var(--text-dim); line-height: 1.75;
+  padding-top: 16px;
+}
+.faq-a a { color: var(--roxo); }
+</style>

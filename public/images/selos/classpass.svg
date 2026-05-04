@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" role="img" aria-label="ClassPass">
+  <title>ClassPass</title>
+  <style>
+    .cp-text { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 52px; fill: #111111; letter-spacing: -1px; }
+  </style>
+  <!-- ClassPass wordmark -->
+  <text x="10" y="60" class="cp-text">class</text>
+  <text x="148" y="60" class="cp-text" fill="#E8461A">pass</text>
+</svg>

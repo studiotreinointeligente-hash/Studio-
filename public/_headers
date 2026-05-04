@@ -1,0 +1,18 @@
+/*
+  # Previne clickjacking (o site não pode ser embutido em iframes de terceiros)
+  X-Frame-Options: SAMEORIGIN
+
+  # Bloqueia sniffing de MIME type (XSS via upload)
+  X-Content-Type-Options: nosniff
+
+  # Referrer controlado: envia origem para HTTPS, nada para HTTP
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Desativa Features de hardware não usadas (câmera, microfone, geolocalização)
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+  # HSTS: força HTTPS por 1 ano (habilitar só após confirmar que HTTPS está estável)
+  # Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+  # CSP: política permissiva mas segura para site estático com Leaflet + WhatsApp
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://wa.me https://api.whatsapp.com https://www.google-analytics.com https://www.googletagmanager.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'

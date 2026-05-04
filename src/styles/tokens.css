@@ -1,0 +1,86 @@
+/* =========================================================
+   Design Tokens — Studio Livel Treino Inteligente v2.5
+   Fonte: studio-treino-design-system.html
+   ========================================================= */
+
+/* Forcar tema claro — sem dark mode */
+:root {
+  color-scheme: light only;
+  /* Fontes */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'Courier New', monospace;
+
+  /* 1º Andar — Studio · Roxo */
+  --roxo:        #632465;
+  --roxo-light:  #8B3A8D;
+  --roxo-lighter:#C090C0;
+  --roxo-dark:   #3D1540;
+  --roxo-dim:    rgba(99,36,101,0.12);
+
+  /* 2º Andar — Pilates · Dourado */
+  --gold:        #D4A017;
+  --gold-light:  #E8C040;
+  --gold-lighter:#F5D870;
+  --gold-dark:   #9A7010;
+  --gold-dim:    rgba(212,160,23,0.13);
+
+  /* 3º Andar — Funcional FitBox · Laranja */
+  --orange:      #FF914D;
+  --orange-light:#FFB07A;
+  --orange-lighter:#FFD0A8;
+  --orange-dark: #D4621A;
+  --orange-dim:  rgba(255,145,77,0.13);
+
+  /* Yoga · Cinza */
+  --gray:        #6B7280;
+  --gray-light:  #9CA3AF;
+  --gray-lighter:#D1D5DB;
+  --gray-dark:   #374151;
+  --gray-dim:    rgba(107,114,128,0.13);
+
+  /* Krav Magá · Vermelho */
+  --red:         #C0181A;
+  --red-light:   #E03535;
+  --red-lighter: #F08080;
+  --red-dark:    #8B1010;
+  --red-dim:     rgba(192,24,26,0.13);
+
+  /* Âncora — Marrom */
+  --brown:       #514D42;
+  --brown-light: #7A7567;
+  --brown-faint: #A09888;
+
+  /* Base */
+  --bg:          #FAF8F5;
+  --bg-warm:     #FDF5E8;
+  --surface:     #FFFFFF;
+  --surface-subtle: #F2EFE8;
+  --border:      rgba(81,77,66,0.10);
+  --border-strong: rgba(81,77,66,0.18);
+
+  /* Texto */
+  --text:        #2A2622;
+  --text-dim:    #514D42;
+  --text-faint:  #9A9488;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(42,38,34,0.08);
+  --shadow-md: 0 4px 14px rgba(42,38,34,0.10), 0 2px 4px rgba(42,38,34,0.05);
+  --shadow-lg: 0 12px 36px rgba(42,38,34,0.12), 0 4px 10px rgba(42,38,34,0.06);
+
+  /* Border radius */
+  --r-sm:   4px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-pill: 9999px;
+
+  /* Espaçamento */
+  --sp-1:  4px;  --sp-2:  8px;  --sp-3:  12px;
+  --sp-4:  16px; --sp-5:  20px; --sp-6:  24px;
+  --sp-8:  32px; --sp-10: 40px; --sp-12: 48px;
+  --sp-16: 64px; --sp-20: 80px;
+}
+
+/* Dark mode desativado — site e sempre claro (color-scheme: light only) */

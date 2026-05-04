@@ -1,0 +1,14 @@
+{
+  "name": "Studio Livel Treino Inteligente",
+  "short_name": "Livel",
+  "description": "Casa especializada em treino acompanhado no Prado, Belo Horizonte.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FAF8F5",
+  "theme_color": "#632465",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon-64.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" }
+  ]
+}
