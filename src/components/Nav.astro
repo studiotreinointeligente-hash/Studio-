@@ -21,15 +21,19 @@ const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) 
   <div class="wrap nav-inner">
 
     <a href="/" class="nav-logo" aria-label="Studio Livel Treino Inteligente — Prado, Belo Horizonte">
-      <img
-        src="/images/logos/logo-livel-studio-clara.png"
-        alt="Studio Livel — academia de treino inteligente em Prado, BH"
-        width="110"
-        height="110"
-        loading="eager"
-        decoding="async"
-        class="nav-logo-img"
-      />
+      <picture>
+        <source type="image/webp" srcset="/images/logos/logo-nav-96w.webp 1x, /images/logos/logo-nav-200w.webp 2x" />
+        <img
+          src="/images/logos/logo-livel-studio-clara.png"
+          alt="Studio Livel — academia de treino inteligente em Prado, BH"
+          width="52"
+          height="52"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="nav-logo-img"
+        />
+      </picture>
     </a>
 
     <nav aria-label="Navegação principal">
@@ -111,7 +115,7 @@ const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) 
     </nav>
 
     <div class="nav-actions">
-      <a href="tel:+5531988451387" class="nav-phone">(31) 98845-1387</a>
+      <a href="tel:+5531991070392" class="nav-phone">(31) 99107-0392</a>
       <a href="/aula-avaliacao/" class={`btn ${btnClass} btn--sm`}>Agendar Aula</a>
     </div>
 
@@ -181,11 +185,49 @@ const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) 
   // Mobile toggle
   const t = document.querySelector('.nav-toggle') as HTMLButtonElement | null;
   const m = document.getElementById('nav-mobile');
+
+  function closeMenu() {
+    if (!t || !m) return;
+    t.setAttribute('aria-expanded', 'false');
+    m.hidden = true;
+    document.body.style.overflow = '';
+    const lvWa = document.getElementById('lv-wa');
+    if (lvWa) lvWa.style.pointerEvents = '';
+  }
+
+  function openMenu() {
+    if (!t || !m) return;
+    t.setAttribute('aria-expanded', 'true');
+    m.hidden = false;
+    document.body.style.overflow = 'hidden';
+    // Desativa o widget WhatsApp enquanto o menu mobile está aberto
+    const lvWa   = document.getElementById('lv-wa');
+    const lvChat = document.getElementById('lv-chat');
+    const lvFab  = document.getElementById('lv-fab');
+    if (lvWa) lvWa.style.pointerEvents = 'none';
+    if (lvChat && lvChat.classList.contains('lv-open')) {
+      lvChat.classList.remove('lv-open');
+      lvChat.setAttribute('aria-hidden', 'true');
+      if (lvFab) lvFab.setAttribute('aria-expanded', 'false');
+    }
+  }
+
   if (t && m) {
     t.addEventListener('click', () => {
       const open = t.getAttribute('aria-expanded') === 'true';
-      t.setAttribute('aria-expanded', String(!open));
-      m.hidden = open;
+      open ? closeMenu() : openMenu();
+    });
+
+    // Fecha ao clicar em qualquer link dentro do menu
+    m.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).tagName === 'A') {
+        closeMenu();
+      }
+    });
+
+    // Fecha com Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
     });
   }
 
@@ -295,25 +337,31 @@ nav ul a.is-active::after {
 .nav-toggle { display:none; flex-direction:column; gap:5px; padding:6px; background:transparent; border:none; cursor:pointer; }
 .bar { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; }
 
-/* Mobile menu */
+/* Mobile menu — overlay fixo abaixo da barra de navegação */
 .nav-mobile {
-  background:#fff;
-  border-top:1px solid var(--border);
-  padding:18px 32px 22px;
-  max-height: calc(100vh - 68px);
+  position: fixed;
+  top: 68px;          /* altura do nav-inner */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 18px 32px 32px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  z-index: 1999;      /* abaixo do nav (2000) mas acima de tudo */
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
 }
 .nav-mobile > ul { list-style:none; display:flex; flex-direction:column; gap:0; }
 .nav-mobile > ul > li > a {
-  display:block; padding:11px 0; font-size:15.5px;
+  display:block; padding:13px 0; font-size:16px;
   color:var(--text-dim); text-decoration:none;
   border-bottom:1px solid var(--border);
 }
 .nav-mobile > ul > li > a:hover { color:var(--text); }
 .nav-mobile-group { border-bottom:1px solid var(--border); }
 .nav-mobile-group__label {
-  display:block; padding:11px 0 6px;
+  display:block; padding:13px 0 6px;
   font-size:11px; font-weight:700; letter-spacing:.1em;
   text-transform:uppercase; color:var(--text-faint);
   text-decoration:none;
@@ -321,7 +369,7 @@ nav ul a.is-active::after {
 .nav-mobile-group__label:hover { color:var(--text); }
 .nav-mobile-group__list { list-style:none; padding-left:12px; }
 .nav-mobile-group__list li a {
-  display:block; padding:8px 0; font-size:14.5px;
+  display:block; padding:10px 0; font-size:15px;
   color:var(--text-dim); text-decoration:none;
   border-bottom:1px solid var(--border);
 }
@@ -329,5 +377,5 @@ nav ul a.is-active::after {
 .nav-mobile-group__list li a:hover { color:var(--text); }
 
 @media(max-width:900px) { nav, .nav-phone { display:none; } .nav-toggle { display:flex; } }
-@media(max-width:640px) { .nav-mobile { padding:14px 18px 20px; } }
+@media(max-width:640px) { .nav-mobile { padding:14px 18px 32px; } }
 </style>

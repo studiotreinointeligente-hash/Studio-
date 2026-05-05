@@ -90,9 +90,9 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   pointer-events: auto;
 }
 
-/* Header */
+/* Header — fundo mais escuro para garantir contraste 4.5:1 com texto branco */
 .lv-hdr {
-  background: #1a7fe8;
+  background: #0d5fb5;
   padding: 14px 14px 14px 16px;
   display: flex;
   align-items: center;
@@ -109,7 +109,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   justify-content: center;
   font-weight: 900;
   font-size: 15px;
-  color: #1a7fe8;
+  color: #0d5fb5;
   letter-spacing: -.5px;
   border: 2px solid rgba(255,255,255,.3);
 }
@@ -121,7 +121,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   height: 12px;
   background: #4ade80;
   border-radius: 50%;
-  border: 2px solid #1a7fe8;
+  border: 2px solid #0d5fb5;
 }
 .lv-agent { flex: 1; min-width: 0; }
 .lv-aname {
@@ -133,7 +133,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.lv-astat { color: rgba(255,255,255,.82); font-size: 12px; margin-top: 3px; }
+.lv-astat { color: #fff; font-size: 12px; margin-top: 3px; }
 #lv-x {
   width: 32px;
   height: 32px;
@@ -164,7 +164,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 .lv-time {
   text-align: center;
   font-size: 11px;
-  color: #999;
+  color: #555;
   background: rgba(255,255,255,.6);
   padding: 3px 10px;
   border-radius: 20px;
@@ -175,7 +175,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #1a7fe8;
+  background: #0d5fb5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,13 +221,13 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 .lv-cta:active { transform: translateY(0); }
 .lv-priv {
   font-size: 11px;
-  color: #aaa;
+  color: #555;
   text-align: center;
   margin-top: 9px;
   line-height: 1.4;
 }
-.lv-priv a { color: #1a7fe8; text-decoration: none; }
-.lv-priv a:hover { text-decoration: underline; }
+.lv-priv a { color: #0057c2; text-decoration: underline; }
+.lv-priv a:hover { color: #003d8a; }
 
 /* FAB */
 #lv-fab {
@@ -312,6 +312,8 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
     if (!getCk(COOKIE)) {
       setTimeout(function () {
         setCk(COOKIE, '1', TTL);
+        var mobileMenu = document.getElementById('nav-mobile');
+        if (mobileMenu && !mobileMenu.hidden) return;
         open();
       }, DELAY);
     }
