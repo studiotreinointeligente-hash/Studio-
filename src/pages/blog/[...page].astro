@@ -7,7 +7,7 @@ const BLOG_TYPES = ['educacional', 'subpublico', 'outer'];
 
 // Labels de modalidade
 const modalLabel: Record<string, string> = {
-  pilates: 'Pilates', musculacao: 'Musculacao',
+  pilates: 'Pilates', musculacao: 'Musculação',
   funcional: 'Funcional', yoga: 'Yoga',
   'krav-maga': 'Krav Maga', geral: 'Estudio',
 };
@@ -55,7 +55,7 @@ const schema = {
       '@type': 'CollectionPage',
       '@id': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}#webpage`,
       'url': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`,
-      'name': `Blog e Educacao${isFirstPage ? '' : ' - Pagina' + page.currentPage} | Studio Livel`,
+      'name': `Blog e Educação${isFirstPage ? '' : ' - Página ' + page.currentPage} | Studio Livel`,
       'inLanguage': 'pt-BR',
       'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
     },
@@ -64,8 +64,8 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`Blog e Educacao${isFirstPage ? '' : ' - Pagina' + page.currentPage} | Studio Livel Treino Inteligente`}
-  description="Artigos, guias e conteudo educacional sobre Pilates, Musculacao, Funcional, Yoga e Krav Maga. Baseado no Metodo Livel desde 1986, Prado, Belo Horizonte."
+  title={`Blog e Educação${isFirstPage ? '' : ' - Página ' + page.currentPage} | Studio Livel Treino Inteligente`}
+  description="Artigos, guias e conteúdo educacional sobre Pilates, Musculação, Funcional, Yoga e Krav Maga. Baseado no Método Livel desde 1986, Prado, Belo Horizonte."
   canonical={`https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`}
   schema={schema}
   activePath="/blog/"
@@ -76,13 +76,13 @@ const schema = {
     <!-- Header -->
     <header class="blog-hdr">
       <div class="wrap">
-        <p class="blog-hdr__kicker">Conteudo educacional</p>
-        <h1 class="blog-hdr__h1">Blog e <em>Educacao</em></h1>
-        <p class="blog-hdr__desc">Artigos, guias e conteudos especiais sobre as cinco modalidades do Studio Livel. {page.total} publicacoes no total.</p>
+        <p class="blog-hdr__kicker">Conteúdo educacional</p>
+        <h1 class="blog-hdr__h1">Blog e <em>Educação</em></h1>
+        <p class="blog-hdr__desc">Artigos, guias e conteúdos especiais sobre as cinco modalidades do Studio Livel. {page.total} publicações no total.</p>
 
-        <!-- Indicador de pagina (se nao for a primeira) -->
+        <!-- Indicador de página (se não for a primeira) -->
         {!isFirstPage && (
-          <p class="blog-hdr__page">Pagina {page.currentPage} de {page.lastPage}</p>
+          <p class="blog-hdr__page">Página {page.currentPage} de {page.lastPage}</p>
         )}
       </div>
     </header>
@@ -117,8 +117,8 @@ const schema = {
           })}
         </ul>
 
-        <!-- Paginacao -->
-        <nav class="pagination" aria-label="Paginacao do blog">
+        <!-- Paginação -->
+        <nav class="pagination" aria-label="Paginação do blog">
           <div class="pagination__inner">
 
             <!-- Anterior -->
@@ -134,8 +134,8 @@ const schema = {
               </span>
             )}
 
-            <!-- Numeros de pagina -->
-            <div class="pag-nums" role="list" aria-label="Paginas">
+            <!-- Números de página -->
+            <div class="pag-nums" role="list" aria-label="Páginas">
               {Array.from({ length: page.lastPage }, (_, i) => i + 1).map(num => {
                 const isActive = num === page.currentPage;
                 const href = num === 1 ? '/blog/' : `/blog/${num}/`;
@@ -144,7 +144,7 @@ const schema = {
                     href={href}
                     class={`pag-num ${isActive ? 'pag-num--active' : ''}`}
                     aria-current={isActive ? 'page' : undefined}
-                    aria-label={`Pagina ${num}`}
+                    aria-label={`Página ${num}`}
                     role="listitem"
                   >
                     {num}
@@ -153,15 +153,15 @@ const schema = {
               })}
             </div>
 
-            <!-- Proximo -->
+            <!-- Próximo -->
             {page.url.next ? (
               <a href={page.url.next} class="pag-btn pag-btn--next" rel="next">
-                Proxima
+                Próxima
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
               </a>
             ) : (
               <span class="pag-btn pag-btn--disabled" aria-hidden="true">
-                Proxima
+                Próxima
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
               </span>
             )}
@@ -170,7 +170,7 @@ const schema = {
 
           <!-- Resumo -->
           <p class="pag-summary">
-            Mostrando {(page.currentPage - 1) * 9 + 1} a {Math.min(page.currentPage * 9, page.total)} de {page.total} publicacoes
+            Mostrando {(page.currentPage - 1) * 9 + 1} a {Math.min(page.currentPage * 9, page.total)} de {page.total} publicações
           </p>
         </nav>
 
