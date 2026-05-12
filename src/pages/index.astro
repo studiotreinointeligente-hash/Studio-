@@ -100,7 +100,7 @@ const modalidades = [
       <p class="home-hero__kicker">Prado, Belo Horizonte · Desde 1986</p>
       <h1 id="home-h1" class="home-hero__h1">
         Studio Livel<br />
-        <em>Treino Inteligente</em>
+        <em>Treino Inteligente.</em>
       </h1>
       <p class="home-hero__sub">Casa especializada em treino acompanhado. Cinco modalidades. Turmas de ate 6 alunos por instrutor. Metodo Livel com ciclos de 3 semanas.</p>
 
@@ -125,9 +125,27 @@ const modalidades = [
     <div class="wrap home-sobre__inner">
       <div class="home-sobre__text">
         <p class="sec-kicker">O Estudio</p>
-        <h2 id="sobre-heading" class="sec-h2">38 anos no <em>mesmo endereco</em></h2>
+        <h2 id="sobre-heading" class="sec-h2">38 anos no <em>mesmo endereco.</em></h2>
+
+        <div class="home-sobre__arco" aria-label="Linha do tempo Livel">
+          <div class="arco-item">
+            <span class="arco-ano">1986</span>
+            <span class="arco-desc">Fundacao no Prado</span>
+          </div>
+          <span class="arco-sep" aria-hidden="true">→</span>
+          <div class="arco-item">
+            <span class="arco-ano">2016</span>
+            <span class="arco-desc">Metodo Livel formalizado</span>
+          </div>
+          <span class="arco-sep" aria-hidden="true">→</span>
+          <div class="arco-item">
+            <span class="arco-ano">2026</span>
+            <span class="arco-desc">Validacao ACSM em andamento</span>
+          </div>
+        </div>
+
         <p class="sec-p">Fundado em 1986 no bairro do Prado, o Studio Livel Treino Inteligente e uma casa especializada em treino acompanhado. Nao e uma academia de volume: e um estudio com metodo proprio, educadores fisicos formados e turmas que nunca ultrapassam 6 alunos por instrutor.</p>
-        <p class="sec-p">O Metodo Livel, formalizado em 2016 pela segunda geracao da familia, organiza a progressao em ciclos de 3 semanas com reavaliacao obrigatoria ao final de cada mesociclo. O mesmo rigor aplicado em 1986.</p>
+        <p class="sec-p">O Metodo Livel, formalizado em 2016 pela segunda geracao da familia, organiza a progressao em ciclos de 3 semanas com reavaliacao obrigatoria ao final de cada mesociclo. A validacao cientifica pelo American College of Sports Medicine (ACSM) esta em andamento para publicacao em 2026.</p>
         <div class="home-sobre__links">
           <a href="/quem-somos/" class="link-arrow">Conhecer a historia completa</a>
           <a href="/metodo-livel/" class="link-arrow">Entender o Metodo Livel</a>
@@ -149,7 +167,7 @@ const modalidades = [
   <section class="home-modal" id="modalidades" aria-labelledby="modal-heading">
     <div class="wrap">
       <p class="sec-kicker">Cinco modalidades</p>
-      <h2 id="modal-heading" class="sec-h2">Um estudio, <em>cinco praticas</em></h2>
+      <h2 id="modal-heading" class="sec-h2">Um estudio, <em>cinco praticas.</em></h2>
       <p class="sec-desc">Cada modalidade tem sala dedicada, instrutor de formacao especifica e progressao pelo Metodo Livel. Podem ser combinadas ao longo da semana.</p>
 
       <div class="modal-grid">
@@ -198,7 +216,7 @@ const modalidades = [
     <section class="home-blog" aria-labelledby="blog-heading">
       <div class="wrap">
         <p class="sec-kicker">Blog e Educacao</p>
-        <h2 id="blog-heading" class="sec-h2">Aprenda sobre <em>treino inteligente</em></h2>
+        <h2 id="blog-heading" class="sec-h2">Aprenda sobre <em>treino inteligente.</em></h2>
         <div class="blog-grid">
           {blogPosts.map(post => (
             <a href={`/${post.data.urlPath.replace(/^\/|\/$/g,'')}/`} class="blog-card">
@@ -246,9 +264,10 @@ const modalidades = [
 .home-hero__kicker { font-size: 11px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 20px; }
 .home-hero__h1 {
   font-family: var(--font-display); font-size: clamp(36px, 6vw, 68px);
-  font-weight: 400; line-height: 1.06; color: #F0EDE8; margin-bottom: 18px;
+  font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+  line-height: 1.0; color: #F0EDE8; margin-bottom: 18px;
 }
-.home-hero__h1 em { font-style: italic; color: var(--gold-light); }
+.home-hero__h1 em { color: var(--gold-light); }
 .home-hero__sub { font-size: 17px; color: rgba(240,237,232,.62); line-height: 1.7; max-width: 520px; margin-bottom: 32px; }
 .home-hero__btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
 .home-hero__stats {
@@ -256,7 +275,7 @@ const modalidades = [
   padding-top: 28px; border-top: 1px solid rgba(212,160,23,.25);
 }
 .home-hero__stat { display: flex; flex-direction: column; gap: 3px; }
-.home-stat-n { font-family: var(--font-display); font-size: 32px; color: #F0EDE8; line-height: 1; }
+.home-stat-n { font-family: var(--font-display); font-size: 32px; font-weight: 900; color: #F0EDE8; line-height: 1; }
 .home-stat-l { font-size: 12px; color: rgba(240,237,232,.40); letter-spacing: .04em; }
 
 /* ── Sobre ──────────────────────────────────────── */
@@ -265,6 +284,19 @@ const modalidades = [
 .home-sobre__img { border-radius: var(--r-xl); overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,.12); }
 .home-sobre__img img { width: 100%; height: auto; }
 .home-sobre__links { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+
+/* Arco narrativo 1986 → 2016 → 2026 */
+.home-sobre__arco {
+  display: flex; align-items: center; gap: 10px;
+  margin: 18px 0 20px; flex-wrap: wrap;
+}
+.arco-item { display: flex; flex-direction: column; gap: 2px; }
+.arco-ano {
+  font-family: var(--font-display); font-weight: 900; font-size: 22px;
+  color: var(--roxo); line-height: 1; text-transform: uppercase; letter-spacing: -0.01em;
+}
+.arco-desc { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-faint); }
+.arco-sep { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--brown-faint); padding: 0 2px; }
 
 .link-arrow { font-size: 15px; font-weight: 600; color: var(--roxo); text-decoration: none; display: flex; align-items: center; gap: 6px; }
 .link-arrow:hover { color: var(--roxo-dark); }
@@ -291,7 +323,7 @@ const modalidades = [
 }
 .modal-card__body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; }
 .modal-card__tag { font-size: 10.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--roxo); margin-bottom: 7px; }
-.modal-card__name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--text); margin-bottom: 8px; }
+.modal-card__name { font-family: var(--font-display); font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; color: var(--text); margin-bottom: 8px; }
 .modal-card__desc { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; flex: 1; margin-bottom: 14px; }
 .modal-card__cta { font-size: 13px; font-weight: 600; color: var(--roxo); }
 
@@ -323,8 +355,8 @@ const modalidades = [
 
 /* ── Comuns ─────────────────────────────────────── */
 .sec-kicker { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--roxo); margin-bottom: 10px; }
-.sec-h2 { font-family: var(--font-display); font-size: clamp(24px, 3.5vw, 40px); font-weight: 400; color: var(--text); margin-bottom: 12px; line-height: 1.15; }
-.sec-h2 em { font-style: italic; color: var(--roxo); }
+.sec-h2 { font-family: var(--font-display); font-size: clamp(24px, 3.5vw, 40px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; color: var(--text); margin-bottom: 12px; line-height: 1.08; }
+.sec-h2 em { font-style: normal; color: var(--roxo); }
 .sec-desc { font-size: 16px; color: var(--text-dim); line-height: 1.7; max-width: 580px; }
 .sec-p { font-size: 16px; color: var(--text-dim); line-height: 1.78; margin-bottom: 14px; }
 

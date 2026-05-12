@@ -148,7 +148,7 @@ const corMap: Record<string, { bg: string; text: string; accent: string; badge: 
       </div>
       <p class="sec-kicker">Um estúdio. Cinco práticas.</p>
       <h1 id="mod-h1" class="mod-hero__h1">
-        Todas as <em>modalidades</em>
+        Todas as <em>modalidades.</em>
       </h1>
       <p class="mod-hero__sub">
         Cada modalidade tem sala dedicada, instrutor de formação específica e progressão pelo Método Livel.
@@ -243,7 +243,7 @@ const corMap: Record<string, { bg: string; text: string; accent: string; badge: 
     <div class="wrap metodo-callout__inner">
       <div class="metodo-callout__content">
         <p class="sec-kicker">O que une tudo</p>
-        <h2 id="metodo-heading" class="sec-h2">O <em>Método Livel</em></h2>
+        <h2 id="metodo-heading" class="sec-h2">O <em>Método Livel.</em></h2>
         <p class="sec-p">Independente da modalidade, todos os alunos do Studio Livel seguem a mesma lógica de progressão: ciclos de 3 semanas com reavaliação obrigatória ao final de cada mesociclo.</p>
         <p class="sec-p">O método foi formalizado em 2016 pela segunda geração da família, sistematizando 30 anos de prática clínica em treino acompanhado. É o mesmo rigor aplicado desde 1986, agora documentado e replicável em todas as modalidades.</p>
         <a href="/metodo-livel/" class="btn btn--roxo" style="margin-top:8px">Entender o Método Livel</a>
@@ -300,9 +300,10 @@ const corMap: Record<string, { bg: string; text: string; accent: string; badge: 
 .mod-hero__logo { height: 52px; width: auto; object-fit: contain; }
 .mod-hero__h1 {
   font-family: var(--font-display); font-size: clamp(32px, 5vw, 54px);
-  font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 16px;
+  font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+  line-height: 1.02; color: var(--text); margin-bottom: 16px;
 }
-.mod-hero__h1 em { font-style: italic; color: var(--roxo); }
+.mod-hero__h1 em { color: var(--roxo); }
 .mod-hero__sub { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 28px; }
 .mod-hero__pills { display: flex; flex-wrap: wrap; gap: 10px; }
 .mod-pill {

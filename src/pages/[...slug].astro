@@ -27,7 +27,8 @@ const modalImages: Record<string, string> = {
 // H1 curto para exibicao (SEO title longo permanece em <title>)
 function getDisplayH1(h1: string): string {
   const beforeColon = h1.split(':')[0].trim();
-  return beforeColon.length > 60 ? beforeColon.slice(0, 58) + '...' : beforeColon;
+  const text = beforeColon.length > 60 ? beforeColon.slice(0, 58) + '...' : beforeColon;
+  return text.endsWith('.') ? text : text + '.';
 }
 
 export async function getStaticPaths() {
@@ -334,7 +335,7 @@ const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--o
 /* ── Dobra geral ──────────────────────────────────── */
 .silo-body { background: #fff; }
 .dobra-kicker { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
-.dobra-h2 { font-family: var(--font-display); font-size: clamp(22px,2.8vw,34px); font-weight: 400; color: var(--text); margin-bottom: 32px; line-height: 1.15; }
+.dobra-h2 { font-family: var(--font-display); font-size: clamp(22px,2.8vw,34px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; color: var(--text); margin-bottom: 32px; line-height: 1.05; }
 
 /* ── Dobra 2: sumario ─────────────────────────────── */
 .dobra-sumario { padding: 36px 0 0; }
@@ -367,7 +368,7 @@ const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--o
 .dobra-how__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 .how-steps { list-style: none; display: flex; flex-direction: column; gap: 24px; }
 .how-step { display: flex; gap: 16px; align-items: flex-start; }
-.how-step__num { font-family: var(--font-display); font-size: 28px; font-weight: 400; line-height: 1; flex-shrink: 0; min-width: 40px; }
+.how-step__num { font-family: var(--font-display); font-size: 28px; font-weight: 900; line-height: 1; flex-shrink: 0; min-width: 40px; }
 .how-step__title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; display: block; }
 .how-step__text  { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
 .dobra-how__img {
@@ -410,7 +411,7 @@ const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--o
   background-size: 22px 22px;
 }
 .dobra-cta__inner { position: relative; z-index: 1; max-width: 620px; }
-.dobra-cta__title { font-family: var(--font-display); font-size: clamp(24px,3.5vw,42px); font-weight: 400; color: #F0EDE8; margin-bottom: 12px; line-height: 1.1; }
+.dobra-cta__title { font-family: var(--font-display); font-size: clamp(24px,3.5vw,42px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; color: #F0EDE8; margin-bottom: 12px; line-height: 1.02; }
 .dobra-cta__sub { font-size: 15.5px; color: rgba(240,237,232,.58); line-height: 1.7; margin-bottom: 28px; }
 .dobra-cta__btns { display: flex; gap: 14px; flex-wrap: wrap; }
 
@@ -442,7 +443,7 @@ details[open] .seo-expand__icon::after { opacity: 0; }
 /* ── Paginas simples ──────────────────────────────── */
 .simple-page { background: #fff; }
 .simple-header { background: var(--surface-subtle); border-bottom: 1px solid var(--border); padding: 40px 0 32px; }
-.simple-h1 { font-family: var(--font-display); font-size: clamp(24px,3vw,38px); font-weight: 400; color: var(--text); margin-bottom: 8px; }
+.simple-h1 { font-family: var(--font-display); font-size: clamp(24px,3vw,38px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; color: var(--text); margin-bottom: 8px; }
 .simple-desc { font-size: 16px; color: var(--text-dim); max-width: 580px; line-height: 1.65; }
 .simple-content { padding: 32px 0 64px; max-width: 820px; }
 

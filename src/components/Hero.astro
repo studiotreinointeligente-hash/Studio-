@@ -120,12 +120,13 @@ const emClass = { roxo: 'em-roxo', gold: 'em-gold', orange: 'em-orange' }[andar]
 .hero__overline--orange::before { background: var(--orange-lighter); }
 .hero__h1 {
   font-family: var(--font-display); font-size: clamp(30px, 4vw, 50px);
-  font-weight: 400; line-height: 1.08; color: #F0EDE8;
+  font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+  line-height: 1.02; color: #F0EDE8;
   margin-bottom: var(--sp-5); overflow-wrap: break-word;
 }
-.em-roxo   { font-style: italic; color: var(--roxo-lighter); }
-.em-gold   { font-style: italic; color: var(--gold-light); }
-.em-orange { font-style: italic; color: var(--orange-lighter); }
+.em-roxo   { color: var(--roxo-lighter); }
+.em-gold   { color: var(--gold-light); }
+.em-orange { color: var(--orange-lighter); }
 .hero__p { font-size: 16.5px; color: rgba(240,237,232,0.58); line-height: 1.68; margin-bottom: var(--sp-10); max-width: 440px; overflow-wrap: break-word; }
 .hero__btns { display: flex; gap: 12px; flex-wrap: wrap; }
 .hero__stats { display: flex; gap: 40px; flex-wrap: wrap; margin-top: var(--sp-12); padding-top: var(--sp-8); }
@@ -133,7 +134,7 @@ const emClass = { roxo: 'em-roxo', gold: 'em-gold', orange: 'em-orange' }[andar]
 .hero__stats--gold   { border-top: 1px solid rgba(212,160,23,0.25); }
 .hero__stats--orange { border-top: 1px solid rgba(255,145,77,0.25); }
 .hero__stat { display: flex; flex-direction: column; gap: 3px; }
-.hero__stat-num   { font-family: var(--font-display); font-size: 32px; color: #F0EDE8; line-height: 1; }
+.hero__stat-num   { font-family: var(--font-display); font-size: 32px; font-weight: 900; color: #F0EDE8; line-height: 1; }
 .hero__stat-label { font-size: 12px; color: rgba(240,237,232,0.38); letter-spacing: 0.04em; }
 .hero__img-wrap { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); flex-shrink: 0; max-width: 420px; }
 .hero__img-wrap img { width: 100%; height: auto; }
