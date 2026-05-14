@@ -1,74 +1,29 @@
 @import './tokens.css';
 
-/* Open Sans — corpo e UI (Google Fonts) */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
-
-/* Univers LT — fonte oficial fornecida pelo cliente, self-hosted */
+/* Instrument Serif — self-hosted */
 @font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_55_Roman.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Instrument Serif';
   font-style: normal;
+  font-weight: 400;
   font-display: swap;
+  src: url('/files/instrument-serif-latin-400-normal.woff2') format('woff2'),
+       url('/files/instrument-serif-latin-400-normal.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+                 U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_56_Oblique.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Instrument Serif';
   font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_65_Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_65_Bold_Oblique.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_75_Black.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Univers LT';
-  src: url('/fonts/Univers_LT_85_Extra_Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Bebas Neue — display editorial / hero poster */
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/BebasNeue_Book.otf') format('opentype');
   font-weight: 400;
-  font-style: normal;
   font-display: swap;
+  src: url('/files/instrument-serif-latin-400-italic.woff2') format('woff2'),
+       url('/files/instrument-serif-latin-400-italic.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+                 U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/BebasNeue_Regular.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/BebasNeue_Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+@import '@fontsource-variable/dm-sans';
 
 /* ── Reset ────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

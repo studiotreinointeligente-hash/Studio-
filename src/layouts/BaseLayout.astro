@@ -41,10 +41,6 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
   <meta name="color-scheme" content="light" />
 
-  <!-- Preload fontes críticas (Univers LT Black — display font, bloqueia LCP sem preload) -->
-  <link rel="preload" as="font" type="font/truetype" href="/fonts/Univers_LT_75_Black.ttf" crossorigin="anonymous" />
-  <link rel="preload" as="font" type="font/truetype" href="/fonts/Univers_LT_55_Roman.ttf" crossorigin="anonymous" />
-
   <!-- Preload LCP image -->
   {lcpImage && <link rel="preload" as="image" href={lcpImage} fetchpriority="high" />}
 

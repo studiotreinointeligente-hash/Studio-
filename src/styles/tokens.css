@@ -7,9 +7,8 @@
 :root {
   color-scheme: light only;
   /* Fontes */
-  --font-display: 'Univers LT', 'Bebas Neue', Impact, sans-serif;
-  --font-poster:  'Bebas Neue', 'Univers LT', Impact, sans-serif;
-  --font-body:    'Open Sans', system-ui, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
   --font-mono:    'Courier New', monospace;
 
   /* 1º Andar — Studio · Roxo */
