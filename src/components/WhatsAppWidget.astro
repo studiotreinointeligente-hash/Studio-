@@ -6,7 +6,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 <div id="lv-wa" aria-live="polite">
 
-  <div id="lv-chat" role="dialog" aria-modal="true" aria-label="Chat Studio Livel" aria-hidden="true">
+  <div id="lv-chat" role="dialog" aria-modal="true" aria-label="Chat Studio Livel" aria-hidden="true" inert>
     <div class="lv-hdr">
       <div class="lv-av-wrap">
         <div class="lv-av">SL</div>
@@ -303,16 +303,20 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
     function open() {
       chat.classList.add('lv-open');
       chat.setAttribute('aria-hidden', 'false');
+      chat.removeAttribute('inert');
       fab.setAttribute('aria-expanded', 'true');
       btnX.focus();
     }
     function close() {
       chat.classList.remove('lv-open');
       chat.setAttribute('aria-hidden', 'true');
+      chat.setAttribute('inert', '');
       fab.setAttribute('aria-expanded', 'false');
     }
 
-    if (!getCk(COOKIE)) {
+    // Auto-open só em desktop (≥901px). No mobile, fica só o FAB para não cobrir conteúdo.
+    var isDesktop = window.matchMedia && window.matchMedia('(min-width: 901px)').matches;
+    if (isDesktop && !getCk(COOKIE)) {
       setTimeout(function () {
         setCk(COOKIE, '1', TTL);
         var mobileMenu = document.getElementById('nav-mobile');
