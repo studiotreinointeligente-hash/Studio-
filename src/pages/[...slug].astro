@@ -618,52 +618,66 @@ details[open] .seo-expand__icon::after { opacity: 0; }
   .blog-article-cta .btn { width: 100%; justify-content: center; }
 }
 
-/* ── CTA Inline de Aula Experimental (inserido no corpo do artigo) ─── */
+/* ── Banner CTA de Aula Experimental (inserido no corpo do artigo) ─── */
 .blog-cta-inline {
-  margin: 36px 0;
-  padding: 28px 32px;
-  background: #F8F5F0;
-  border-left: 4px solid var(--roxo);
-  border-radius: var(--r-lg, 12px);
+  margin: 40px 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #E2DAF0;
+  border-left: 5px solid var(--roxo, #6B4FA0);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(107,79,160,.08);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+.blog-cta-inline__eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--roxo, #6B4FA0);
+  padding: 16px 28px 0;
 }
 .blog-cta-inline__text {
   font-size: 15px;
   font-weight: 600;
-  color: var(--text);
-  line-height: 1.45;
-  flex: 1;
-  min-width: 200px;
+  color: var(--text, #1a1a1a);
+  line-height: 1.5;
+  padding: 8px 28px 0;
+  margin: 0;
 }
 .blog-cta-inline__btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  align-self: flex-start;
+  margin: 18px 28px 20px;
   background: #25D366;
   color: #fff;
   font-weight: 700;
   font-size: 13px;
-  padding: 12px 20px;
+  padding: 11px 22px;
   border-radius: 8px;
   text-decoration: none;
   white-space: nowrap;
   letter-spacing: .02em;
-  flex-shrink: 0;
+  transition: background .15s;
 }
 .blog-cta-inline__btn::before {
   content: '';
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z'/%3E%3Cpath d='M12 0C5.374 0 0 5.373 0 12c0 2.117.554 4.099 1.522 5.823L0 24l6.332-1.493A11.955 11.955 0 0012 24c6.626 0 12-5.373 12-12S18.626 0 12 0zm0 22c-1.885 0-3.645-.52-5.143-1.424l-.369-.22-3.756.885.928-3.67-.242-.379A9.962 9.962 0 012 12c0-5.514 4.487-10 10-10s10 4.486 10 10-4.486 10-10 10z'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 .blog-cta-inline__btn:hover { background: #1aad54; }
 @media (max-width: 640px) {
-  .blog-cta-inline { flex-direction: column; align-items: flex-start; padding: 20px 18px; }
-  .blog-cta-inline__btn { width: 100%; justify-content: center; }
+  .blog-cta-inline__eyebrow { padding: 14px 18px 0; }
+  .blog-cta-inline__text    { padding: 8px 18px 0; }
+  .blog-cta-inline__btn     { margin: 16px 18px 18px; width: calc(100% - 36px); justify-content: center; }
 }
 </style>
