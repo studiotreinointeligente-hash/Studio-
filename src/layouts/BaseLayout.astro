@@ -15,6 +15,7 @@ interface Props {
   lcpImage?: string;
   ogImage?: string;
   isYMYL?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   lcpImage,
   ogImage = '/images/logos/logo-livel-og.jpg',
   isYMYL = false,
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = 'https://studiotreinointeligente.com.br';
@@ -71,7 +73,8 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
-  {isYMYL && <meta name="robots" content="index, follow, max-image-preview:large" />}
+  {noindex && <meta name="robots" content="noindex, follow" />}
+  {!noindex && isYMYL && <meta name="robots" content="index, follow, max-image-preview:large" />}
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
