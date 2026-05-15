@@ -17,7 +17,17 @@ const schema = {
       'address': { '@type': 'PostalAddress', 'streetAddress': 'R. Chopin, 271', 'addressLocality': 'Belo Horizonte', 'addressRegion': 'MG', 'postalCode': '30410-180', 'addressCountry': 'BR' },
       'telephone': '+55-31-99107-0392',
       'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': '4.8', 'reviewCount': '201', 'bestRating': '5', 'worstRating': '1' },
-      'sameAs': ['https://www.instagram.com/livelestudio/', 'https://www.facebook.com/studiolivel/'],
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
+        'width': 140,
+        'height': 140,
+      },
+      'sameAs': [
+        'https://share.google/6dkQeAfPyaZqeFEIX',
+        'https://www.instagram.com/livelestudio/',
+        'https://www.facebook.com/studiolivel/',
+      ],
     },
     { '@type': 'WebSite', '@id': 'https://studiotreinointeligente.com.br/#website', 'url': 'https://studiotreinointeligente.com.br/', 'name': 'Studio Livel Treino Inteligente', 'inLanguage': 'pt-BR' },
   ],

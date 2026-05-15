@@ -90,13 +90,33 @@ const shortBreadcrumb = d.breadcrumb.map((b, i) =>
 // Cor do andar
 const andarCor = d.andar === 'none' ? 'roxo' : (d.andar as 'roxo' | 'gold' | 'orange' | 'gray' | 'red');
 const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--orange)', gray: 'var(--gray)', red: 'var(--red)' }[andarCor];
+
+// Injeta author Equipe Livel em todos os nós Article do @graph
+const equipeAuthor = {
+  '@type': 'Organization',
+  '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author',
+  'name': 'Equipe Livel',
+  'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
+};
+const schemaWithAuthor = (() => {
+  const raw = d.schema as any;
+  if (!raw?.['@graph']) return raw;
+  return {
+    ...raw,
+    '@graph': raw['@graph'].map((node: any) => {
+      const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+      if (types.includes('Article')) return { ...node, author: equipeAuthor };
+      return node;
+    }),
+  };
+})();
 ---
 
 <BaseLayout
   title={d.title}
   description={d.description}
   canonical={d.canonical}
-  schema={d.schema}
+  schema={schemaWithAuthor}
   andar={d.andar}
   activePath={`/${d.urlPath.replace(/^\/|\/$/g,'')}/`}
   lcpImage={isContentPage ? imgSrc : undefined}

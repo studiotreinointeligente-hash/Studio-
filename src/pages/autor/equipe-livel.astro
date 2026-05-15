@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author',
+      'name': 'Equipe Livel',
+      'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
+      'description': 'Equipe de educadores físicos do Studio Livel Treino Inteligente. Profissionais especializados em Pilates, Musculação, Funcional FitBox, Yoga e Krav Magá, com atuação no Prado, Belo Horizonte, desde 1986.',
+      'parentOrganization': {
+        '@id': 'https://studiotreinointeligente.com.br/#organization',
+      },
+      'knowsAbout': [
+        'Pilates',
+        'Musculação',
+        'Treino Funcional',
+        'Yoga',
+        'Krav Magá',
+        'Educação Física',
+        'Treinamento Personalizado',
+        'Composição Corporal',
+      ],
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
+        'width': 140,
+        'height': 140,
+      },
+      'sameAs': [
+        'https://share.google/6dkQeAfPyaZqeFEIX',
+        'https://www.instagram.com/livelestudio/',
+        'https://www.facebook.com/studiolivel/',
+      ],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#webpage',
+      'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
+      'name': 'Equipe Livel — Educadores Físicos | Studio Livel Treino Inteligente',
+      'inLanguage': 'pt-BR',
+      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+      'about': { '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author' },
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': 'Início', 'item': 'https://studiotreinointeligente.com.br/' },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Equipe Livel', 'item': 'https://studiotreinointeligente.com.br/autor/equipe-livel/' },
+        ],
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Equipe Livel — Educadores Físicos | Studio Livel Treino Inteligente"
+  description="Conheça a equipe de educadores físicos do Studio Livel. Especialistas em Pilates, Musculação, Funcional, Yoga e Krav Magá no Prado, Belo Horizonte, desde 1986."
+  canonical="https://studiotreinointeligente.com.br/autor/equipe-livel/"
+  schema={schema}
+  andar="roxo"
+  activePath="/quem-somos/"
+>
+  <section class="autor-hero">
+    <div class="wrap">
+      <p class="autor-kicker">Quem escreve aqui</p>
+      <h1 class="autor-h1">Equipe Livel</h1>
+      <p class="autor-desc">
+        Os conteúdos publicados no Studio Livel são produzidos pela equipe de educadores físicos
+        do estúdio — profissionais com formação e experiência prática nas modalidades que ensinam.
+        Desde 1986 no Prado, Belo Horizonte.
+      </p>
+    </div>
+  </section>
+
+  <section class="autor-body">
+    <div class="wrap autor-body__inner">
+      <div class="autor-info">
+        <h2 class="autor-section-title">Especialidades da equipe</h2>
+        <ul class="autor-skills">
+          <li>Pilates (Mat, Reformer, Cadillac, Chair)</li>
+          <li>Musculação e Hipertrofia</li>
+          <li>Funcional FitBox</li>
+          <li>Yoga</li>
+          <li>Krav Magá — Defesa Pessoal</li>
+          <li>Treinamento para todas as idades</li>
+        </ul>
+      </div>
+
+      <div class="autor-about">
+        <h2 class="autor-section-title">Sobre o Studio Livel</h2>
+        <p>
+          O Studio Livel é uma casa especializada em treino acompanhado, em operação contínua
+          desde 1986 no bairro Prado, Belo Horizonte. Turmas de até 6 alunos por instrutor,
+          com o Método Livel de ciclos de 3 semanas.
+        </p>
+        <p>
+          Todo o conteúdo produzido reflete a experiência prática do dia a dia com alunos reais,
+          nas cinco modalidades oferecidas pelo estúdio.
+        </p>
+        <a href="/quem-somos/" class="btn btn--roxo" style="margin-top:20px;display:inline-flex">
+          Conhecer o estúdio
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.autor-hero {
+  background: #3D1540;
+  padding: 72px 0 56px;
+  color: #F0EDE8;
+}
+.autor-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #C090C0;
+  margin-bottom: 12px;
+}
+.autor-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #F0EDE8;
+  margin-bottom: 16px;
+}
+.autor-desc {
+  font-size: 16px;
+  color: rgba(240,237,232,.75);
+  max-width: 600px;
+  line-height: 1.7;
+}
+.autor-body { padding: 56px 0; background: #fff; }
+.autor-body__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+.autor-section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.autor-skills {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.autor-skills li {
+  font-size: 15px;
+  color: var(--text-dim);
+  padding-left: 18px;
+  position: relative;
+}
+.autor-skills li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--roxo);
+}
+.autor-about p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+@media (max-width: 680px) {
+  .autor-body__inner { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
