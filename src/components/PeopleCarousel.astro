@@ -72,21 +72,23 @@ const accentBg  = { roxo:'var(--roxo-dim)', gold:'var(--gold-dim)', orange:'var(
   .car-track { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── Mobile: carrossel horizontal com overflow do .wrap ── */
+/* ── Mobile: carrossel horizontal com swipe nativo ── */
 @media (max-width: 580px) {
   /*
-    overflow-x: clip → clipa visual sem criar scroll-container pai.
-    Isso impede que iOS Safari intercepte os swipes antes de chegarem
-    no .car-track filho que tem overflow-x: auto.
+    Section faz o clip visual (overflow-x: hidden no ancestral mais alto).
+    O .car-track é o ÚNICO scroll container, com touch-action: pan-x.
   */
+  .car-section {
+    overflow-x: hidden;
+  }
   .car-inner {
-    overflow-x: clip;   /* clip visual, sem scroll container */
-    overflow-y: visible;
+    overflow: visible;
     padding-right: 0;
   }
   .car-track {
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding-bottom: 8px;
@@ -95,9 +97,8 @@ const accentBg  = { roxo:'var(--roxo-dim)', gold:'var(--gold-dim)', orange:'var(
     scrollbar-width: none;
     -ms-overflow-style: none;
     gap: 14px;
-    /* Garante que o browser entenda que este elemento faz pan horizontal */
     touch-action: pan-x;
-    -webkit-overflow-scrolling: touch; /* momentum scroll no iOS */
+    -webkit-overflow-scrolling: touch;
     cursor: grab;
   }
   .car-track:active { cursor: grabbing; }

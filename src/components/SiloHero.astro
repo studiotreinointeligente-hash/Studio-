@@ -18,7 +18,7 @@ const {
   stats = [],
   ctaHref = '/aula-avaliacao/',
   ctaLabel = 'Agendar Aula de Avaliação',
-  ctaSecondaryHref = '#beneficios',
+  ctaSecondaryHref = '#como-funciona',
   ctaSecondaryLabel = 'Como funciona',
 } = Astro.props;
 
@@ -97,16 +97,19 @@ const c = colorMap[andar];
 .silo-hero__bg-picture {
   position: absolute; inset: 0; z-index: 0;
   display: block; overflow: hidden;
+  pointer-events: none;
 }
 .silo-hero__bg-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
   display: block;
+  pointer-events: none;
 }
 .silo-hero__overlay {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(135deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.48) 100%);
+  pointer-events: none;
 }
 .silo-hero__noise {
   position: absolute; inset: 0; z-index: 2;
@@ -142,5 +145,9 @@ const c = colorMap[andar];
   text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
 .silo-hero__stat-lbl { font-size: 12px; color: rgba(240,237,232,.78); letter-spacing: .04em; text-shadow: 0 1px 4px rgba(0,0,0,0.65); }
-@media(max-width:640px){ .silo-hero { padding: 48px 0 40px; } }
+@media(max-width:640px){
+  .silo-hero { padding: 48px 0 40px; }
+  .silo-hero__btns { flex-direction: column; }
+  .silo-hero__btns .btn { width: 100%; justify-content: center; }
+}
 </style>

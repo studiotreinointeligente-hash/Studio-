@@ -182,7 +182,7 @@ const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--o
 
         {/* ── DOBRA 4: COMO FUNCIONA ────────────────────── */}
         {isPilarOrHub && sData?.howSteps && (
-          <section class="dobra-how" aria-labelledby="how-heading">
+          <section id="como-funciona" class="dobra-how" aria-labelledby="how-heading">
             <div class="wrap dobra-how__inner">
               <div class="dobra-how__text">
                 <p class="dobra-kicker" style={`color:${accentColor}`}>Metodo Livel</p>
@@ -495,6 +495,8 @@ details[open] .seo-expand__icon::after { opacity: 0; }
   cursor: pointer;
   padding: 0;
   transition: opacity 0.15s;
+  position: relative;
+  z-index: 2;
 }
 .fade-expand__btn:hover { opacity: 0.6; }
 
@@ -538,4 +540,8 @@ details[open] .seo-expand__icon::after { opacity: 0; }
   gap: 20px; flex-wrap: wrap;
 }
 .blog-article-cta__text { font-size: 17px; font-weight: 600; color: var(--text); }
+@media (max-width: 640px) {
+  .blog-article-cta { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+  .blog-article-cta .btn { width: 100%; justify-content: center; }
+}
 </style>

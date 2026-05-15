@@ -192,7 +192,7 @@ const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) 
     m.hidden = true;
     document.body.style.overflow = '';
     const lvWa = document.getElementById('lv-wa');
-    if (lvWa) lvWa.style.pointerEvents = '';
+    if (lvWa) lvWa.style.pointerEvents = 'auto';
   }
 
   function openMenu() {

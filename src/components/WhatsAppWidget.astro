@@ -62,13 +62,16 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 2147483647;
+  z-index: 2100;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 12px;
+  /* Container não captura cliques — só os filhos interativos (FAB + chat aberto) */
+  pointer-events: none;
 }
+#lv-fab { pointer-events: auto; }
 
 /* Chat window */
 #lv-chat {
