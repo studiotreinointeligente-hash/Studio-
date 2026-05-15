@@ -17,7 +17,7 @@ interface Props {
 const {
   overline, h1, intro, andar,
   stats = [],
-  ctaPrimary = { href: '/aula-avaliacao/', label: 'Agendar Aula-Avaliação' },
+  ctaPrimary = { href: 'https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel.', label: 'Agendar pelo WhatsApp' },
   ctaSecondary,
   imageSrc, imageAlt = '', imageWidth = 1200, imageHeight = 630,
   isLCP = true,
@@ -37,7 +37,7 @@ const emClass = { roxo: 'em-roxo', gold: 'em-gold', orange: 'em-orange' }[andar]
       <h1 id="hero-h1" class="hero__h1" set:html={h1.replace(/\*(.*?)\*/g, `<em class="${emClass}">$1</em>`)} />
       <p class="hero__p">{intro}</p>
       <div class="hero__btns">
-        <a href={ctaPrimary.href} class={`btn ${btnClass} btn--lg`}>{ctaPrimary.label}</a>
+        <a href={ctaPrimary.href} class={`btn ${btnClass} btn--lg`} target="_blank" rel="noopener noreferrer">{ctaPrimary.label}</a>
         {ctaSecondary && (
           <a href={ctaSecondary.href} class="btn btn--ghost">{ctaSecondary.label}</a>
         )}

@@ -16,8 +16,8 @@ const {
   overline, h1, intro, andar,
   imageSrc, imageAlt = '',
   stats = [],
-  ctaHref = '/aula-avaliacao/',
-  ctaLabel = 'Agendar Aula de Avaliação',
+  ctaHref = 'https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel.',
+  ctaLabel = 'Agendar pelo WhatsApp',
   ctaSecondaryHref = '#como-funciona',
   ctaSecondaryLabel = 'Como funciona',
 } = Astro.props;
@@ -73,7 +73,7 @@ const c = colorMap[andar];
       <h1 id="page-h1" class="silo-hero__h1">{h1}</h1>
       {intro && <p class="silo-hero__intro">{intro}</p>}
       <div class="silo-hero__btns">
-        <a href={ctaHref} class={`btn ${c.btnClass} btn--lg`}>{ctaLabel}</a>
+        <a href={ctaHref} class={`btn ${c.btnClass} btn--lg`} target="_blank" rel="noopener noreferrer">{ctaLabel}</a>
         <a href={ctaSecondaryHref} class="btn btn--outline-white btn--lg" style={`border-color:rgba(255,255,255,.45)`}>{ctaSecondaryLabel}</a>
       </div>
       {stats.length > 0 && (
