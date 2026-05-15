@@ -91,21 +91,74 @@ const shortBreadcrumb = d.breadcrumb.map((b, i) =>
 const andarCor = d.andar === 'none' ? 'roxo' : (d.andar as 'roxo' | 'gold' | 'orange' | 'gray' | 'red');
 const accentColor = { roxo: 'var(--roxo)', gold: 'var(--gold)', orange: 'var(--orange)', gray: 'var(--gray)', red: 'var(--red)' }[andarCor];
 
-// Injeta author Equipe Livel em todos os nós Article do @graph
+// Wikidata Q-IDs por modalidade (confirmados)
+const WIKIDATA_MAP: Record<string, { id: string; name: string }> = {
+  pilates:     { id: 'Q182150', name: 'Pilates' },
+  yoga:        { id: 'Q8162',   name: 'Yoga' },
+  'krav-maga': { id: 'Q193208', name: 'Krav Magá' },
+};
+
 const equipeAuthor = {
   '@type': 'Organization',
   '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author',
   'name': 'Equipe Livel',
   'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
 };
+
+const CANONICAL_SAME_AS = [
+  'https://share.google/6dkQeAfPyaZqeFEIX',
+  'https://www.instagram.com/livelestudio/',
+  'https://www.facebook.com/studiolivel/',
+];
+
+const SPEAKABLE_SPEC = {
+  '@type': 'SpeakableSpecification',
+  'cssSelector': ['.summarization', 'h2', 'h3'],
+};
+
+const wikiEntity = WIKIDATA_MAP[d.modalidade];
+
 const schemaWithAuthor = (() => {
   const raw = d.schema as any;
   if (!raw?.['@graph']) return raw;
   return {
     ...raw,
     '@graph': raw['@graph'].map((node: any) => {
-      const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
-      if (types.includes('Article')) return { ...node, author: equipeAuthor };
+      const types = (Array.isArray(node['@type']) ? node['@type'] : [node['@type']]) as string[];
+
+      // Organization: normalizar sameAs para URLs canônicas
+      if (types.some(t => ['HealthClub', 'Organization', 'LocalBusiness'].includes(t))) {
+        return { ...node, sameAs: CANONICAL_SAME_AS };
+      }
+
+      // Article: injetar author + Speakable para pilar/educacional
+      if (types.includes('Article')) {
+        const withAuthor = { ...node, author: equipeAuthor };
+        if (d.type === 'educacional' || d.type === 'pilar') {
+          return { ...withAuthor, speakable: SPEAKABLE_SPEC };
+        }
+        return withAuthor;
+      }
+
+      // WebPage: adicionar about Wikidata + Speakable para pilar
+      if (types.includes('WebPage') && d.type === 'pilar' && wikiEntity) {
+        const wikidataThing = {
+          '@type': 'Thing',
+          '@id': `https://www.wikidata.org/wiki/${wikiEntity.id}`,
+          'name': wikiEntity.name,
+        };
+        const existingAbout = node.about;
+        const mergedAbout = existingAbout
+          ? (Array.isArray(existingAbout) ? [...existingAbout, wikidataThing] : [existingAbout, wikidataThing])
+          : wikidataThing;
+        return { ...node, about: mergedAbout, speakable: SPEAKABLE_SPEC };
+      }
+
+      // WebPage: Speakable para educacional
+      if (types.includes('WebPage') && d.type === 'educacional') {
+        return { ...node, speakable: SPEAKABLE_SPEC };
+      }
+
       return node;
     }),
   };
