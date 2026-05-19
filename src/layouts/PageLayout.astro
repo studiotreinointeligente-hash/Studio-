@@ -61,6 +61,17 @@ const {
   </div>
 </BaseLayout>
 
+<script is:inline>
+  document.querySelectorAll('.prose table').forEach(function(t) {
+    if (t.parentElement && !t.parentElement.classList.contains('table-wrap')) {
+      var w = document.createElement('div');
+      w.className = 'table-wrap';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    }
+  });
+</script>
+
 <style>
 .page-content { padding: var(--sp-10) 0 var(--sp-16); }
 .page-wrap { max-width: 820px; }

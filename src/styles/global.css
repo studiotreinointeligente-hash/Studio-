@@ -27,7 +27,7 @@
 
 /* ── Reset ────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 body {
   font-family: var(--font-body);
   background: #FFFFFF;
@@ -94,8 +94,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .prose strong { color: var(--text); font-weight: 600; }
 .prose a { color: var(--roxo); text-underline-offset: 3px; }
 .prose a:hover { color: var(--roxo-light); }
-.prose table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 1.5em 0; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); }
-.prose table th { text-align: left; padding: 10px 16px; background: var(--surface-subtle); border-bottom: 2px solid var(--border-strong); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
+.prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--r-md); border: 1px solid var(--border); margin: 1.5em 0; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 0; border-radius: 0; overflow: hidden; border: none; min-width: 480px; }
+.prose table th { text-align: left; padding: 10px 16px; background: var(--surface-subtle); border-bottom: 2px solid var(--border-strong); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); white-space: nowrap; }
 .prose table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
 .prose table tr:last-child td { border-bottom: none; }
 
