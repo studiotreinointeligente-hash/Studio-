@@ -5,7 +5,7 @@ import compress from '@playform/compress';
 import icon from 'astro-icon';
 
 export default defineConfig({
-  site: 'https://studiotreinointeligente.com.br',
+  site: 'https://www.studiotreinointeligente.com.br',
   output: 'static',
   integrations: [
     mdx(),

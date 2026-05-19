@@ -222,22 +222,22 @@ function classifyPage(slug, dir) {
 function buildBreadcrumb(slug, h1, modalidade) {
   const s = (slug || '').replace(/^\/|\/$/g, '');
   const base = [
-    { name: 'Início', item: 'https://studiotreinointeligente.com.br/' },
+    { name: 'Início', item: 'https://www.studiotreinointeligente.com.br/' },
   ];
 
   const modalMap = {
-    pilates: { name: 'Pilates', item: 'https://studiotreinointeligente.com.br/pilates/' },
-    musculacao: { name: 'Musculação', item: 'https://studiotreinointeligente.com.br/musculacao/' },
-    funcional: { name: 'Funcional', item: 'https://studiotreinointeligente.com.br/treino-funcional/' },
-    yoga: { name: 'Yoga', item: 'https://studiotreinointeligente.com.br/yoga/' },
-    'krav-maga': { name: 'Krav Magá', item: 'https://studiotreinointeligente.com.br/krav-maga/' },
+    pilates: { name: 'Pilates', item: 'https://www.studiotreinointeligente.com.br/pilates/' },
+    musculacao: { name: 'Musculação', item: 'https://www.studiotreinointeligente.com.br/musculacao/' },
+    funcional: { name: 'Funcional', item: 'https://www.studiotreinointeligente.com.br/treino-funcional/' },
+    yoga: { name: 'Yoga', item: 'https://www.studiotreinointeligente.com.br/yoga/' },
+    'krav-maga': { name: 'Krav Magá', item: 'https://www.studiotreinointeligente.com.br/krav-maga/' },
   };
 
   if (modalidade && modalMap[modalidade] && s !== modalidade && !s.startsWith(modalidade.split('-')[0]+'/') && s !== 'treino-funcional') {
     base.push(modalMap[modalidade]);
   }
 
-  base.push({ name: h1 || s, item: `https://studiotreinointeligente.com.br/${s}/` });
+  base.push({ name: h1 || s, item: `https://www.studiotreinointeligente.com.br/${s}/` });
   return base;
 }
 
@@ -286,7 +286,7 @@ function processHTMLPage(htmlPath, jsonPath, outputDir, collectionSlug, override
   const title       = removeDashes(meta.title || '');
   const description = removeDashes(meta.description || '');
   const h1          = removeDashes(meta.h1 || title);
-  const canonical   = `https://studiotreinointeligente.com.br/${slug}/`;
+  const canonical   = `https://www.studiotreinointeligente.com.br/${slug}/`;
 
   const frontmatter = {
     title,
@@ -327,7 +327,7 @@ function processTXTPage(txtPath, outputDir, collectionSlug, overrideSlug) {
   const title       = removeDashes(meta.title || '');
   const description = removeDashes(meta.description || '');
   const h1          = removeDashes(meta.h1 || title);
-  const canonical   = `https://studiotreinointeligente.com.br/${slug || ''}/`;
+  const canonical   = `https://www.studiotreinointeligente.com.br/${slug || ''}/`;
 
   const frontmatter = {
     title,
@@ -355,15 +355,15 @@ function processTXTPage(txtPath, outputDir, collectionSlug, overrideSlug) {
 }
 
 function buildMinimalSchema(slug, title, description, type, modalidade, isYMYL) {
-  const url = `https://studiotreinointeligente.com.br/${slug}/`;
-  const org = { '@id': 'https://studiotreinointeligente.com.br/#organization' };
+  const url = `https://www.studiotreinointeligente.com.br/${slug}/`;
+  const org = { '@id': 'https://www.studiotreinointeligente.com.br/#organization' };
 
   const graph = [
     {
       '@type': ['HealthClub', 'Organization'],
-      '@id': 'https://studiotreinointeligente.com.br/#organization',
+      '@id': 'https://www.studiotreinointeligente.com.br/#organization',
       'name': 'Studio Livel Treino Inteligente',
-      'url': 'https://studiotreinointeligente.com.br/',
+      'url': 'https://www.studiotreinointeligente.com.br/',
       'foundingDate': '1986',
       'address': { '@type': 'PostalAddress', 'streetAddress': 'R. Chopin, 271', 'addressLocality': 'Belo Horizonte', 'addressRegion': 'MG', 'postalCode': '30410-180', 'addressCountry': 'BR' },
       'telephone': '+55-31-98845-1387',
@@ -376,7 +376,7 @@ function buildMinimalSchema(slug, title, description, type, modalidade, isYMYL) 
       'name': title,
       'description': description,
       'inLanguage': 'pt-BR',
-      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+      'isPartOf': { '@id': 'https://www.studiotreinointeligente.com.br/#website' },
       'publisher': org,
       'datePublished': TODAY,
       'dateModified': TODAY,

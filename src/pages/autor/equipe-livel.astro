@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const schema = {
@@ -6,12 +6,12 @@ const schema = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author',
+      '@id': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/#author',
       'name': 'Equipe Livel',
-      'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
+      'url': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/',
       'description': 'Equipe de educadores físicos do Studio Livel Treino Inteligente. Profissionais especializados em Pilates, Musculação, Funcional FitBox, Yoga e Krav Magá, com atuação no Prado, Belo Horizonte, desde 1986.',
       'parentOrganization': {
-        '@id': 'https://studiotreinointeligente.com.br/#organization',
+        '@id': 'https://www.studiotreinointeligente.com.br/#organization',
       },
       'knowsAbout': [
         'Pilates',
@@ -25,7 +25,7 @@ const schema = {
       ],
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
+        'url': 'https://www.studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
         'width': 140,
         'height': 140,
       },
@@ -37,17 +37,17 @@ const schema = {
     },
     {
       '@type': 'WebPage',
-      '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#webpage',
-      'url': 'https://studiotreinointeligente.com.br/autor/equipe-livel/',
+      '@id': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/#webpage',
+      'url': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/',
       'name': 'Equipe Livel — Educadores Físicos | Studio Livel Treino Inteligente',
       'inLanguage': 'pt-BR',
-      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
-      'about': { '@id': 'https://studiotreinointeligente.com.br/autor/equipe-livel/#author' },
+      'isPartOf': { '@id': 'https://www.studiotreinointeligente.com.br/#website' },
+      'about': { '@id': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/#author' },
       'breadcrumb': {
         '@type': 'BreadcrumbList',
         'itemListElement': [
-          { '@type': 'ListItem', 'position': 1, 'name': 'Início', 'item': 'https://studiotreinointeligente.com.br/' },
-          { '@type': 'ListItem', 'position': 2, 'name': 'Equipe Livel', 'item': 'https://studiotreinointeligente.com.br/autor/equipe-livel/' },
+          { '@type': 'ListItem', 'position': 1, 'name': 'Início', 'item': 'https://www.studiotreinointeligente.com.br/' },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Equipe Livel', 'item': 'https://www.studiotreinointeligente.com.br/autor/equipe-livel/' },
         ],
       },
     },
@@ -58,7 +58,7 @@ const schema = {
 <BaseLayout
   title="Equipe Livel — Educadores Físicos | Studio Livel Treino Inteligente"
   description="Conheça a equipe de educadores físicos do Studio Livel. Especialistas em Pilates, Musculação, Funcional, Yoga e Krav Magá no Prado, Belo Horizonte, desde 1986."
-  canonical="https://studiotreinointeligente.com.br/autor/equipe-livel/"
+  canonical="https://www.studiotreinointeligente.com.br/autor/equipe-livel/"
   schema={schema}
   andar="roxo"
   activePath="/quem-somos/"

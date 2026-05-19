@@ -1,4 +1,4 @@
----
+﻿---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FAQSection from '../components/FAQSection.astro';
@@ -9,9 +9,9 @@ const schema = {
   '@graph': [
     {
       '@type': ['HealthClub','Organization'],
-      '@id': 'https://studiotreinointeligente.com.br/#organization',
+      '@id': 'https://www.studiotreinointeligente.com.br/#organization',
       'name': 'Studio Livel Treino Inteligente',
-      'url': 'https://studiotreinointeligente.com.br/',
+      'url': 'https://www.studiotreinointeligente.com.br/',
       'foundingDate': '1986',
       'description': 'Casa especializada em treino acompanhado no Prado, Belo Horizonte, em operacao continua desde 1986.',
       'address': { '@type': 'PostalAddress', 'streetAddress': 'R. Chopin, 271', 'addressLocality': 'Belo Horizonte', 'addressRegion': 'MG', 'postalCode': '30410-180', 'addressCountry': 'BR' },
@@ -19,7 +19,7 @@ const schema = {
       'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': '4.8', 'reviewCount': '201', 'bestRating': '5', 'worstRating': '1' },
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
+        'url': 'https://www.studiotreinointeligente.com.br/images/logos/logo-livel-studio-roxa.png',
         'width': 140,
         'height': 140,
       },
@@ -36,14 +36,14 @@ const schema = {
         { '@type': 'Thing', 'name': 'Treino Funcional' },
       ],
       'hasPart': [
-        { '@id': 'https://studiotreinointeligente.com.br/pilates/#service-pilates' },
-        { '@id': 'https://studiotreinointeligente.com.br/musculacao/#service' },
-        { '@id': 'https://studiotreinointeligente.com.br/treino-funcional/#service' },
-        { '@id': 'https://studiotreinointeligente.com.br/yoga/#service' },
-        { '@id': 'https://studiotreinointeligente.com.br/krav-maga/#service' },
+        { '@id': 'https://www.studiotreinointeligente.com.br/pilates/#service-pilates' },
+        { '@id': 'https://www.studiotreinointeligente.com.br/musculacao/#service' },
+        { '@id': 'https://www.studiotreinointeligente.com.br/treino-funcional/#service' },
+        { '@id': 'https://www.studiotreinointeligente.com.br/yoga/#service' },
+        { '@id': 'https://www.studiotreinointeligente.com.br/krav-maga/#service' },
       ],
     },
-    { '@type': 'WebSite', '@id': 'https://studiotreinointeligente.com.br/#website', 'url': 'https://studiotreinointeligente.com.br/', 'name': 'Studio Livel Treino Inteligente', 'inLanguage': 'pt-BR' },
+    { '@type': 'WebSite', '@id': 'https://www.studiotreinointeligente.com.br/#website', 'url': 'https://www.studiotreinointeligente.com.br/', 'name': 'Studio Livel Treino Inteligente', 'inLanguage': 'pt-BR' },
   ],
 };
 
@@ -101,7 +101,7 @@ const modalidades = [
 <BaseLayout
   title="Studio Livel Treino Inteligente | Prado, Belo Horizonte"
   description="Studio Livel Treino Inteligente: casa especializada em treino acompanhado desde 1986 no Prado, BH. Pilates, Musculacao, Funcional, Yoga e Krav Maga. Turmas de 6 alunos."
-  canonical="https://studiotreinointeligente.com.br/"
+  canonical="https://www.studiotreinointeligente.com.br/"
   schema={schema}
   andar="roxo"
   activePath="/"

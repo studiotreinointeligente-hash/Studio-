@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const schema = {
@@ -6,18 +6,18 @@ const schema = {
   '@graph': [
     {
       '@type': 'WebPage',
-      '@id': 'https://studiotreinointeligente.com.br/modalidades/#webpage',
-      'url': 'https://studiotreinointeligente.com.br/modalidades/',
+      '@id': 'https://www.studiotreinointeligente.com.br/modalidades/#webpage',
+      'url': 'https://www.studiotreinointeligente.com.br/modalidades/',
       'name': 'Modalidades | Studio Livel Treino Inteligente',
       'description': 'Conheça as cinco modalidades do Studio Livel: Musculação, Pilates, Treino Funcional, Yoga e Krav Magá. Turmas de até 6 alunos por instrutor no Prado, BH.',
       'inLanguage': 'pt-BR',
-      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+      'isPartOf': { '@id': 'https://www.studiotreinointeligente.com.br/#website' },
     },
     {
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://studiotreinointeligente.com.br/' },
-        { '@type': 'ListItem', 'position': 2, 'name': 'Modalidades', 'item': 'https://studiotreinointeligente.com.br/modalidades/' },
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://www.studiotreinointeligente.com.br/' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Modalidades', 'item': 'https://www.studiotreinointeligente.com.br/modalidades/' },
       ],
     },
   ],
@@ -108,7 +108,7 @@ const corMap: Record<string, { bg: string; text: string; accent: string; badge: 
 <BaseLayout
   title="Modalidades | Studio Livel Treino Inteligente"
   description="Conheça as cinco modalidades do Studio Livel: Musculação, Pilates, Funcional FitBox, Yoga e Krav Magá. Turmas de até 6 alunos por instrutor no Prado, Belo Horizonte."
-  canonical="https://studiotreinointeligente.com.br/modalidades/"
+  canonical="https://www.studiotreinointeligente.com.br/modalidades/"
   schema={schema}
   andar="roxo"
   activePath="/modalidades/"

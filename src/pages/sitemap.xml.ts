@@ -1,6 +1,6 @@
-import { getCollection } from 'astro:content';
+﻿import { getCollection } from 'astro:content';
 
-const SITE = 'https://studiotreinointeligente.com.br';
+const SITE = 'https://www.studiotreinointeligente.com.br';
 
 const STATIC_PAGES = [
   { url: '/',                 priority: '1.0', changefreq: 'weekly'  },

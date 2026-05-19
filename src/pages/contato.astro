@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiloHero   from '../components/SiloHero.astro';
 import BreadcrumbNav from '../components/BreadcrumbNav.astro';
@@ -11,9 +11,9 @@ const schema = {
   "@graph": [
     {
       "@type": ["HealthClub","LocalBusiness"],
-      "@id": "https://studiotreinointeligente.com.br/#organization",
+      "@id": "https://www.studiotreinointeligente.com.br/#organization",
       "name": "Studio Livel Treino Inteligente",
-      "url": "https://studiotreinointeligente.com.br/",
+      "url": "https://www.studiotreinointeligente.com.br/",
       "telephone": "+55-31-99107-0392",
       "foundingDate": "1986",
       "address": {
@@ -44,25 +44,25 @@ const schema = {
     },
     {
       "@type": "ContactPage",
-      "@id": "https://studiotreinointeligente.com.br/contato/#webpage",
-      "url": "https://studiotreinointeligente.com.br/contato/",
+      "@id": "https://www.studiotreinointeligente.com.br/contato/#webpage",
+      "url": "https://www.studiotreinointeligente.com.br/contato/",
       "name": "Contato | Studio Livel Treino Inteligente",
       "inLanguage": "pt-BR",
-      "isPartOf": { "@id": "https://studiotreinointeligente.com.br/#website" }
+      "isPartOf": { "@id": "https://www.studiotreinointeligente.com.br/#website" }
     }
   ]
 };
 
 const breadcrumb = [
-  { name: "Início",  item: "https://studiotreinointeligente.com.br/" },
-  { name: "Contato", item: "https://studiotreinointeligente.com.br/contato/" },
+  { name: "Início",  item: "https://www.studiotreinointeligente.com.br/" },
+  { name: "Contato", item: "https://www.studiotreinointeligente.com.br/contato/" },
 ];
 ---
 
 <BaseLayout
   title="Contato | Studio Livel Treino Inteligente"
   description="Fale com o Studio Livel: WhatsApp, formulário, endereço e mapa. R. Chopin, 271, Prado, Belo Horizonte. Aula-avaliação gratuita em 50 minutos."
-  canonical="https://studiotreinointeligente.com.br/contato/"
+  canonical="https://www.studiotreinointeligente.com.br/contato/"
   schema={schema}
   andar="roxo"
   activePath="/contato/"

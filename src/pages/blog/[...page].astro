@@ -53,11 +53,11 @@ const schema = {
   '@graph': [
     {
       '@type': 'CollectionPage',
-      '@id': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}#webpage`,
-      'url': `https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`,
+      '@id': `https://www.studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}#webpage`,
+      'url': `https://www.studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`,
       'name': `Blog e Educação${isFirstPage ? '' : ' - Página ' + page.currentPage} | Studio Livel`,
       'inLanguage': 'pt-BR',
-      'isPartOf': { '@id': 'https://studiotreinointeligente.com.br/#website' },
+      'isPartOf': { '@id': 'https://www.studiotreinointeligente.com.br/#website' },
     },
   ],
 };
@@ -66,7 +66,7 @@ const schema = {
 <BaseLayout
   title={`Blog e Educação${isFirstPage ? '' : ' - Página ' + page.currentPage} | Studio Livel Treino Inteligente`}
   description="Artigos, guias e conteúdo educacional sobre Pilates, Musculação, Funcional, Yoga e Krav Maga. Baseado no Método Livel desde 1986, Prado, Belo Horizonte."
-  canonical={`https://studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`}
+  canonical={`https://www.studiotreinointeligente.com.br/blog/${isFirstPage ? '' : page.currentPage + '/'}`}
   schema={schema}
   activePath="/blog/"
   noindex={!isFirstPage}
