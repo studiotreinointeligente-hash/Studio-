@@ -29,3 +29,6 @@ npm-debug.log*
 
 # Local Vercel
 .vercel/
+
+# Google Instant Indexing — chave privada da service account (NUNCA commitar)
+service-account.json
