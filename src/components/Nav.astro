@@ -123,63 +123,63 @@ const isModalidadeActive = modalidades.some(m => activePath.startsWith(m.href)) 
       <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
   </div>
-
-  <!-- Menu mobile -->
-  <div id="nav-mobile" class="nav-mobile" hidden>
-    <ul role="list">
-      <li>
-        <a href="/"
-          aria-current={activePath==='/'?'page':undefined}
-          style={activePath==='/'?`color:${accentColor};font-weight:700`:''}>
-          Início
-        </a>
-      </li>
-      <li>
-        <a href="/quem-somos/"
-          aria-current={activePath==='/quem-somos/'?'page':undefined}
-          style={activePath==='/quem-somos/'?`color:${accentColor};font-weight:700`:''}>
-          Quem Somos
-        </a>
-      </li>
-      <li class="nav-mobile-group">
-        <a href="/modalidades/"
-          class="nav-mobile-group__label"
-          aria-current={activePath==='/modalidades/'?'page':undefined}
-          style={isModalidadeActive?`color:${accentColor};font-weight:700`:''}>
-          Modalidades
-        </a>
-        <ul class="nav-mobile-group__list" role="list">
-          {modalidades.map(m => (
-            <li>
-              <a href={m.href}
-                aria-current={activePath.startsWith(m.href)?'page':undefined}
-                style={activePath.startsWith(m.href)?`color:${accentColor};font-weight:700`:''}>
-                {m.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </li>
-      <li>
-        <a href="/blog/"
-          aria-current={activePath.startsWith('/blog/')?'page':undefined}
-          style={activePath.startsWith('/blog/')?`color:${accentColor};font-weight:700`:''}>
-          Blog
-        </a>
-      </li>
-      <li>
-        <a href="/contato/"
-          aria-current={activePath==='/contato/'?'page':undefined}
-          style={activePath==='/contato/'?`color:${accentColor};font-weight:700`:''}>
-          Contato
-        </a>
-      </li>
-    </ul>
-    <div style="margin-top:18px">
-      <a href="https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel." class={`btn ${btnClass}`} target="_blank" rel="noopener noreferrer">Agendar Aula Grátis</a>
-    </div>
-  </div>
 </header>
+
+<!-- Menu mobile fora do header para evitar bug de fixed dentro de sticky -->
+<div id="nav-mobile" class="nav-mobile" hidden>
+  <ul role="list">
+    <li>
+      <a href="/"
+        aria-current={activePath==='/'?'page':undefined}
+        style={activePath==='/'?`color:${accentColor};font-weight:700`:''}>
+        Início
+      </a>
+    </li>
+    <li>
+      <a href="/quem-somos/"
+        aria-current={activePath==='/quem-somos/'?'page':undefined}
+        style={activePath==='/quem-somos/'?`color:${accentColor};font-weight:700`:''}>
+        Quem Somos
+      </a>
+    </li>
+    <li class="nav-mobile-group">
+      <a href="/modalidades/"
+        class="nav-mobile-group__label"
+        aria-current={activePath==='/modalidades/'?'page':undefined}
+        style={isModalidadeActive?`color:${accentColor};font-weight:700`:''}>
+        Modalidades
+      </a>
+      <ul class="nav-mobile-group__list" role="list">
+        {modalidades.map(m => (
+          <li>
+            <a href={m.href}
+              aria-current={activePath.startsWith(m.href)?'page':undefined}
+              style={activePath.startsWith(m.href)?`color:${accentColor};font-weight:700`:''}>
+              {m.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </li>
+    <li>
+      <a href="/blog/"
+        aria-current={activePath.startsWith('/blog/')?'page':undefined}
+        style={activePath.startsWith('/blog/')?`color:${accentColor};font-weight:700`:''}>
+        Blog
+      </a>
+    </li>
+    <li>
+      <a href="/contato/"
+        aria-current={activePath==='/contato/'?'page':undefined}
+        style={activePath==='/contato/'?`color:${accentColor};font-weight:700`:''}>
+        Contato
+      </a>
+    </li>
+  </ul>
+  <div style="margin-top:18px">
+    <a href="https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel." class={`btn ${btnClass}`} target="_blank" rel="noopener noreferrer">Agendar Aula Grátis</a>
+  </div>
+</div>
 
 <script>
   // Mobile toggle

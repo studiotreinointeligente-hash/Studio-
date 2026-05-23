@@ -16,6 +16,7 @@ interface Props {
   ogImage?: string;
   isYMYL?: boolean;
   noindex?: boolean;
+  hideCta?: boolean;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   ogImage = '/images/logos/logo-livel-og.jpg',
   isYMYL = false,
   noindex = false,
+  hideCta = false,
 } = Astro.props;
 
 const siteUrl = 'https://www.studiotreinointeligente.com.br';
@@ -150,7 +152,7 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   <main id="main-content" tabindex="-1">
     <slot />
   </main>
-  <PreFooterCTA />
+  {!hideCta && <PreFooterCTA />}
   <Footer />
   <WhatsAppWidget />
 </body>
