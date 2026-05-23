@@ -6,7 +6,12 @@ import FAQSection from '../components/FAQSection.astro';
 import BairrosMap from '../components/BairrosMap.astro';
 import BreadcrumbNav from '../components/BreadcrumbNav.astro';
 import PeopleCarousel from '../components/PeopleCarousel.astro';
+import ProfessoresKravMaga from '../components/ProfessoresKravMaga.astro';
+import KravMagaHero from '../components/KravMagaHero.astro';
+import KravMagaFormPopup from '../components/KravMagaFormPopup.astro';
 import { siloData } from '../data/siloData';
+
+const KRAV_CTA_URL = 'https://wa.me/553171421239?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Krav%20Mag%C3%A1%20no%20Studio%20Livel.';
 
 type PageEntry =
   | CollectionEntry<'pilates'> | CollectionEntry<'musculacao'>
@@ -67,16 +72,20 @@ if (Array.isArray(graph)) {
 
 // Landing page: APENAS as pilar pages do menu principal
 // Tudo o mais (hub, bairro, subpublico, educacional, tier0, tier2, outer) = blog
-const isSiloPage   = d.type === 'pilar';
+const isSiloPage    = d.type === 'pilar';
 const isContentPage = isSiloPage;
 const isPilarOrHub  = d.type === 'pilar';
 const isBairro      = false;
 const isBlogPage    = !isSiloPage;
+const isKravMaga    = d.modalidade === 'krav-maga';
+const isKravPilar   = isKravMaga && d.type === 'pilar';
 
 // Dobra 2 com conteudo expandivel em todas as paginas pilar
 const hasInlineExpand = d.type === 'pilar';
 
-const imgSrc = modalImages[d.modalidade] || modalImages.geral;
+const imgSrc = isKravMaga
+  ? '/images/krav-maga/defesa-pessoal.jpg'
+  : (modalImages[d.modalidade] || modalImages.geral);
 const sData = siloData[d.modalidade];
 
 // H1 curto para display (sem colon e subtitulo)
@@ -174,21 +183,30 @@ const schemaWithAuthor = (() => {
   activePath={`/${d.urlPath.replace(/^\/|\/$/g,'')}/`}
   lcpImage={isContentPage ? imgSrc : undefined}
   isYMYL={d.isYMYL}
+  hideCta={isKravMaga}
 >
   {isContentPage ? (
     <>
       {/* ── DOBRA 1: HERO ─────────────────────────────── */}
-      <SiloHero
-        overline={sData?.overline || (d.modalidade + ' · Studio Livel')}
-        h1={displayH1}
-        intro={sData?.heroIntroShort || d.description}
-        andar={andarCor}
-        imageSrc={imgSrc}
-        imageAlt={displayH1}
-        stats={sData?.stats || []}
-        ctaHref="https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel."
-        ctaLabel={sData?.ctaLabel || 'Agendar pelo WhatsApp'}
-      />
+      {isKravPilar ? (
+        <KravMagaHero
+          h1={displayH1}
+          intro={sData?.heroIntroShort || d.description}
+          stats={sData?.stats || []}
+        />
+      ) : (
+        <SiloHero
+          overline={sData?.overline || (d.modalidade + ' · Studio Livel')}
+          h1={displayH1}
+          intro={sData?.heroIntroShort || d.description}
+          andar={andarCor}
+          imageSrc={imgSrc}
+          imageAlt={displayH1}
+          stats={sData?.stats || []}
+          ctaHref="https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel."
+          ctaLabel={sData?.ctaLabel || 'Agendar pelo WhatsApp'}
+        />
+      )}
 
       <div class="silo-body">
 
@@ -273,23 +291,30 @@ const schemaWithAuthor = (() => {
                 </ol>
               </div>
               <div class="dobra-how__img" aria-hidden="true">
-                <picture>
-                  <source
-                    type="image/avif"
-                    srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
-                    sizes="(max-width:900px) 100vw, 50vw"
-                  />
-                  <source
-                    type="image/webp"
-                    srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
-                    sizes="(max-width:900px) 100vw, 50vw"
-                  />
-                  <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" />
-                </picture>
+                {isKravMaga ? (
+                  <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" style="border-radius:12px;object-fit:cover;width:100%;height:100%;" />
+                ) : (
+                  <picture>
+                    <source
+                      type="image/avif"
+                      srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
+                      sizes="(max-width:900px) 100vw, 50vw"
+                    />
+                    <source
+                      type="image/webp"
+                      srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
+                      sizes="(max-width:900px) 100vw, 50vw"
+                    />
+                    <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" />
+                  </picture>
+                )}
               </div>
             </div>
           </section>
         )}
+
+        {/* ── DOBRA 5.5: PROFESSORES — só na pilar de krav-maga ─ */}
+        {isKravPilar && <ProfessoresKravMaga />}
 
         {/* ── DOBRA 5: CARROSSEL PARA QUEM E ───────────── */}
         {(isPilarOrHub || isBairro) && sData?.forWhom && (
@@ -382,23 +407,48 @@ const schemaWithAuthor = (() => {
   )}
 </BaseLayout>
 
+{isKravMaga && <KravMagaFormPopup />}
+
 {hasInlineExpand && (
   <script>
     (function () {
-      var wrap = document.getElementById('fade-expand');
-      var btn  = document.getElementById('fade-expand-btn');
+      var wrap    = document.getElementById('fade-expand');
+      var btn     = document.getElementById('fade-expand-btn');
       if (!wrap || !btn) return;
-      var veil = wrap.querySelector('.fade-expand__veil');
+      var veil    = wrap.querySelector('.fade-expand__veil');
+      var prose   = wrap.querySelector('.fade-expand__prose');
+      var label   = btn.querySelector('span');
+      var svg     = btn.querySelector('svg');
+      var collapsed = true;
+      var collapsedHeight = wrap.offsetHeight;
+
       btn.addEventListener('click', function () {
-        var prose = wrap.querySelector('.fade-expand__prose');
-        wrap.style.transition = 'max-height 0.45s ease';
-        wrap.style.maxHeight  = prose.scrollHeight + 'px';
-        if (veil) veil.style.opacity = '0';
-        btn.style.display = 'none';
-        setTimeout(function () {
-          wrap.style.maxHeight = 'none';
-          wrap.style.overflow  = 'visible';
-        }, 470);
+        if (collapsed) {
+          /* — expandir — */
+          wrap.style.transition = 'max-height 0.45s ease';
+          wrap.style.overflow   = 'hidden';
+          wrap.style.maxHeight  = prose.scrollHeight + 'px';
+          if (veil) veil.style.opacity = '0';
+          if (label) label.textContent = 'Ver menos';
+          if (svg) svg.style.transform = 'rotate(180deg)';
+          collapsed = false;
+          setTimeout(function () {
+            wrap.style.maxHeight = 'none';
+            wrap.style.overflow  = 'visible';
+          }, 470);
+        } else {
+          /* — recolher — */
+          wrap.style.overflow   = 'hidden';
+          wrap.style.maxHeight  = prose.scrollHeight + 'px';
+          if (veil) veil.style.opacity = '1';
+          if (label) label.textContent = 'Ver mais';
+          if (svg) svg.style.transform = 'rotate(0deg)';
+          collapsed = true;
+          requestAnimationFrame(function () {
+            wrap.style.transition = 'max-height 0.4s ease';
+            wrap.style.maxHeight  = collapsedHeight + 'px';
+          });
+        }
       });
     })();
   </script>
@@ -571,6 +621,7 @@ details[open] .seo-expand__icon::after { opacity: 0; }
   position: relative;
   z-index: 2;
 }
+.fade-expand__btn svg { transition: transform 0.3s ease; }
 .fade-expand__btn:hover { opacity: 0.6; }
 
 /* ── Garantir cores corretas em textos (forca light) ── */

@@ -1,0 +1,400 @@
+---
+// Popup de agendamento — Krav Magá Studio Livel
+const WA_NUMBER = '553171421239';
+---
+
+<!-- Overlay -->
+<div id="km-popup-overlay" class="km-popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="km-popup-title">
+  <div class="km-popup-box">
+
+    <button class="km-popup-close" id="km-popup-close" aria-label="Fechar formulário" type="button">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <h2 id="km-popup-title" class="km-popup-title">
+      Dê o primeiro passo. <span class="km-popup-title--red">Mude sua vida.</span>
+    </h2>
+    <p class="km-popup-sub">
+      Preencha o formulário abaixo para agendar a sua aula gratuita no Centro de Krav Maga Prado e vivenciar nossa metodologia oficial.
+    </p>
+
+    <form id="km-popup-form" class="km-popup-form" novalidate>
+
+      <div class="km-popup-row">
+        <div class="km-popup-field">
+          <label for="km-nome">Seu Nome Completo</label>
+          <input
+            type="text"
+            id="km-nome"
+            name="nome"
+            placeholder="Ex: João da Silva"
+            autocomplete="name"
+            required
+          />
+          <span class="km-field-error" id="km-nome-err">Preencha este campo.</span>
+        </div>
+        <div class="km-popup-field">
+          <label for="km-tel">WhatsApp / Telefone</label>
+          <input
+            type="tel"
+            id="km-tel"
+            name="telefone"
+            placeholder="(31) 90000-0000"
+            autocomplete="tel"
+            maxlength="15"
+            inputmode="numeric"
+            required
+          />
+          <span class="km-field-error" id="km-tel-err">Preencha este campo.</span>
+        </div>
+      </div>
+
+      <div class="km-popup-field km-popup-field--full">
+        <label for="km-turma">Escolha uma Turma</label>
+        <select id="km-turma" name="turma">
+          <option value="" disabled selected>Selecione a turma...</option>
+          <optgroup label="Segunda e Quarta">
+            <option value="Seg/Qua 18:30 - Iniciantes">18:30 - Iniciantes</option>
+            <option value="Seg/Qua 19:30 - Graduados">19:30 - Graduados</option>
+            <option value="Seg/Qua 20:30 - Iniciantes">20:30 - Iniciantes</option>
+          </optgroup>
+          <optgroup label="Terça e Quinta">
+            <option value="Ter/Qui 06:10 - Graduados">06:10 - Graduados</option>
+            <option value="Ter/Qui 07:10 - Iniciantes">07:10 - Iniciantes</option>
+            <option value="Ter/Qui 18:30 - Iniciantes">18:30 - Iniciantes</option>
+            <option value="Ter/Qui 19:30 - Graduados">19:30 - Graduados</option>
+            <option value="Ter/Qui 20:30 - Iniciantes">20:30 - Iniciantes</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <button type="submit" class="km-popup-submit">
+        Garantir minha aula gratuita agora &nbsp;→
+      </button>
+
+      <p class="km-popup-note">* Suas informações estão seguras conosco. Entraremos em contato rápido para confirmar seu agendamento.</p>
+
+    </form>
+  </div>
+</div>
+
+<script is:inline define:vars={{ WA_NUMBER }}>
+(function () {
+
+  /* ── Elementos ── */
+  var overlay = document.getElementById('km-popup-overlay');
+  var closeBtn = document.getElementById('km-popup-close');
+  var form = document.getElementById('km-popup-form');
+  var nomeInput = document.getElementById('km-nome');
+  var telInput = document.getElementById('km-tel');
+  var nomeErr = document.getElementById('km-nome-err');
+  var telErr = document.getElementById('km-tel-err');
+
+  /* ── Abertura / fechamento ── */
+  function openPopup() {
+    if (!overlay) return;
+    overlay.removeAttribute('aria-hidden');
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { if (nomeInput) nomeInput.focus(); }, 100);
+  }
+
+  function closePopup() {
+    if (!overlay) return;
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  /* Expõe openPopup globalmente para os botões CTA */
+  window.kmOpenPopup = openPopup;
+
+  if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+  if (overlay) {
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closePopup();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePopup();
+  });
+
+  /* ── Máscara de telefone: (XX) XXXXX-XXXX ── */
+  function maskPhone(raw) {
+    var d = raw.replace(/\D/g, '').slice(0, 11);
+    if (d.length === 0) return '';
+    if (d.length <= 2) return '(' + d;
+    if (d.length <= 7) return '(' + d.slice(0,2) + ') ' + d.slice(2);
+    return '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+  }
+
+  if (telInput) {
+    telInput.addEventListener('input', function () {
+      var pos = telInput.selectionStart;
+      var prev = telInput.value;
+      telInput.value = maskPhone(prev);
+      /* reposiciona cursor */
+      var diff = telInput.value.length - prev.length;
+      if (pos !== null) telInput.setSelectionRange(pos + diff, pos + diff);
+    });
+
+    telInput.addEventListener('keydown', function (e) {
+      /* permite: backspace, delete, setas, tab */
+      if ([8,9,46,37,38,39,40].indexOf(e.keyCode) !== -1) return;
+      /* bloqueia não-numéricos */
+      if (!/^\d$/.test(e.key)) e.preventDefault();
+    });
+  }
+
+  /* ── Validação e envio ── */
+  function isValidPhone(v) {
+    return v.replace(/\D/g, '').length >= 10;
+  }
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var nome = nomeInput ? nomeInput.value.trim() : '';
+      var tel  = telInput  ? telInput.value.trim()  : '';
+      var turma = document.getElementById('km-turma') ? document.getElementById('km-turma').value : '';
+
+      var valid = true;
+
+      /* valida nome */
+      if (!nome) {
+        nomeInput.classList.add('is-invalid');
+        nomeErr.style.display = 'block';
+        valid = false;
+      } else {
+        nomeInput.classList.remove('is-invalid');
+        nomeErr.style.display = 'none';
+      }
+
+      /* valida telefone */
+      if (!tel || !isValidPhone(tel)) {
+        telInput.classList.add('is-invalid');
+        telErr.style.display = 'block';
+        valid = false;
+      } else {
+        telInput.classList.remove('is-invalid');
+        telErr.style.display = 'none';
+      }
+
+      if (!valid) return;
+
+      /* monta mensagem WhatsApp */
+      var msg = 'Olá! Quero agendar minha aula gratuita de Krav Magá.\n\n'
+              + 'Nome: ' + nome + '\n'
+              + 'Telefone: ' + tel + '\n'
+              + (turma ? 'Turma de interesse: ' + turma + '\n' : '')
+              + '\nAguardo o contato!';
+
+      var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank', 'noopener,noreferrer');
+      closePopup();
+    });
+
+    /* remove erro ao digitar */
+    if (nomeInput) nomeInput.addEventListener('input', function () {
+      nomeInput.classList.remove('is-invalid');
+      nomeErr.style.display = 'none';
+    });
+    if (telInput) telInput.addEventListener('input', function () {
+      telInput.classList.remove('is-invalid');
+      telErr.style.display = 'none';
+    });
+  }
+
+})();
+</script>
+
+<style>
+/* ── Overlay ── */
+.km-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(3px);
+}
+.km-popup-overlay.is-open {
+  display: flex;
+}
+
+/* ── Caixa ── */
+.km-popup-box {
+  position: relative;
+  background: #111;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 760px;
+  padding: 48px 44px 36px;
+  box-shadow: 0 32px 80px rgba(0,0,0,.6);
+  animation: kmSlideUp .3s cubic-bezier(.25,.8,.25,1);
+}
+
+@keyframes kmSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Fechar ── */
+.km-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,.08);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,.6);
+  transition: background .2s, color .2s;
+}
+.km-popup-close:hover { background: rgba(255,255,255,.16); color: #fff; }
+
+/* ── Título ── */
+.km-popup-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  color: #fff;
+  text-align: center;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.km-popup-title--red { color: #c0181a; }
+
+.km-popup-sub {
+  font-size: .9rem;
+  color: rgba(255,255,255,.55);
+  text-align: center;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+/* ── Form ── */
+.km-popup-form { display: flex; flex-direction: column; gap: 18px; }
+
+.km-popup-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.km-popup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.km-popup-field--full { grid-column: 1 / -1; }
+
+.km-popup-field label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.km-popup-field input,
+.km-popup-field select {
+  background: #1a1a1a;
+  border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 1rem;
+  color: #fff;
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.km-popup-field input::placeholder { color: rgba(255,255,255,.25); }
+
+.km-popup-field input:focus,
+.km-popup-field select:focus {
+  border-color: #c0181a;
+}
+
+.km-popup-field input.is-invalid,
+.km-popup-field select.is-invalid {
+  border-color: #c0181a;
+  box-shadow: 0 0 0 3px rgba(192,24,26,.2);
+}
+
+/* seta do select */
+.km-popup-field select {
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff66' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.km-popup-field select option {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* ── Erro ── */
+.km-field-error {
+  display: none;
+  font-size: .75rem;
+  color: #f08080;
+  margin-top: 2px;
+}
+
+/* ── Botão enviar ── */
+.km-popup-submit {
+  background: #c0181a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  width: 100%;
+  transition: background .2s, transform .15s;
+  margin-top: 4px;
+}
+.km-popup-submit:hover {
+  background: #a01416;
+  transform: translateY(-1px);
+}
+
+/* ── Nota rodapé ── */
+.km-popup-note {
+  font-size: .75rem;
+  color: rgba(255,255,255,.3);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 600px) {
+  .km-popup-box { padding: 36px 20px 28px; }
+  .km-popup-row { grid-template-columns: 1fr; }
+}
+</style>

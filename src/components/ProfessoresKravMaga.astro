@@ -1,0 +1,249 @@
+---
+// Seção de professores — Krav Maga
+---
+
+<section class="prof-section" aria-labelledby="prof-heading">
+  <div class="wrap prof-inner">
+
+    <div class="prof-header">
+      <p class="prof-kicker">Instrutores certificados</p>
+      <h2 id="prof-heading" class="prof-title">
+        Faixas Pretas que ensinam<br />defesa pessoal real
+      </h2>
+      <p class="prof-subtitle">
+        Certificados pela Federação Sul-Americana de Krav Maga (FSAKM),
+        linhagem direta do sistema criado por Imi Lichtenfeld.
+      </p>
+    </div>
+
+    <div class="prof-grid">
+
+      <article class="prof-card" aria-label="Professor Guilherme">
+        <div class="prof-photo-wrap">
+          <img
+            src="/images/krav-maga/prof-guilherme.jpg"
+            alt="Prof. Guilherme — Faixa Preta 2º Dan de Krav Maga"
+            width="420"
+            height="520"
+            loading="lazy"
+            decoding="async"
+            class="prof-photo"
+          />
+          <div class="prof-belt">
+            <span class="prof-belt__text">Faixa Preta 2º Dan</span>
+          </div>
+        </div>
+        <div class="prof-info">
+          <h3 class="prof-name">Prof. Guilherme</h3>
+          <p class="prof-bio">
+            Instrutor sênior com formação pelo sistema Krav Maga Mestre Kobi.
+            Especialista em defesa pessoal civil e cenários urbanos de alto risco.
+          </p>
+        </div>
+      </article>
+
+      <article class="prof-card" aria-label="Professor Ederson">
+        <div class="prof-photo-wrap">
+          <img
+            src="/images/krav-maga/prof-ederson.jpg"
+            alt="Prof. Ederson — Faixa Preta 1º Dan de Krav Maga"
+            width="420"
+            height="520"
+            loading="lazy"
+            decoding="async"
+            class="prof-photo"
+          />
+          <div class="prof-belt">
+            <span class="prof-belt__text">Faixa Preta 1º Dan</span>
+          </div>
+        </div>
+        <div class="prof-info">
+          <h3 class="prof-name">Prof. Ederson</h3>
+          <p class="prof-bio">
+            Instrutor certificado com foco em krav maga feminino e iniciantes.
+            Formação em defesa para ambientes confinados e agressão com arma branca.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="prof-cta-wrap">
+      <button
+        type="button"
+        class="btn btn--red btn--lg prof-cta"
+        onclick="window.kmOpenPopup && window.kmOpenPopup()"
+      >
+        Agendar aula gratuita
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.prof-section {
+  background: #140202;
+  padding: 80px 0 64px;
+}
+
+.prof-header {
+  text-align: left;
+  margin-bottom: 56px;
+}
+
+.prof-kicker {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #f08080;
+  margin-bottom: 12px;
+}
+
+.prof-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.prof-subtitle {
+  font-size: .95rem;
+  color: rgba(255,255,255,.55);
+  max-width: 520px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.prof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  max-width: 780px;
+  margin: 0 0 48px;
+}
+
+.prof-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  cursor: pointer;
+}
+
+/* Foto */
+.prof-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #2a0606;
+}
+
+.prof-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px 20px 0 0;
+  transition: transform .35s cubic-bezier(.25,.8,.25,1);
+  transform-origin: center bottom;
+}
+
+/* Hover: zoom suave na foto */
+.prof-card:hover .prof-photo,
+.prof-card:focus-within .prof-photo {
+  transform: scale(1.06);
+}
+
+/* Badge faixa */
+.prof-belt {
+  background: #c0181a;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prof-belt__bar {
+  display: inline-block;
+  width: 28px;
+  height: 5px;
+  background: #0a0a0a;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.prof-belt__text {
+  font-size: .75rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Nome e bio */
+.prof-info {
+  text-align: left;
+  padding: 0 8px;
+}
+
+.prof-name {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.45rem;
+  color: #fff;
+  margin-bottom: 8px;
+  transition: color .2s;
+}
+
+.prof-card:hover .prof-name {
+  color: #f08080;
+}
+
+.prof-bio {
+  font-size: .875rem;
+  color: rgba(255,255,255,.5);
+  line-height: 1.65;
+}
+
+/* CTA */
+.prof-cta-wrap {
+  text-align: left;
+}
+
+.prof-cta {
+  display: inline-flex;
+  margin-bottom: 14px;
+}
+
+.prof-cta-note {
+  font-size: .78rem;
+  color: rgba(255,255,255,.35);
+}
+
+.prof-cta-note a {
+  color: rgba(255,255,255,.45);
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .prof-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .prof-photo-wrap {
+    max-width: 100%;
+  }
+
+  .prof-cta {
+    width: 100%;
+    display: flex;
+  }
+
+  .prof-section { padding: 56px 0 48px; }
+}
+</style>
