@@ -1,0 +1,147 @@
+---
+// Vídeo institucional Krav Maga — embed YouTube com lazy load
+const VIDEO_ID = '-4yX8WRkiOA';
+const THUMB = `https://i.ytimg.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
+---
+
+<section class="krav-video-section" aria-labelledby="krav-video-heading">
+  <div class="wrap krav-video-inner">
+    <div class="krav-video-text">
+      <p class="krav-video-kicker">Veja na prática</p>
+      <h2 id="krav-video-heading" class="krav-video-title">
+        Krav Maga em ação:<br />o que você aprende no Studio Livel
+      </h2>
+      <p class="krav-video-desc">
+        Assista ao treinamento real com nossos instrutores certificados.
+        Técnicas de defesa pessoal aplicadas a cenários urbanos.
+      </p>
+    </div>
+    <div class="krav-video-embed-wrap">
+      <div class="krav-video-embed" id="krav-yt-wrap">
+        <!-- Thumbnail clicável — carrega o iframe só quando o usuário clicar (performance) -->
+        <button
+          class="krav-yt-thumb"
+          id="krav-yt-btn"
+          aria-label="Reproduzir vídeo: Krav Maga no Studio Livel"
+          style={`background-image:url('${THUMB}')`}
+        >
+          <span class="krav-yt-play" aria-hidden="true">
+            <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+              <circle cx="34" cy="34" r="34" fill="rgba(0,0,0,.55)" />
+              <polygon points="27,22 52,34 27,46" fill="#fff" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ VIDEO_ID }}>
+(function() {
+  var btn = document.getElementById('krav-yt-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var wrap = document.getElementById('krav-yt-wrap');
+    if (!wrap) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + VIDEO_ID + '?autoplay=1&start=42&rel=0';
+    iframe.title = 'Krav Maga no Studio Livel';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.style.position = 'absolute';
+    iframe.style.inset = '0';
+    iframe.style.border = 'none';
+    iframe.style.borderRadius = '12px';
+    wrap.innerHTML = '';
+    wrap.appendChild(iframe);
+  }, { once: true });
+}());
+</script>
+
+<style>
+.krav-video-section {
+  background: #111;
+  padding: 72px 0;
+}
+
+.krav-video-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.krav-video-kicker {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #f08080;
+  margin-bottom: 12px;
+}
+
+.krav-video-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.krav-video-desc {
+  font-size: .92rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.65;
+}
+
+/* Embed */
+.krav-video-embed-wrap {
+  width: 100%;
+}
+
+.krav-video-embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Thumbnail button */
+.krav-yt-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: filter .2s;
+}
+
+.krav-yt-thumb:hover { filter: brightness(1.15); }
+.krav-yt-thumb:hover .krav-yt-play circle { fill: rgba(192,24,26,.75); }
+
+.krav-yt-play {
+  pointer-events: none;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.5));
+  transition: transform .2s;
+}
+
+.krav-yt-thumb:hover .krav-yt-play { transform: scale(1.08); }
+
+@media (max-width: 768px) {
+  .krav-video-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+</style>
