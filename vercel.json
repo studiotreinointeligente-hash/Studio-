@@ -1,6 +1,8 @@
 {
   "redirects": [
 
+    { "source": "/aula-avalia%C3%A7%C3%A3o/",                        "destination": "/aula-avaliacao/",         "permanent": true },
+
     { "source": "/academia-de-artes-marciais-em-alto-barroca/",   "destination": "/krav-maga/",              "permanent": true },
     { "source": "/academia-de-artes-marciais-em-belo-horizonte/", "destination": "/krav-maga/",              "permanent": true },
     { "source": "/academia-de-artes-marciais-em-caicara/",        "destination": "/krav-maga/",              "permanent": true },
