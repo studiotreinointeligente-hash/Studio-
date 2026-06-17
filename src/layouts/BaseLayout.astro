@@ -65,9 +65,9 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
     />
   )}
 
-  <!-- Preload fonte crítica para destravar o LCP (instrument-serif aparece no <h1>) -->
-  <link rel="preload" href="/files/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href="/files/instrument-serif-latin-ext-400-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <!-- Preload fontes críticas para destravar o LCP (Univers LT aparece nos H1/H2) -->
+  <link rel="preload" href="/fonts/Univers_LT_75_Black.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Univers_LT_55_Roman.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
 
   <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -109,35 +109,17 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   <!-- Schema JSON-LD -->
   {schema && <SchemaLD schema={schema} />}
 
-  <!-- Fontes self-hosted: @font-face com URLs absolutas (evita resolução relativa à página) -->
+  <!-- Fontes críticas self-hosted: @font-face inline com URLs absolutas (Univers LT — H1/H2) -->
   <style is:global>
-    /* Latin (default — usado primeiro) */
     @font-face {
-      font-family: 'Instrument Serif';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      src: url('/files/instrument-serif-latin-400-normal.woff2') format('woff2'),
-           url('/files/instrument-serif-latin-400-normal.woff') format('woff');
-    }
-    /* Latin-ext (subset com acentos PT) */
-    @font-face {
-      font-family: 'Instrument Serif';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-      src: url('/files/instrument-serif-latin-ext-400-normal.woff2') format('woff2'),
-           url('/files/instrument-serif-latin-ext-400-normal.woff') format('woff');
+      font-family: 'Univers LT';
+      font-style: normal; font-weight: 800; font-display: swap;
+      src: url('/fonts/Univers_LT_75_Black.ttf') format('truetype');
     }
     @font-face {
-      font-family: 'Instrument Serif';
-      font-style: italic;
-      font-weight: 400;
-      font-display: swap;
-      src: url('/files/instrument-serif-latin-400-italic.woff2') format('woff2'),
-           url('/files/instrument-serif-latin-400-italic.woff') format('woff');
+      font-family: 'Univers LT';
+      font-style: normal; font-weight: 400; font-display: swap;
+      src: url('/fonts/Univers_LT_55_Roman.ttf') format('truetype');
     }
   </style>
 

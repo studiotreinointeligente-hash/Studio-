@@ -6,10 +6,23 @@
 /* Forcar tema claro — sem dark mode */
 :root {
   color-scheme: light only;
-  /* Fontes */
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
+  /* Fontes — Sistema tipográfico oficial Livel (entrega-dev-tipografia) */
+  --font-poster:  'Bebas Neue', 'Univers LT', 'Impact', sans-serif;          /* cartaz / hero editorial */
+  --font-display: 'Univers LT', 'Bebas Neue', 'Impact', sans-serif;          /* headlines de UI — H1/H2 */
+  --font-body:    'Open Sans', system-ui, -apple-system, sans-serif;          /* corpo + interface */
   --font-mono:    'Courier New', monospace;
+
+  /* Escala tipográfica oficial Livel (clamp p/ responsivo) */
+  --text-display: clamp(56px, 9vw, 112px);  /* Bebas Neue — display gigante */
+  --text-hero:    clamp(40px, 6vw, 72px);   /* Univers 75/85 — headline de seção */
+  --text-h1:      clamp(32px, 4.5vw, 56px);
+  --text-h2:      clamp(26px, 3.2vw, 40px);
+  --text-h3:      22px;
+  --text-title:   20px;
+  --text-small:   14px;
+  --text-eyebrow: 12px;
+  --track-eyebrow: 0.32em;
+  --track-display: -0.01em;
 
   /* 1º Andar — Studio · Roxo */
   --roxo:        #632465;
