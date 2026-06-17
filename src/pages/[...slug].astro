@@ -13,6 +13,11 @@ import { siloData } from '../data/siloData';
 
 const KRAV_CTA_URL = 'https://wa.me/553171421239?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Krav%20Mag%C3%A1%20no%20Studio%20Livel.';
 
+// CTA padrão (aula-avaliação gratuita) — usado por todos os silos
+const DEFAULT_CTA_URL = 'https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel.';
+// Pilates tem número de contato próprio
+const PILATES_CTA_URL = 'https://wa.me/553175135459?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel.';
+
 type PageEntry =
   | CollectionEntry<'pilates'> | CollectionEntry<'musculacao'>
   | CollectionEntry<'funcional'> | CollectionEntry<'yoga'>
@@ -83,9 +88,15 @@ const isKravPilar   = isKravMaga && d.type === 'pilar';
 // Dobra 2 com conteudo expandivel em todas as paginas pilar
 const hasInlineExpand = d.type === 'pilar';
 
-const imgSrc = isKravMaga
+// Imagem padrao da modalidade (fallback comum para hero e corpo)
+const modalDefaultImg = isKravMaga
   ? '/images/krav-maga/defesa-pessoal.jpg'
   : (modalImages[d.modalidade] || modalImages.geral);
+// heroImage no frontmatter sobrescreve SO a hero; senao usa o padrao da modalidade
+const imgSrc = d.heroImage || modalDefaultImg;
+// sessionImage sobrescreve SO a dobra "Como funciona"; senao usa o padrao da modalidade
+// (nao herda heroImage, para evitar a mesma foto repetida na pagina)
+const sessionImgSrc = d.sessionImage || modalDefaultImg;
 const sData = siloData[d.modalidade];
 
 // H1 curto para display (sem colon e subtitulo)
@@ -203,7 +214,7 @@ const schemaWithAuthor = (() => {
           imageSrc={imgSrc}
           imageAlt={displayH1}
           stats={sData?.stats || []}
-          ctaHref="https://wa.me/5531991070392?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20aula-avalia%C3%A7%C3%A3o%20gratuita%20no%20Studio%20Livel."
+          ctaHref={d.modalidade === 'pilates' ? PILATES_CTA_URL : DEFAULT_CTA_URL}
           ctaLabel={sData?.ctaLabel || 'Agendar pelo WhatsApp'}
         />
       )}
@@ -292,20 +303,20 @@ const schemaWithAuthor = (() => {
               </div>
               <div class="dobra-how__img" aria-hidden="true">
                 {isKravMaga ? (
-                  <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" style="border-radius:12px;object-fit:cover;width:100%;height:100%;" />
+                  <img src={sessionImgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" style="border-radius:12px;object-fit:cover;width:100%;height:100%;" />
                 ) : (
                   <picture>
                     <source
                       type="image/avif"
-                      srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
+                      srcset={`${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.avif')} 400w, ${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.avif')} 800w, ${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.avif')} 1200w`}
                       sizes="(max-width:900px) 100vw, 50vw"
                     />
                     <source
                       type="image/webp"
-                      srcset={`${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${imgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
+                      srcset={`${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-400w.webp')} 400w, ${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-800w.webp')} 800w, ${sessionImgSrc.replace(/\.(jpg|jpeg|png|webp)$/i,'-1200w.webp')} 1200w`}
                       sizes="(max-width:900px) 100vw, 50vw"
                     />
-                    <img src={imgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" />
+                    <img src={sessionImgSrc} alt="" width="500" height="600" loading="lazy" decoding="async" />
                   </picture>
                 )}
               </div>

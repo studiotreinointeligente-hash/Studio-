@@ -24,6 +24,8 @@ const pageSchema = z.object({
   dateModified:  z.string(),
   lcpImage:      z.string().optional(),
   ogImage:       z.string().optional(),
+  heroImage:     z.string().optional(),
+  sessionImage:  z.string().optional(),
 });
 
 export const collections = {
