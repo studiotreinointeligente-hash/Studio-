@@ -55,7 +55,8 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
       if (link) {
         gtag('event', 'whatsapp_click', {
           link_url: link.href,
-          page_path: location.pathname
+          page_path: location.pathname,
+          transport_type: 'beacon'
         });
       }
     });
