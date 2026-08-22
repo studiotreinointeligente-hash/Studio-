@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import partytown from '@astrojs/partytown';
 import compress from '@playform/compress';
 import icon from 'astro-icon';
 
@@ -9,12 +8,6 @@ export default defineConfig({
   output: 'static',
   integrations: [
     mdx(),
-    partytown({
-      // Scripts com type="text/partytown" rodam em Web Worker (GTM, GA, etc.)
-      config: {
-        forward: ['dataLayer.push', 'gtag'],
-      },
-    }),
     icon({
       // Iconify collections usadas no projeto
       include: {
