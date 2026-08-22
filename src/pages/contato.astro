@@ -365,6 +365,9 @@ const breadcrumb = [
     if (modal) text += ' Tenho interesse em ' + modal + '.';
     text += ' ' + msg;
 
+    gtag('event', 'generate_lead', { form_id: 'contato-form', modalidade: modal || undefined });
+    gtag('event', 'whatsapp_click', { link_url: WA, page_path: location.pathname, source: 'contato_form' });
+
     window.open(WA + encodeURIComponent(text), '_blank');
   });
 

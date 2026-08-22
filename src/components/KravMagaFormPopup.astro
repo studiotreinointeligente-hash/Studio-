@@ -195,6 +195,10 @@ const WA_NUMBER = '553171421239';
               + '\nAguardo o contato!';
 
       var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+
+      gtag('event', 'generate_lead', { form_id: 'krav-maga-popup', turma: turma || undefined });
+      gtag('event', 'whatsapp_click', { link_url: url, page_path: location.pathname, source: 'krav_maga_popup' });
+
       window.open(url, '_blank', 'noopener,noreferrer');
       closePopup();
     });

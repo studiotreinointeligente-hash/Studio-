@@ -49,6 +49,16 @@ const fullOg  = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-WQZ14JK43G');
+
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest && e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (link) {
+        gtag('event', 'whatsapp_click', {
+          link_url: link.href,
+          page_path: location.pathname
+        });
+      }
+    });
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
