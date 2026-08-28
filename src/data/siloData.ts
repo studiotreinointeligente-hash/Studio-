@@ -231,9 +231,9 @@ export const siloData: Record<string, SiloData> = {
   },
 
   yoga: {
-    andar: 'Studio Livel · Prado, BH',
+    andar: '3 Andar · Studio Livel',
     cor: 'gray',
-    overline: 'Yoga · Studio Livel · Prado, BH',
+    overline: '3 Andar · Yoga · Studio Livel',
     heroIntroShort: 'Sistema codificado de posturas, respiração e atenção. Prática secular ensinada como ferramenta técnica com mecanismos fisiológicos explicáveis.',
     stats: [
       { num: '60min', label: 'Por sessão' },
@@ -269,9 +269,9 @@ export const siloData: Record<string, SiloData> = {
   },
 
   'krav-maga': {
-    andar: 'Studio Livel · Prado, BH',
+    andar: '3 Andar · Studio Livel',
     cor: 'red',
-    overline: 'Krav Maga · Studio Livel · Prado, BH',
+    overline: '3 Andar · Krav Maga · Studio Livel',
     heroIntroShort: 'Defesa pessoal civil com condicionamento físico integrado. Técnicas aplicáveis a situações reais. Aberto a iniciantes sem experiência prévia em artes marciais.',
     stats: [
       { num: '60min', label: 'Por sessão' },
